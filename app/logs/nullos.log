@@ -1,0 +1,34 @@
+crud.pdoException.form.insert -- 2017-03-02 11:56:24
+----------
+exception 'PDOException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`roadmaps`.`task`, CONSTRAINT `fk_task_task` FOREIGN KEY (`parent_task_id`) REFERENCES `task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)' in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:114
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(114): PDOStatement->execute(Array)
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Crud/Form.php(150): QuickPdo\QuickPdo::insert('roadmaps.task', Array)
+#2 unknown file(unknown line): Crud\Form->Crud\{closure}(Array, 'Oops, something went wrong with the database, sorry...')
+#3 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickForm/QuickForm.php(216): call_user_func_array(Closure, Array)
+#4 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Crud/Form.php(166): QuickForm\QuickForm->play()
+#5 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/crud/form/roadmaps.task.php(37): Crud\Form->display()
+#6 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/modules/crud/crud.php(47): require_once('/Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/crud/form/roadmaps.task.php')
+#7 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Layout/Layout.php(159): require_once('/Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/modules/crud/crud.php')
+#8 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Layout/Layout.php(66): Layout\Layout->includeElement('body')
+#9 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/pages/modules/crud/crud.php(8): Layout\Layout->display()
+#10 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/index.php(50): require_once('/Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/pages/modules/crud/crud.php')
+#11 {main}
+
+crud.pdoException.form.insert -- 2017-03-02 11:57:34
+----------
+exception 'PDOException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`roadmaps`.`task`, CONSTRAINT `fk_task_task` FOREIGN KEY (`parent_task_id`) REFERENCES `task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)' in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:114
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(114): PDOStatement->execute(Array)
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Crud/Form.php(150): QuickPdo\QuickPdo::insert('roadmaps.task', Array)
+#2 unknown file(unknown line): Crud\Form->Crud\{closure}(Array, 'Oops, something went wrong with the database, sorry...')
+#3 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickForm/QuickForm.php(216): call_user_func_array(Closure, Array)
+#4 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Crud/Form.php(166): QuickForm\QuickForm->play()
+#5 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/crud/form/roadmaps.task.php(37): Crud\Form->display()
+#6 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/modules/crud/crud.php(47): require_once('/Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/crud/form/roadmaps.task.php')
+#7 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Layout/Layout.php(159): require_once('/Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/modules/crud/crud.php')
+#8 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Layout/Layout.php(66): Layout\Layout->includeElement('body')
+#9 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/pages/modules/crud/crud.php(8): Layout\Layout->display()
+#10 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/index.php(50): require_once('/Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/pages/modules/crud/crud.php')
+#11 {main}
+

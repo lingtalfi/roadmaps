@@ -1,0 +1,26 @@
+[02-Mar-2017 13:17:59 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1049] Unknown database 'roadmaps' in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:36
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(36): PDO->__construct('mysql:unix_sock...', 'root', 'root', Array)
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/init.php(87): QuickPdo\QuickPdo::setConnection('mysql:unix_sock...', 'root', 'root', Array)
+#2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/dbgen.php(5): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 36
+[02-Mar-2017 15:47:18 Europe/Paris] PHP Notice:  Undefined property: Layout\Layout::$period in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 13
+[02-Mar-2017 15:47:18 Europe/Paris] PHP Fatal error:  Uncaught Error: Call to a member function getStartDate() on null in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php:13
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Layout/Layout.php(172): require_once()
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Layout/Layout.php(79): Layout\Layout->includeElement('body')
+#2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/pages/calendrier.php(8): Layout\Layout->display()
+#3 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/index.php(51): require_once('/Volumes/Macint...')
+#4 {main}
+  thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 13
+[02-Mar-2017 15:47:37 Europe/Paris] PHP Notice:  Undefined property: Period\Period::$period in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 13
+[02-Mar-2017 15:47:37 Europe/Paris] PHP Fatal error:  Uncaught Error: Call to a member function getStartDate() on null in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php:13
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Layout/Layout.php(172): require_once()
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Layout/Layout.php(79): Layout\Layout->includeElement('body')
+#2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/pages/calendrier.php(8): Layout\Layout->display()
+#3 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/index.php(51): require_once('/Volumes/Macint...')
+#4 {main}
+  thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 13
+[02-Mar-2017 16:26:53 Europe/Paris] PHP Notice:  Undefined variable: months in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 42

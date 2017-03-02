@@ -1,0 +1,45 @@
+.roadmaps-table th {
+    background: #000;
+    color: white;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.roadmaps-table td {
+    padding: 2px;
+}
+
+.roadmaps-table td.filled {
+    background: #4f103e;
+}
+.roadmaps-table td.start-date-update-trigger,
+.roadmaps-table td.end-date-update-trigger
+{
+    cursor: pointer;
+}
+
+.roadmaps-table tr.close {
+    display: none;
+}
+
+.roadmaps-table .level-0 {
+    background: #aaa;
+    font-weight: bold;
+}
+
+.roadmaps-table .level-1 {
+    background: #ccc;
+}
+
+.roadmaps-table .level-2 {
+    background: #eee;
+}
+
+.roadmaps-table .toggler {
+    background: none;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+    padding: 2px;
+}

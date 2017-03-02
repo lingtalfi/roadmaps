@@ -1,0 +1,18 @@
+.infoitem {
+    border-collapse: collapse;
+}
+.infoitem tr,
+.infoitem td
+{
+    border: 1px solid #bbb;
+}
+.infoitem td{
+    padding: 5px;
+}
+
+.infoitem  td:first-child{
+    background: #eee;
+}
+.infoitem  td:last-child{
+    background: #ddd;
+}

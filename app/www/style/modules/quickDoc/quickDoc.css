@@ -1,0 +1,38 @@
+.quickdoc .boxy {
+    background: #becad8;
+    padding: 20px;
+    margin-bottom: 10px;
+    line-height: 2em;
+    color: black;
+}
+
+.quickdoc .boxy button {
+    background: #222;
+    cursor: pointer;
+    font-weight: bold;
+    color: #eee;
+}
+
+.quickdoc .boxy button:hover {
+    background: #000;
+    cursor: pointer;
+    font-weight: bold;
+    color: #fff;
+}
+
+.quickdoc button.big {
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    margin: 5px;
+    font-size: 1.2em;
+    letter-spacing: 2px;
+}
+
+.quickdoc .key2value-form tr td:first-child{
+    width: 40%;
+}
+
+.quickdoc .key2value-form h4{
+    color: #125e86;
+}

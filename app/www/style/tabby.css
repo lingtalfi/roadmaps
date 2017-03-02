@@ -1,0 +1,113 @@
+/*
+* Tabby default theme,
+* by ling -- 2016-12-04
+*/
+.tabby {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.tabby .tabs {
+    background: #b4d4c9;
+    display: flex;
+    flex-shrink: 0;
+}
+
+.tabby .tabs .badge {
+    border-radius: 10px;
+    background-color: white;
+    color: #125e86;
+    font-size: 12px;
+    font-weight: 700;
+    min-width: 10px;
+    padding: 3px 7px;
+    margin: 0 0 0 5px;
+    text-align: center;
+}
+
+.tabby .tabs .badge.badge-error {
+    background-color: red;
+    color: white;
+}
+
+.tabby .tabs .badge.badge-success {
+    background-color: #5fb15f;
+    color: white;
+}
+
+.tabby .tabs .tab {
+    padding: 10px;
+    margin-left: 5px;
+    background: #125e86;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.tabby .tabs .icon {
+    fill: white;
+    margin-right: 5px;
+}
+
+.tabby .tabs a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.tabby .tabs a:hover {
+    color: #ddd;
+}
+
+.tabby .tabs a:hover .icon {
+    fill: #ddd;
+}
+.tabby .tabs a:hover .badge {
+    background-color: #ddd;
+}
+.tabby .tabs a:hover .badge.badge-success {
+    background-color: #5fb15f;
+}
+.tabby .tabs a:hover .badge.badge-error {
+    background-color: red;
+}
+
+
+.tabby .tabs .tab:first-child {
+    margin-left: 0px;
+}
+
+.tabby .tabs .tab.spacer {
+    flex: auto;
+    background: none;
+}
+
+.tabby .body {
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabby .body .body-top,
+.tabby .body .body-top > form
+{
+    background: #d6abd6;
+    display: flex;
+}
+
+.tabby .body .body-top .box:not(:first-child) {
+    margin-left: 10px;
+}
+
+.tabby .body .body-top .box {
+    padding: 5px;
+}
+
+.tabby .body .body-content {
+    flex: auto;
+    background: #d8d8d8;
+    box-sizing: border-box;
+    padding: 20px;
+}

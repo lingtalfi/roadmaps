@@ -1,0 +1,102 @@
+/*
+This is just an experimental thought about how to create a general
+
+css utility file
+
+that we can use across the different pages.
+
+
+I believe there should be generic class names for various areas of the css:
+- paddings and margins
+- text-align
+- some generic colors terms (maybe dark or light)
+- probably others...
+
+Below is my first thought about it...
+
+The goal is to help with design consistency across pages.
+
+I prefer this rather than re-thinking the whole design process on a per-page basis.
+*/
+
+
+/*---------------------
+- PADDING
+-----------------------*/
+.pad{
+    padding: 10px;
+}
+
+.padt{
+    padding-top: 10px;
+}
+.padr{
+    padding-right: 10px;
+}
+.padb{
+    padding-bottom: 10px;
+}
+.padl{
+    padding-left: 10px;
+}
+
+/*---------------------
+- BIG PADDING
+-----------------------*/
+.bigpad{
+    padding: 20px;
+}
+
+.bigpadt{
+    padding-top: 20px;
+}
+.bigpadr{
+    padding-right: 20px;
+}
+.bigpadb{
+    padding-bottom: 20px;
+}
+.bigpadl{
+    padding-left: 20px;
+}
+
+
+/*---------------------
+- MARGIN
+-----------------------*/
+.mar{
+    margin: 10px;
+}
+
+.mart{
+    margin-top: 10px;
+}
+.marr{
+    margin-right: 10px;
+}
+.marb{
+    margin-bottom: 10px;
+}
+.marl{
+    margin-left: 10px;
+}
+
+/*---------------------
+- BIG MARGIN
+-----------------------*/
+.bigmar{
+    margin: 20px;
+}
+
+.bigmart{
+    margin-top: 20px;
+}
+.bigmarr{
+    margin-right: 20px;
+}
+.bigmarb{
+    margin-bottom: 20px;
+}
+.bigmarl{
+    margin-left: 20px;
+}

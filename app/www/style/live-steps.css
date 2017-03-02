@@ -1,0 +1,51 @@
+.live-steps {
+    box-sizing: border-box;
+    padding: 20px;
+    background: #c2d7c2;
+    width: 90%;
+    border: 1px solid #a2cea2;
+    margin: 20px auto;
+    position: relative;
+    display: none;
+}
+
+.live-steps.started {
+    display: block;
+}
+
+.live-steps .live-steps-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.live-steps.finished .live-steps-close {
+    display: block;
+}
+
+.live-steps ul {
+    list-style-type: none;
+    text-align: left;
+}
+
+.live-steps li {
+    padding: 2px 10px;
+}
+
+.live-steps .error {
+    color: red;
+}
+
+.live-steps .info {
+    color: #1b22a8;
+}
+
+.live-steps .warning {
+    color: #bd2901;
+    background: #e3e3d3;
+}
+

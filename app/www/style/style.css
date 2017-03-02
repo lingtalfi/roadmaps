@@ -1,0 +1,665 @@
+html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+}
+
+ul, li {
+    margin: 0;
+    padding: 0;
+
+}
+
+/*------------------------------------
+- HOLY GRAIL
+------------------------------------*/
+body.holygrail {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0 20px 0 0;
+    background: #ddd;
+}
+
+.body {
+    flex: auto;
+}
+
+.topbar,
+.bottombar {
+    height: 20px;
+    background: #ddd;
+    display: flex;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+/*------------------------------------
+- LANG MODULE
+------------------------------------*/
+.topbar .lang-tool {
+    display: flex;
+    color: #999;
+}
+
+.topbar .lang-tool a {
+    color: #356a9a;
+}
+
+.topbar .lang-list {
+    display: flex;
+    list-style-type: none;
+    margin-left: 20px;
+}
+
+.topbar .lang-list li {
+    padding: 0 10px;
+    border-right: 1px solid #c3c3c3;
+}
+
+.topbar .lang-list .last {
+    border-right: none;
+}
+
+/*------------------------------------
+- TOPMENU
+------------------------------------*/
+.topmenu {
+    height: 40px;
+    background: #ddd;
+    display: flex;
+    justify-content: flex-end;
+    flex-shrink: 0;
+    padding: 15px 0 10px 0;
+}
+
+.topmenu ul {
+    display: flex;
+    list-style-type: none;
+}
+
+.topmenu ul li{
+    margin: 0 10px;
+}
+
+.topmenu ul li a{
+    padding: 10px;
+    display: block;
+    border-radius: 5px;
+    background: rgba(12, 68, 129, 0.8);
+    color: white;
+    text-decoration: none;
+}
+
+/*------------------------------------
+- PANES CODE
+------------------------------------*/
+.panes-container {
+    display: flex;
+    background: #eee;
+}
+
+.pane-main {
+    width: 30%;
+    min-width: 20px;
+    background: #ddd;
+}
+
+.pane-aux {
+    background: #ccc;
+    flex: auto;
+}
+
+/*------------------------------------
+- GENERAL TOOLS
+------------------------------------*/
+.icon {
+    /*width: 48px;*/
+    /*height: 48px;*/
+}
+
+.button-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: auto;
+}
+
+/*------------------------------------
+- SPLIT
+------------------------------------*/
+.gutter {
+    background-color: #eee;
+
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+.gutter.gutter-horizontal {
+    background-image: url('../libs/split/vertical.png');
+    cursor: ew-resize;
+}
+
+.gutter.gutter-vertical {
+    background-image: url('../libs/split/horizontal.png');
+    cursor: ns-resize;
+}
+
+/*------------------------------------
+- LEFT MENU TOOLS
+------------------------------------*/
+.leftmenu .linkslist li {
+    border-bottom: 1px solid #bbb;
+    margin-top: 5px;
+    margin-left: 20px;
+}
+
+.leftmenu .linkslist li:last-child {
+    border-bottom: none;
+}
+
+.leftmenu .linkslist a {
+    display: block;
+    width: 100%;
+    /*height: 100%; */ /* not chrome friendly */
+    padding: 5px;
+}
+
+.leftmenu .linkslist a:hover {
+    background: #ccc;
+}
+
+.leftmenu .section-block {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #aaa;
+}
+
+.leftmenu .section-block h3 {
+    color: black;
+    background: rgba(178, 114, 0, 0.82);
+    padding: 0px;
+    min-height: 20px;
+    font-size: 0.9em;
+    line-height: 0.9em;
+    font-weight: normal;
+    box-sizing: border-box;
+    padding-left: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.leftmenu .section-block .expander {
+    cursor: pointer;
+}
+
+.leftmenu .section-block.closed {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    border-bottom: none;
+}
+
+.leftmenu .section-block.closed ul {
+    display: none;
+}
+
+.leftmenu .section-block .expand-more {
+    display: none;
+}
+
+.leftmenu .section-block .expand-less {
+    display: block;
+}
+
+.leftmenu .section-block.closed .expand-more {
+    display: block;
+}
+
+.leftmenu .section-block.closed .expand-less {
+    display: none;
+}
+
+/*------------------------------------
+- LEFT MENU
+------------------------------------*/
+.leftmenu {
+    overflow: hidden;
+}
+
+.leftmenu a {
+    color: #666;
+    text-decoration: none;
+}
+
+.leftmenu .header {
+    display: flex;
+    background: #aaa;
+    padding: 10px;
+    align-items: center;
+
+}
+
+.leftmenu .header .title {
+    display: block;
+    color: black;
+    flex: auto;
+}
+
+/*------------------------------------
+- RIGHT TOOLS
+------------------------------------*/
+.hidden {
+    display: none;
+}
+
+.freepage {
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.tac {
+    text-align: center;
+}
+
+.tal {
+    text-align: left;
+}
+
+.bignose {
+    /*font-size: 1.2em;*/
+    /*line-height: 1.6em;*/
+}
+
+.mt20 {
+    margin-top: 20px;
+}
+
+.pad {
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.bigtable {
+    width: 100%;
+    text-align: left;
+}
+
+.bigtable.withlines {
+    border-collapse: collapse;
+}
+
+.bigtable.padded td,
+.bigtable.padded th {
+    padding: 10px;
+}
+
+.bigtable.withlines tr,
+.bigtable.withlines td,
+.bigtable.withlines th {
+    border: 1px solid #aaa;
+}
+
+.bigtable.lastcolumnbigger th:last-child {
+    width: 100%;
+}
+
+.flexh {
+    display: flex;
+    align-items: center;
+}
+
+.flexhe {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.flexc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.alert {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.alert-success,
+.congrats {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+}
+
+.alert-error {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+}
+
+.alert-info {
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    color: #31708f;
+}
+
+.alert-error .icon-span {
+    margin-right: 10px;
+}
+
+.congrats {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.congrats .text {
+    margin-left: 20px;
+}
+
+.warning-color {
+    color: #bd1515;
+}
+
+.centered-ul {
+    text-align: left;
+    display: inline-block;
+}
+
+/*
+* The icon box is a div containing a container div which itself contains two spans.
+* - The first span contains an svg icon.
+* - The second span has .text and contains the informative text.
+*/
+.icon-box {
+    display: inline-block;
+    margin: 0 auto;
+    justify-content: flex-start;
+    align-items: center;
+    background: #ddd;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.icon-box > div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.icon-box span.text {
+    margin-left: 10px;
+}
+
+.icon-box.technical-note {
+    background: #f9e0b1;
+    border: 1px solid orange;
+}
+
+.icon-box.technical-note .icon {
+    fill: #ca6310;
+}
+
+.whiteboard {
+    background: white;
+    color: black;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    padding: 20px;
+    line-height: 1.3em;
+    font-size: 1em;
+}
+
+/*------------------------------------
+- DATATABLE
+------------------------------------*/
+.crudadmintable-newitemlink {
+    text-align: center;
+}
+
+.crudadmintable-newitemlink a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: blue;
+}
+
+/*------------------------------------
+- FORM
+------------------------------------*/
+.form-section {
+    background: rgba(255, 255, 255, 0.05);
+    width: 80%;
+    margin: 0 auto;
+}
+
+.form-section .form-header {
+    margin: 30px 0;
+}
+
+.form-title,
+.list-title {
+    background: #aaa;
+    padding: 10px;
+}
+
+.form {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.form .row {
+    display: flex;
+    margin-bottom: 20px;
+    /*border-bottom: 1px solid #bbb;*/
+    /*padding-bottom: 20px;*/
+}
+
+.form .label {
+    text-align: left;
+    width: 30%;
+}
+
+.form .control {
+    flex: auto;
+}
+
+.form input:not([type="checkbox"]),
+.form textarea,
+.form select {
+    width: 100%;
+}
+
+.form textarea {
+    height: 200px;
+}
+
+.form fieldset {
+    margin: 30px 0;
+}
+
+.form .autowidth {
+    width: auto !important;
+}
+
+.form hr {
+    border: 1px solid #eee;
+    width: 80%;
+    margin: 50px auto;
+}
+
+.form .control-container {
+    flex: auto;
+}
+
+.form .row_visible {
+    display: flex;
+    margin-top: 10px;
+}
+
+.form .visible_label {
+    margin-right: 2%;
+}
+
+.form ._day,
+.form ._month {
+    margin-right: 1%;
+}
+
+.form ._lastdate {
+    margin-right: 5%;
+}
+
+.form .submit {
+    text-align: center;
+}
+
+.form .input-submit {
+    background: #446092 none repeat scroll 0 0;
+    border: medium none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    color: white;
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 10px 20px;
+}
+
+.form .error,
+.top-control-errors,
+.top-form-result.error {
+    color: #c00;
+    background: yellow;
+}
+
+.top-form-result.success {
+    color: #fff;
+    background: #589a5e;
+}
+
+.top-control-errors,
+.top-form-result {
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.top-control-errors ul,
+.top-control-errors li {
+    margin-left: 20px;
+}
+
+.checkbox-label {
+    display: block;
+    text-align: left;
+}
+
+.checkbox-label input,
+.radio-label input {
+    width: auto;
+}
+
+.tac .row {
+    text-align: left;
+}
+
+.dynamic-items li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    background: #eee;
+    padding: 5px;
+}
+
+.dynamic-items li button {
+    margin-left: 100px;
+}
+
+/*------------------------------------
+- AUTHENTICATION FORM
+------------------------------------*/
+.authentication-body {
+    background: #eee;
+    display: flex;
+    align-items: center;
+}
+
+.authentication-section {
+    width: 60%;
+    background: #ddd;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 20px;
+    max-width: 500px;
+}
+
+.authentication-section h1 {
+    text-align: center;
+}
+
+.form-connection .error {
+    display: none;
+}
+
+.form-connection .error.activated {
+    display: block;
+}
+
+.form-connection .input-submit {
+    margin-top: 50px;
+    width: auto;
+}
+
+/*------------------------------------
+- INSTALL PAGE
+------------------------------------*/
+.install-page .alert {
+    justify-content: center;
+}
+
+.install-page .icon-span {
+    margin-right: 10px;
+}
+
+.install-page .path {
+    font-family: monospace;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 3px;
+}
+
+.install-page .code {
+    font-family: monospace;
+    background: black;
+    padding: 3px;
+    color: white;
+}
+
+/*------------------------------------
+- YOUR STYLES...
+------------------------------------*/
+.table-links.blue h3 {
+    background: #454565;
+    color: #bbb;
+}
+
+.table-links.purple h3 {
+    background: #70317d;
+    color: #bbb;
+}
+
+.table-links.yellow h3 {
+    background: #a59723;
+}
+
+.table-links.gray h3 {
+    background: #444;
+    color: #bbb;
+}

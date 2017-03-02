@@ -1,0 +1,44 @@
+.blues .banner {
+    background: #11567b;
+    color: #eee;
+}
+
+.blues .boxy {
+    background: #becad8;
+    padding: 20px;
+    margin-bottom: 10px;
+    line-height: 2em;
+    color: black;
+}
+
+.blues .boxy button {
+    background: #222;
+    cursor: pointer;
+    font-weight: bold;
+    color: #eee;
+}
+
+.blues .boxy button:hover {
+    background: #000;
+    cursor: pointer;
+    font-weight: bold;
+    color: #fff;
+}
+
+.blues button.big {
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    margin: 5px;
+    font-size: 1.2em;
+    letter-spacing: 2px;
+}
+
+.blues .key2value-form tr td:first-child {
+    width: 40%;
+}
+
+.blues .key2value-form h4 {
+    color: #125e86;
+}
+

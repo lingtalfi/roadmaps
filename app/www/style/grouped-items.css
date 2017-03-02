@@ -1,0 +1,8 @@
+.grouped-items table {
+    text-align: left;
+    width: 100%;
+}
+
+.grouped-items.bluesy h4{
+    color: #125e86;
+}
