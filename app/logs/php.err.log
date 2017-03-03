@@ -24,3 +24,95 @@ Stack trace:
 #4 {main}
   thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 13
 [02-Mar-2017 16:26:53 Europe/Paris] PHP Notice:  Undefined variable: months in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 42
+[03-Mar-2017 13:03:51 Europe/Paris] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY000] [2002] No such file or directory' in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:41
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(41): PDO->__construct('mysql:unix_sock...', 'root', 'root', Array)
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/init.php(91): QuickPdo\QuickPdo::setConnection('mysql:unix_sock...', 'root', 'root', Array)
+#2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/index.php(6): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 41
+[03-Mar-2017 13:04:21 Europe/Paris] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY000] [1049] Unknown database 'roadmaps'' in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:41
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(41): PDO->__construct('mysql:host=loca...', 'root', 'root', Array)
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/init.php(91): QuickPdo\QuickPdo::setConnection('mysql:host=loca...', 'root', 'root', Array)
+#2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/index.php(6): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 41
+[03-Mar-2017 13:04:34 Europe/Paris] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY000] [1049] Unknown database 'roadmaps'' in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:41
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(41): PDO->__construct('mysql:host=loca...', 'root', 'root', Array)
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/init.php(91): QuickPdo\QuickPdo::setConnection('mysql:host=loca...', 'root', 'root', Array)
+#2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/dbgen.php(5): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 41
+[03-Mar-2017 13:36:03 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] No such file or directory in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:36
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(36): PDO->__construct('mysql:host=loca...', 'root', 'root', Array)
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/init.php(87): QuickPdo\QuickPdo::setConnection('mysql:host=loca...', 'root', 'root', Array)
+#2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/index.php(6): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 36
+[03-Mar-2017 17:12:02 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')
+and start_date <'2017-03-04'' at line 3 in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:324
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(324): PDOStatement->execute(Array)
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Calendar/CalendarApi.php(61): QuickPdo\QuickPdo::freeQuery('\nupdate task se...')
+#2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/no.php(9): Calendar\CalendarApi::setStartDate(1, '2017-03-04')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 324
+[03-Mar-2017 17:12:18 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')
+and start_date <'2017-03-04 00:00:00'' at line 3 in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:324
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(324): PDOStatement->execute(Array)
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Calendar/CalendarApi.php(61): QuickPdo\QuickPdo::freeQuery('\nupdate task se...')
+#2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/no.php(9): Calendar\CalendarApi::setStartDate(1, '2017-03-04 00:0...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 324
+[03-Mar-2017 17:12:56 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')
+and start_date < '2017-03-04 00:00:00'' at line 3 in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:324
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(324): PDOStatement->execute(Array)
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Calendar/CalendarApi.php(61): QuickPdo\QuickPdo::freeQuery('\nupdate task se...')
+#2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/no.php(9): Calendar\CalendarApi::setStartDate(1, '2017-03-04 00:0...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 324
+[03-Mar-2017 17:13:07 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')
+and start_date < '2017-03-04 00:00:00'' at line 3 in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:324
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(324): PDOStatement->execute(Array)
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Calendar/CalendarApi.php(62): QuickPdo\QuickPdo::freeQuery('\nupdate task se...')
+#2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/no.php(9): Calendar\CalendarApi::setStartDate(1, '2017-03-04 00:0...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 324
+[03-Mar-2017 17:19:32 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')
+and start_date > '2017-03-04 00:00:00'' at line 3 in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:324
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(324): PDOStatement->execute(Array)
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Calendar/CalendarApi.php(93): QuickPdo\QuickPdo::freeQuery('\nupdate task se...')
+#2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/no.php(9): Calendar\CalendarApi::setStartDate(3, '2017-03-04 00:0...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 324
+[03-Mar-2017 17:19:58 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')
+and start_date > '2017-03-04 00:00:00'' at line 3 in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:324
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(324): PDOStatement->execute(Array)
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Calendar/CalendarApi.php(93): QuickPdo\QuickPdo::freeQuery('\nupdate task se...')
+#2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/no.php(9): Calendar\CalendarApi::setStartDate(3, '2017-03-04 00:0...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 324
+[03-Mar-2017 17:20:18 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')
+and start_date > '2017-03-04 00:00:00'' at line 3 in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:324
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(324): PDOStatement->execute(Array)
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Calendar/CalendarApi.php(93): QuickPdo\QuickPdo::freeQuery('\nupdate task se...')
+#2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/no.php(9): Calendar\CalendarApi::setStartDate(3, '2017-03-04 00:0...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 324
+[03-Mar-2017 17:20:54 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')
+and start_date > '2017-03-04 00:00:00'' at line 3 in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:324
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(324): PDOStatement->execute(Array)
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Calendar/CalendarApi.php(97): QuickPdo\QuickPdo::freeQuery('\nupdate task se...')
+#2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/no.php(9): Calendar\CalendarApi::setStartDate(3, '2017-03-04 00:0...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 324

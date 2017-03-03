@@ -44,8 +44,8 @@ require_once __DIR__ . "/functions/main-functions.php";
 $dbUser = 'root';
 $dbPass = 'root';
 $dbName = 'roadmaps';
-$host = 'host=localhost';
 $host = 'unix_socket=/Applications/MAMP/tmp/mysql/mysql.sock';
+$host = 'host=localhost';
 
 
 //--------------------------------------------

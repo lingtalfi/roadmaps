@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 02, 2017 at 01:07 PM
+-- Generation Time: Mar 03, 2017 at 05:16 PM
 -- Server version: 5.6.35
 -- PHP Version: 7.1.1
 
@@ -17,35 +17,17 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `project`
---
-
-CREATE TABLE `project` (
-  `id` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `project`
---
-
-INSERT INTO `project` (`id`, `name`) VALUES
-(1, 'leaderfit-ecommerce');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `task`
 --
 
 CREATE TABLE `task` (
   `id` int(11) NOT NULL,
   `label` varchar(128) NOT NULL,
-  `nb_hours_min` int(11) DEFAULT NULL,
-  `nb_hours_max` int(11) DEFAULT NULL,
+  `start_date` datetime DEFAULT NULL,
+  `end_date` datetime DEFAULT NULL,
   `description` text NOT NULL,
   `parent_task_id` int(11) DEFAULT NULL,
-  `done_date` datetime DEFAULT NULL,
+  `done` tinyint(4) NOT NULL,
   `project_id` int(11) NOT NULL,
   `order` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -54,36 +36,30 @@ CREATE TABLE `task` (
 -- Dumping data for table `task`
 --
 
-INSERT INTO `task` (`id`, `label`, `nb_hours_min`, `nb_hours_max`, `description`, `parent_task_id`, `done_date`, `project_id`, `order`) VALUES
-(1, 'kamille', 0, 0, 'Première implémentation du framework kam (https://github.com/lingtalfi/kam)', NULL, NULL, 1, 0),
-(2, 'Architecture', 0, 0, '', 1, NULL, 1, 0),
-(7, 'Services', 0, 0, '', 1, NULL, 1, 0),
-(8, 'Modules and hooks', 0, 0, '', 1, NULL, 1, 0),
-(9, 'MVC', 0, 0, '', 1, NULL, 1, 0),
-(13, 'Admin tools', 0, 0, '', NULL, NULL, 1, 0),
-(14, 'Theme implementation', 0, 0, '', NULL, NULL, 1, 0),
-(15, 'Nullos MVC', 0, 0, '', NULL, NULL, 1, 0),
-(16, 'Module e-commerce', 0, 0, '', NULL, NULL, 1, 0),
-(17, 'create datatables tools', 0, 0, '', 13, NULL, 1, 0),
-(18, 'create form tools', 0, 0, '', 13, NULL, 1, 0),
-(19, 'create generator tools (autoadmin)', 0, 0, '', 13, NULL, 1, 0),
-(20, 'test MVC - no css framework (basic html) - redo basic zilu interface', 0, 0, 'test MVC - no css framework (basic html) - redo basic zilu interface', 14, NULL, 1, 0),
-(21, 'test MVC - bootstrap - https://colorlib.com/polygon/gentelella/index.html', 0, 0, 'test MVC - bootstrap - https://colorlib.com/polygon/gentelella/index.html', 14, NULL, 1, 0),
-(22, 'création système import module', 0, 0, '', 15, NULL, 1, 0),
-(23, 'création modules basiques de test', 0, 0, '', 15, NULL, 1, 0),
-(24, 'conception module e-commerce', 0, 0, '', 16, NULL, 1, 0),
-(25, 'implémentation maquette front - https://www.boulanger.com/', 0, 0, '', 16, NULL, 1, 0),
-(26, 'implémentation pages backoffice', 0, 0, '', 16, NULL, 1, 0);
+INSERT INTO `task` (`id`, `label`, `start_date`, `end_date`, `description`, `parent_task_id`, `done`, `project_id`, `order`) VALUES
+(1, 'kamille', '2017-03-04 00:00:00', '2017-03-22 00:00:00', '', NULL, 0, 1, 0),
+(2, 'Architecture', '2017-03-07 00:00:00', '2017-03-15 00:00:00', '', 1, 0, 1, 0),
+(3, 'Services', '2017-03-05 00:00:00', '2017-03-07 00:00:00', '', 1, 0, 1, 0),
+(4, 'Modules and hooks', '2017-03-04 00:00:00', '2017-03-15 00:00:00', '', 1, 0, 1, 0),
+(5, 'MVC', '2017-03-03 00:00:00', '2017-03-16 00:00:00', '', 1, 0, 1, 0),
+(6, 'Admin tools', '2017-04-05 00:00:00', '2017-03-22 00:00:00', '', NULL, 0, 1, 0),
+(7, 'Theme implementation', '2017-03-22 00:00:00', '2017-03-15 00:00:00', '', NULL, 0, 1, 0),
+(8, 'Nullos MVC', '2017-03-15 00:00:00', '2017-03-15 00:00:00', '', NULL, 0, 1, 0),
+(9, 'Module e-commerce', '2017-03-15 00:00:00', '2017-03-15 00:00:00', '', NULL, 0, 1, 0),
+(10, 'create datatables tools', '2017-03-15 00:00:00', '2017-03-15 00:00:00', '', 6, 0, 1, 0),
+(11, 'create form tools', '2017-03-15 00:00:00', '2017-03-15 00:00:00', '', 6, 0, 1, 0),
+(12, 'create generator tools (autoadmin)', '2017-03-15 00:00:00', '2017-03-15 00:00:00', '', 6, 0, 1, 0),
+(13, 'test MVC - no css framework (basic html) - redo basic zilu interface', '2017-03-15 00:00:00', '2017-03-15 00:00:00', '', 7, 0, 1, 0),
+(14, 'test MVC - bootstrap - https://colorlib.com/polygon/gentelella/index.html', '2017-03-15 00:00:00', '2017-03-15 00:00:00', '', 7, 0, 1, 0),
+(15, 'création système import module', '2017-03-15 00:00:00', '2017-03-15 00:00:00', '', 8, 0, 1, 0),
+(16, 'création modules basiques de test', '2017-03-15 00:00:00', '2017-03-15 00:00:00', '', 8, 0, 1, 0),
+(17, 'conception module e-commerce', '2017-03-15 00:00:00', '2017-03-15 00:00:00', '', 9, 0, 1, 0),
+(18, 'implémentation maquette front - https://www.boulanger.com/', '2017-03-15 05:25:35', '2017-03-15 00:00:00', '', 9, 0, 1, 0),
+(19, 'implémentation pages backoffice', '2017-03-15 00:00:00', '2017-03-15 00:00:00', '', 9, 0, 1, 0);
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `project`
---
-ALTER TABLE `project`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `task`
@@ -98,15 +74,10 @@ ALTER TABLE `task`
 --
 
 --
--- AUTO_INCREMENT for table `project`
---
-ALTER TABLE `project`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- Constraints for dumped tables
 --
@@ -115,5 +86,5 @@ ALTER TABLE `task`
 -- Constraints for table `task`
 --
 ALTER TABLE `task`
-  ADD CONSTRAINT `fk_task_project1` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_task_task` FOREIGN KEY (`parent_task_id`) REFERENCES `task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_task_project1` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_task_task` FOREIGN KEY (`parent_task_id`) REFERENCES `task` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;

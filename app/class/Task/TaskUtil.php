@@ -61,9 +61,40 @@ order by start_date asc
     {
         return QuickPdo::fetchAll("select * from task 
 where parent_task_id=" . (int)$taskId . "
-order by start_date asc
+order by `order` asc
 ");
 
+    }
+
+    public static function getTasksAfter($startDate)
+    {
+        return QuickPdo::fetchAll("select id from task where start_date > '$startDate'", [], \PDO::FETCH_COLUMN);
+    }
+
+
+    public static function collectChildrenIds($taskId, array &$ids)
+    {
+        $childrenIds = QuickPdo::fetchAll("select id from task 
+where parent_task_id=" . (int)$taskId . "
+", [], \PDO::FETCH_COLUMN);
+
+        foreach ($childrenIds as $id) {
+            $ids[] = $id;
+            self::collectChildrenIds($id, $ids);
+        }
+    }
+
+    public static function collectParentIds($taskId, array &$ids)
+    {
+
+        $parentId = QuickPdo::fetch("select parent_task_id from task 
+where id=" . (int)$taskId . " 
+", [], \PDO::FETCH_COLUMN);
+
+        if (false !== $parentId && null !== $parentId) {
+            $ids[] = $parentId;
+            self::collectParentIds($parentId, $ids);
+        }
     }
 
 }

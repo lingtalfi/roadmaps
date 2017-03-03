@@ -81,10 +81,16 @@
                             <?php if (true === $task['hasChildren']): ?>
                                 <button class="toggler">-</button>
                             <?php endif; ?>
-                            <?php echo $task['label']; ?>
+                            <?php echo $task['label'] . " (" . $task['id'] . ")"; ?>
                         </td>
-                        <td data-id="<?php echo $task['id']; ?>" class="start-date-update-trigger"><?php echo justDate($task['start_date']); ?></td>
-                        <td data-id="<?php echo $task['id']; ?>" class="end-date-update-trigger"><?php echo justDate($task['end_date']); ?></td>
+                        <td data-id="<?php echo $task['id']; ?>"
+                            class="start-date-update-trigger"
+                            data-date="<?php echo $task['start_date']; ?>"
+                            title="<?php echo $task['start_date']; ?>"><?php echo justDate($task['start_date']); ?></td>
+                        <td data-id="<?php echo $task['id']; ?>"
+                            class="end-date-update-trigger"
+                            data-date="<?php echo $task['end_date']; ?>"
+                            title="<?php echo $task['end_date']; ?>"><?php echo justDate($task['end_date']); ?></td>
 
                         <?php foreach ($plots as $time):
                             $s = "";
@@ -160,14 +166,35 @@
                 e.preventDefault();
                 toggle(jTarget);
             }
-            else if (jTarget.hasClass("start-date-update-trigger")) {
+            else if (
+                jTarget.hasClass("start-date-update-trigger") ||
+                jTarget.hasClass("end-date-update-trigger")
+            ) {
                 e.preventDefault();
+
+
+                var title = "";
+                var action = "";
+                var showDecaler = "";
+
+                if (jTarget.hasClass("start-date-update-trigger")) {
+                    title = "Modifier la date de départ";
+                    action = "calendrier-update-startdate";
+                    showDecaler = true;
+                }
+                else {
+                    title = "Modifier la date de fin";
+                    action = "calendrier-update-enddate";
+                    showDecaler = false;
+                }
+
 
                 if ('undefined' !== typeof $("#dialog-update-date").dialog('instance')) {
                     $("#dialog-update-date").dialog("close");
                 }
 
                 $("#dialog-update-date").dialog({
+                    title: title,
                     position: {
                         my: "center",
                         at: "center",
@@ -175,19 +202,108 @@
                     },
                     width: 600,
                     open: function (event, ui) {
+                        var defaultValue = jTarget.text();
 
+                        var jDate = $("#dialog-update-date").find(".datepicker");
+                        jDate.datepicker({
+                            dateFormat: "yy-mm-dd"
+                        });
+                        jDate.datepicker("setDate", defaultValue);
+                        jDate.blur();
+
+                        var jLiDecaler = $("#dialog-update-date").find(".decaler");
+                        if (true === showDecaler) {
+                            jLiDecaler.show();
+                        }
+                        else {
+                            jLiDecaler.hide();
+                        }
+
+
+                        var date = jTarget.attr("data-date");
+                        var horaire = date.split(" ")[1];
+
+                        var hour = parseInt(horaire.substr(0, 2));
+                        var minute = parseInt(horaire.substr(3, 2));
+
+                        var jHour = $("#dialog-update-date").find('.hour');
+                        var jMinute = $("#dialog-update-date").find('.minute');
+
+                        jHour.val(hour);
+                        jMinute.val(minute);
+
+
+                    },
+                    buttons: {
+                        "Appliquer": function () {
+
+                            var jDatePicker = $("#dialog-update-date").find('.datepicker');
+                            var jHour = $("#dialog-update-date").find('.hour');
+                            var jMinute = $("#dialog-update-date").find('.minute');
+                            var jCheckDecaler = $("#dialog-update-date").find('.decaler-checkbox');
+                            var id = jTarget.attr("data-id");
+
+
+                            $.post('/services/roadmaps.php?action=' + action, {
+                                'id': id,
+                                'decaler': jCheckDecaler.prop('checked'),
+                                'date': jDatePicker.val(),
+                                'hour': jHour.val(),
+                                'minute': jMinute.val()
+                            }, function (data) {
+                                if ('ok' === data) {
+                                    location.reload();
+                                }
+                            }, 'json');
+                        },
+                        "Annuler": function () {
+                            $(this).dialog("close");
+                        }
                     }
                 });
             }
 
+
+            $(".datepicker").datepicker();
+
         });
+
+
+        $(document).tooltip();
+
+
     });
 
 
 </script>
 
 <div style="display: none">
-    <div id="dialog-update-date" title="sds">
-        zegzeog izoj
+    <div id="dialog-update-date"
+         style="text-align: left; box-sizing: border-box; padding-left: 20px">
+        <ul style="list-style-type: none">
+            <li style="margin-top: 10px">
+                <label>
+                    Choisissez la date <input type="text" class="datepicker">
+                </label>
+            </li>
+            <li style="margin-top: 10px">
+                <label>Choisissez l'horaire</label>
+                <select class="hour">
+                    <?php for ($i = 0; $i < 24; $i++): ?>
+                        <option value="<?php echo $i; ?>"><?php echo sprintf("%02s", $i); ?></option>
+                    <?php endfor; ?>
+                </select>
+                H
+                <select class="minute">
+                    <?php for ($i = 0; $i < 60; $i++): ?>
+                        <option value="<?php echo $i; ?>"><?php echo sprintf("%02s", $i); ?></option>
+                    <?php endfor; ?>
+                </select>
+                m
+            </li>
+            <li style="margin-top: 10px" class="decaler">
+                Décaler les tâches suivantes <input type="checkbox" class="decaler-checkbox">
+            </li>
+        </ul>
     </div>
 </div>

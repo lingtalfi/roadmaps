@@ -23,14 +23,17 @@ $form->labels = [
 $form->title = "Task";
 
 
-$form->addControl("label")->type("text")->addConstraint("required");
+$form->addControl("label")->type("text")
+->addConstraint("required");
 $form->addControl("start_date")->type("date6");
 $form->addControl("end_date")->type("date6");
 $form->addControl("description")->type("message");
 $form->addControl("parent_task_id")->type("selectByRequest", "select id, label from roadmaps.task");
-$form->addControl("done")->type("text")->value(0);
+$form->addControl("done")->type("text")
+->value(0);
 $form->addControl("project_id")->type("selectByRequest", "select id, name from roadmaps.project");
-$form->addControl("order")->type("text")->value(0);
+$form->addControl("order")->type("text")
+->value(0);
 
 
 $form->display();

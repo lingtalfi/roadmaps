@@ -23,4 +23,24 @@ class Task
         return QuickPdo::insert("task", $data);
     }
 
+
+    public static function getStartDate($taskId)
+    {
+        if (false !== ($res = QuickPdo::fetch("select start_date from task where id=" . (int)$taskId))) {
+            return $res['start_date'];
+        }
+        return false;
+    }
+
+
+    public static function hasChildren($taskId)
+    {
+        if (false !== ($res = QuickPdo::fetch("select id from task where parent_task_id=" . (int)$taskId))) {
+            return true;
+        }
+        return false;
+    }
+
+
+
 }
