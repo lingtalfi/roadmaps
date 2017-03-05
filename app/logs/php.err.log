@@ -116,3 +116,35 @@ Stack trace:
 #2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/no.php(9): Calendar\CalendarApi::setStartDate(3, '2017-03-04 00:0...')
 #3 {main}
   thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 324
+[05-Mar-2017 12:39:37 Europe/Paris] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY000] [2002] Connection refused' in /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:41
+Stack trace:
+#0 /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(41): PDO->__construct('mysql:host=loca...', 'root', 'root', Array)
+#1 /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/init.php(91): QuickPdo\QuickPdo::setConnection('mysql:host=loca...', 'root', 'root', Array)
+#2 /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/www/index.php(6): require_once('/Users/pierrela...')
+#3 {main}
+  thrown in /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 41
+[05-Mar-2017 12:39:38 Europe/Paris] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY000] [2002] Connection refused' in /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:41
+Stack trace:
+#0 /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(41): PDO->__construct('mysql:host=loca...', 'root', 'root', Array)
+#1 /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/init.php(91): QuickPdo\QuickPdo::setConnection('mysql:host=loca...', 'root', 'root', Array)
+#2 /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/www/index.php(6): require_once('/Users/pierrela...')
+#3 {main}
+  thrown in /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 41
+[05-Mar-2017 12:40:06 Europe/Paris] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY000] [2002] Connection refused' in /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:41
+Stack trace:
+#0 /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(41): PDO->__construct('mysql:host=loca...', 'root', '', Array)
+#1 /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/init.php(91): QuickPdo\QuickPdo::setConnection('mysql:host=loca...', 'root', '', Array)
+#2 /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/www/index.php(6): require_once('/Users/pierrela...')
+#3 {main}
+  thrown in /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 41
+[05-Mar-2017 12:40:43 Europe/Paris] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'leaderfit-ecommerce'');
+
+
+
+INSERT INTO `task` (`id`, `label`, `start_date`, `end' at line 2' in /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:307
+Stack trace:
+#0 /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(307): PDO->exec('INSERT INTO `pr...')
+#1 /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/tools/reset-db.php(9): QuickPdo\QuickPdo::freeExec('INSERT INTO `pr...')
+#2 /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/www/dbgen.php(6): require_once('/Users/pierrela...')
+#3 {main}
+  thrown in /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 307

@@ -25,11 +25,12 @@ AssetsList::js("/libs/screendebug/js/screendebug.js");
     <div id="three">
         <?php
 
+        $periodInterval = 86400;
 
         $p = \Period\Period::create();
-        $p->setStartDate(date("Y-m-d H:i:s"));
-        $p->setEndDate(date("Y-m-d H:i:s", time() + 30 * 86400));
-        $p->setInterval(86400);
+        $p->setStartDate(date("Y-m-d 00:00:00"));
+        $p->setEndDate(date("Y-m-d 00:00:00", time() + 30 * 86400));
+        $p->setInterval($periodInterval);
 
 
         $helper = new \Period\InlinePeriodHelper($p);
@@ -119,6 +120,8 @@ AssetsList::js("/libs/screendebug/js/screendebug.js");
                         $cpt = 0;
                         $wasLast = false;
                         foreach ($plots as $k => $time):
+
+                            $leftOffset = 0;
                             $s = "";
                             $isFilled = isFilled($time, $task['timeStart'], $task['timeEnd']);
                             if (true === $isFilled) {
@@ -130,8 +133,19 @@ AssetsList::js("/libs/screendebug/js/screendebug.js");
                             $isRightBorder = false;
 
                             if (true === $isFilled && 0 === $cpt) {
-                                $isLeftBorder = true;
                                 $cpt++;
+                                if ($task['timeStart'] >= $plots[0]) {
+                                    $isLeftBorder = true;
+                                } else {
+                                    $start = $plots[0];
+                                    while (true) {
+                                        $start -= $periodInterval;
+                                        if ($start < $task['timeStart']) {
+                                            break;
+                                        }
+                                        $leftOffset++;
+                                    }
+                                }
                             }
 
                             $isLast = (false === $wasLast && $cpt > 0 && array_key_exists($k + 1, $plots) && (false === isFilled($plots[$k + 1], $task['timeStart'], $task['timeEnd'])));
@@ -142,18 +156,20 @@ AssetsList::js("/libs/screendebug/js/screendebug.js");
 
 
                             if (true === $isLeftBorder) {
-                                if ($time <= $time['timeStart']) {
-                                    $s .= " left-border";
-                                }
+                                $s .= " left-border";
                             }
                             if (true === $isRightBorder) {
                                 $s .= " right-border";
                             }
 
+                            $sOffset = "";
+                            if ($leftOffset > 0) {
+                                $sOffset = 'data-offset="' . $leftOffset . '"';
+                            }
+
 
                             ?>
-                            <td class="<?php echo $s; ?> cell">
-                                <?php echo $task['timeStart']; ?>
+                            <td class="<?php echo $s; ?> cell" <?php echo $sOffset; ?>>
                                 <div class="token-grab-handle"></div>
                                 <div class="token-resize-handle-left token-resize-handle"></div>
                                 <div class="token-resize-handle-right token-resize-handle"></div>
@@ -333,6 +349,7 @@ AssetsList::js("/libs/screendebug/js/screendebug.js");
         //----------------------------------------
         // GUI DRAG
         //----------------------------------------
+        var periodInterval = <?php echo $periodInterval; ?>;
         var plots = <?php echo json_encode($plots); ?>;
         var dragType = null; // left|right|grab
         var thTimeOffsets = []; // collection of th's offsets, so that we can then estimate the position of the mouse
@@ -452,21 +469,30 @@ AssetsList::js("/libs/screendebug/js/screendebug.js");
          *          - 0: jTr
          *          - 1: start_date index
          *          - 2: end_date index
+         *          - 3: leftOffset
+         *          - 4: rightOffset
          */
         var aIndexesTree = null;
 
 
         function getIndexTree(jTd) {
             var ret = [];
-            ret.push([jTd.parent(), startIndex, endIndex]);
+            var jTr = jTd.parent();
+            var jFirst = jTr.find(".filled:first");
+            var jLast = jTr.find(".filled:last");
+            var leftOffset = jFirst.attr("data-offset") ? jFirst.attr("data-offset") : 0;
+            var rightOffset = jLast.attr("data-offset") ? jLast.attr("data-offset") : 0;
+            ret.push([jTd.parent(), startIndex, endIndex, leftOffset, rightOffset]);
 
             for (var i in aChildrenTrs) {
                 var jChildTr = aChildrenTrs[i];
                 var jEl = jChildTr.find('td.filled:first');
+                var leftOffset = jEl.attr("data-offset") ? jEl.attr("data-offset") : 0;
                 var startInd = jEl.index() - nbNonThTime;
                 jEl = jChildTr.find('td.filled:last');
+                var rightOffset = jEl.attr("data-offset") ? jEl.attr("data-offset") : 0;
                 var endInd = jEl.index() - nbNonThTime;
-                ret.push([jChildTr, startInd, endInd]);
+                ret.push([jChildTr, startInd, endInd, leftOffset, rightOffset]);
             }
             return ret;
         }
@@ -537,7 +563,14 @@ AssetsList::js("/libs/screendebug/js/screendebug.js");
 
             for (var i in aIndexesTree) {
                 var item = aIndexesTree[i];
-                redraw(item[0], item[1] + indexOffset, item[2] + indexOffset);
+                var theStartIndex = item[1] + indexOffset;
+                var theEndIndex = item[2] + indexOffset;
+                theStartIndex -= item[3];
+                if (theStartIndex < 0) {
+                    theStartIndex = 0;
+                }
+
+                redraw(item[0], theStartIndex, theEndIndex);
             }
             debug(e);
         }
@@ -693,6 +726,13 @@ AssetsList::js("/libs/screendebug/js/screendebug.js");
                         }
                     }
                 }
+                else if ("grab" === dragType) {
+                    console.log(aIndexesTree);
+                    for(var i in aIndexesTree){
+                        var item = aIndexesTree[i];
+                        var realStart = item
+                    }
+                }
 
 
                 window.removeEventListener('mousemove', moveLeft);
@@ -702,12 +742,13 @@ AssetsList::js("/libs/screendebug/js/screendebug.js");
         });
 
 
-        function debug(e) {
+        function debug(e, tmp) {
             screenDebug({
                 mousePageX: e.pageX,
                 startIndex: startIndex,
                 endIndex: endIndex,
                 currentIndex: currentIndex,
+                tmp: tmp,
                 indexOffset: indexOffset
             });
         }

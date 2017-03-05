@@ -1,5 +1,5 @@
 INSERT INTO `project` (`id`, `name`) VALUES
-(1, ''leaderfit-ecommerce'');
+(1, 'leaderfit-ecommerce');
 
 
 
