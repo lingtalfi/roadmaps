@@ -32,6 +32,14 @@ class Task
         return false;
     }
 
+    public static function getEndDate($taskId)
+    {
+        if (false !== ($res = QuickPdo::fetch("select end_date from task where id=" . (int)$taskId))) {
+            return $res['end_date'];
+        }
+        return false;
+    }
+
 
     public static function hasChildren($taskId)
     {
@@ -40,7 +48,6 @@ class Task
         }
         return false;
     }
-
 
 
 }

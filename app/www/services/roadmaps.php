@@ -1,10 +1,7 @@
 <?php
 
 
-use QuickPdo\QuickPdo;
-use Task\Task;
-use Task\TaskUtil;
-
+use Calendar\CalendarApi;
 require_once __DIR__ . "/../../init.php";
 
 
@@ -26,62 +23,12 @@ if (array_key_exists('action', $_GET)) {
                 $date = $_POST['date'];
                 $hour = $_POST['hour'];
                 $minute = $_POST['minute'];
-
-
-                $decaler = false;
-                $startDate = null;
-                if (array_key_exists("decaler", $_POST) && "true" === $_POST['decaler']) {
-                    $decaler = true;
-                }
-
-
-                $fieldToUpdate = "";
-                if ('calendrier-update-startdate' === $action) {
-                    $fieldToUpdate = "start_date";
-                } else {
-                    $fieldToUpdate = "end_date";
-                }
-
-
                 $fullDate = $date . " $hour:$minute:00";
-
-
-                if (true === $decaler) {
-
-//                    $taskIds = TaskUtil::getTasksAfter($startDate);
-
-                    $offset = 0;
-                    $startDate = Task::getStartDate($taskId);
-                    $originalTime = strtotime($startDate);
-                    $newTime = strtotime($date);
-                    $mysqlOp = "";
-                    if ($newTime > $originalTime) {
-                        $mysqlOp = "DATE_ADD";
-                        $offset = $newTime - $originalTime;
-                    } else {
-                        $mysqlOp = "DATE_SUB";
-                        $offset = $originalTime - $newTime;
-                    }
-
-
-                    $q = "
-update task 
-set 
-start_date=$mysqlOp(start_date, INTERVAL $offset SECOND),                    
-end_date=$mysqlOp(end_date, INTERVAL $offset SECOND)
-where start_date >= '$startDate'                    
-";
-                    QuickPdo::freeExec($q);
-
+                if ('calendrier-update-startdate' === $action) {
+                    CalendarApi::setStartDate($taskId, $fullDate);
                 } else {
-                    QuickPdo::update("task", [
-                        $fieldToUpdate => $fullDate,
-                    ], [
-                        ["id", "=", $taskId]
-                    ]);
+                    CalendarApi::setEndDate($taskId, $fullDate);
                 }
-
-
                 $output = "ok";
             }
 

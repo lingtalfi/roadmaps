@@ -90,8 +90,63 @@ and start_date > '$newStartDate'
         }
     }
 
-    public static function setEndDate($taskId, $endDate)
+    public static function setEndDate($taskId, $newEndDate)
     {
+        $currentEndDate = Task::getEndDate($taskId);
+
+        QuickPdo::update("task", [
+            "end_date" => $newEndDate,
+        ], [
+            ["id", "=", $taskId],
+        ]);
+
+        if (true === Task::hasChildren($taskId)) {
+            //--------------------------------------------
+            // PARENT PART
+            //--------------------------------------------
+
+            if ($newEndDate < $currentEndDate) {
+
+                // trim children
+                $childrenIds = [];
+                TaskUtil::collectChildrenIds($taskId, $childrenIds);
+                if (count($childrenIds) > 0) {
+
+                    $sIds = implode(', ', $childrenIds);
+
+                    $q = "
+update task set end_date='$newEndDate' 
+where 
+id in ($sIds)
+and end_date > '$newEndDate'
+                ";
+                    QuickPdo::freeQuery($q);
+                }
+            }
+        } else {
+
+            //--------------------------------------------
+            // CHILD PART
+            //--------------------------------------------
+            if ($newEndDate > $currentEndDate) {
+                // extend parents
+                $parentIds = [];
+                TaskUtil::collectParentIds($taskId, $parentIds);
+
+                if (count($parentIds) > 0) {
+
+                    $sIds = implode(', ', $parentIds);
+
+                    $q = "
+update task set end_date='$newEndDate' 
+where 
+id in ($sIds)
+and end_date < '$newEndDate'
+                ";
+                    QuickPdo::freeQuery($q);
+                }
+            }
+        }
     }
 
 }
