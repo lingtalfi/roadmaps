@@ -42,11 +42,11 @@ require_once __DIR__ . "/functions/main-functions.php";
 // DB
 //--------------------------------------------
 $dbUser = 'root';
-$dbPass = '';
+$dbPass = 'root';
 $dbName = 'roadmaps';
 $host = 'unix_socket=/Applications/MAMP/tmp/mysql/mysql.sock';
-$host = 'host=localhost';
 $host = 'host=127.0.0.1';
+$host = 'host=localhost';
 
 
 //--------------------------------------------

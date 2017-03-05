@@ -148,3 +148,10 @@ Stack trace:
 #2 /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/www/dbgen.php(6): require_once('/Users/pierrela...')
 #3 {main}
   thrown in /Users/pierrelafitte/Desktop/mondossier/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 307
+[05-Mar-2017 18:11:49 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:36
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(36): PDO->__construct('mysql:host=127....', 'root', '', Array)
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/init.php(88): QuickPdo\QuickPdo::setConnection('mysql:host=127....', 'root', '', Array)
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/index.php(6): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 36

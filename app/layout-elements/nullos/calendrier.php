@@ -155,6 +155,7 @@ AssetsList::js("/libs/screendebug/js/screendebug.js");
                             }
 
 
+                            $sOffset = "";
                             if (true === $isLeftBorder) {
                                 $s .= " left-border";
                             }
@@ -162,9 +163,8 @@ AssetsList::js("/libs/screendebug/js/screendebug.js");
                                 $s .= " right-border";
                             }
 
-                            $sOffset = "";
                             if ($leftOffset > 0) {
-                                $sOffset = 'data-offset="' . $leftOffset . '"';
+                                $sOffset = 'data-offset-left="' . $leftOffset . '"';
                             }
 
 
@@ -480,18 +480,24 @@ AssetsList::js("/libs/screendebug/js/screendebug.js");
             var jTr = jTd.parent();
             var jFirst = jTr.find(".filled:first");
             var jLast = jTr.find(".filled:last");
-            var leftOffset = jFirst.attr("data-offset") ? jFirst.attr("data-offset") : 0;
-            var rightOffset = jLast.attr("data-offset") ? jLast.attr("data-offset") : 0;
+            var leftOffset = jFirst.attr("data-offset-left") ? jFirst.attr("data-offset-left") : 0;
+            var rightOffset = jLast.attr("data-offset-right") ? jLast.attr("data-offset-right") : 0;
             ret.push([jTd.parent(), startIndex, endIndex, leftOffset, rightOffset]);
 
             for (var i in aChildrenTrs) {
                 var jChildTr = aChildrenTrs[i];
                 var jEl = jChildTr.find('td.filled:first');
-                var leftOffset = jEl.attr("data-offset") ? jEl.attr("data-offset") : 0;
+                var leftOffset = jEl.attr("data-offset-left") ? jEl.attr("data-offset-left") : 0;
                 var startInd = jEl.index() - nbNonThTime;
                 jEl = jChildTr.find('td.filled:last');
-                var rightOffset = jEl.attr("data-offset") ? jEl.attr("data-offset") : 0;
+                var rightOffset = jEl.attr("data-offset-right") ? jEl.attr("data-offset-right") : 0;
                 var endInd = jEl.index() - nbNonThTime;
+                /**
+                 * startInd: index of the first filled element of the line
+                 * endInd: index of the last filled element of the line
+                 * leftOffset: index offset from the task's start date to the first filled element of the line
+                 * rightOffset: index offset from the task's end date to the last filled element of the line
+                 */
                 ret.push([jChildTr, startInd, endInd, leftOffset, rightOffset]);
             }
             return ret;
@@ -727,10 +733,28 @@ AssetsList::js("/libs/screendebug/js/screendebug.js");
                     }
                 }
                 else if ("grab" === dragType) {
-                    console.log(aIndexesTree);
-                    for(var i in aIndexesTree){
+
+                    for (var i in aIndexesTree) {
                         var item = aIndexesTree[i];
-                        var realStart = item
+                        var jTr = item[0];
+
+                        jTr.find(".filled:first").addClass("left-border");
+                        jTr.find(".filled:last").addClass("right-border");
+
+
+
+                        var realStart = item[1] + indexOffset - item[3];
+                        if (realStart < 0) {
+                            jTr.find('.left-border').removeClass("left-border");
+                            jTr.find('.cell:first').attr("data-offset-left", -1 * realStart);
+                        }
+                        else {
+                            jTr.find('.cell:first').attr("data-offset-left", null);
+                        }
+
+
+
+
                     }
                 }
 
