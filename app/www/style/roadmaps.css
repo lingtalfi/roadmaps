@@ -67,7 +67,7 @@
 
 .roadmaps-table .left-border .token-resize-handle,
 .roadmaps-table .right-border .token-resize-handle {
-    background: red;
+    /*background: red;*/
     position: absolute;
     top: 0;
     height: 100%;
@@ -106,4 +106,58 @@
     display: block;
 }
 
+.first-column-cell {
+    display: flex;
+    align-items: center;
+}
+
+.first-column-cell .sort-container {
+    position: relative;
+    width: 20px;
+}
+
+.first-column-cell .label {
+    flex: auto;
+    white-space: nowrap;
+}
+
+.first-column-cell .sort-container button {
+    cursor: pointer;
+    border: none;
+    position: absolute;
+    left: 2px;
+    display: block;
+    width: 16px;
+    height: 8px;
+}
+
+.first-column-cell .sort-container button.up {
+    top: -10px;
+    background: transparent;
+    display: none;
+}
+
+.first-column-cell .sort-container button.down {
+    top: -1px;
+    background: transparent;
+    display: none;
+}
+
+.first-column-cell .sort-container button i {
+    position: absolute;
+    font-size: 20px;
+    color: #666;
+    cursor: pointer;
+    top: -4px;
+    left: -1px;
+}
+
+.first-column-cell .sort-container button:hover i {
+    color: #ddd;
+}
+
+.first-column-cell .sort-container.has-prev-sibling button.up,
+.first-column-cell .sort-container.has-next-sibling button.down {
+    display: block;
+}
 

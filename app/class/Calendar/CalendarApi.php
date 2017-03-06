@@ -6,6 +6,7 @@ namespace Calendar;
 use QuickPdo\QuickPdo;
 use Task\Task;
 use Task\TaskUtil;
+use Util\GeneralUtil;
 
 /**
  * This is the api for the calendar.
@@ -27,6 +28,8 @@ use Task\TaskUtil;
  * no leaf can be taller than its container.
  *
  *
+ * When a container is moved, all its children moves along with it.
+ *
  */
 class CalendarApi
 {
@@ -35,15 +38,18 @@ class CalendarApi
     {
         $currentStartDate = Task::getStartDate($taskId);
 
+
         QuickPdo::update("task", [
             "start_date" => $newStartDate,
         ], [
             ["id", "=", $taskId],
         ]);
+        GeneralUtil::debugLog(QuickPdo::getQuery());
+
 
         if (true === Task::hasChildren($taskId)) {
             //--------------------------------------------
-            // PARENT PART
+            // CHILDREN PART
             //--------------------------------------------
 
             if ($newStartDate > $currentStartDate) {
@@ -61,13 +67,14 @@ where
 id in ($sIds)
 and start_date < '$newStartDate'
                 ";
+                    GeneralUtil::debugLog($q);
                     QuickPdo::freeQuery($q);
                 }
             }
         } else {
 
             //--------------------------------------------
-            // CHILD PART
+            // PARENTS PART
             //--------------------------------------------
             if ($newStartDate < $currentStartDate) {
                 // extend parents
@@ -84,6 +91,7 @@ where
 id in ($sIds)
 and start_date > '$newStartDate'
                 ";
+                    GeneralUtil::debugLog($q);
                     QuickPdo::freeQuery($q);
                 }
             }
@@ -99,10 +107,12 @@ and start_date > '$newStartDate'
         ], [
             ["id", "=", $taskId],
         ]);
+        GeneralUtil::debugLog(QuickPdo::getQuery());
+
 
         if (true === Task::hasChildren($taskId)) {
             //--------------------------------------------
-            // PARENT PART
+            // CHILDREN PART
             //--------------------------------------------
 
             if ($newEndDate < $currentEndDate) {
@@ -120,13 +130,14 @@ where
 id in ($sIds)
 and end_date > '$newEndDate'
                 ";
+                    GeneralUtil::debugLog($q);
                     QuickPdo::freeQuery($q);
                 }
             }
         } else {
 
             //--------------------------------------------
-            // CHILD PART
+            // PARENTS PART
             //--------------------------------------------
             if ($newEndDate > $currentEndDate) {
                 // extend parents
@@ -143,10 +154,73 @@ where
 id in ($sIds)
 and end_date < '$newEndDate'
                 ";
+                    GeneralUtil::debugLog($q);
                     QuickPdo::freeQuery($q);
                 }
             }
         }
+    }
+
+
+    public static function move($taskId, $offset)
+    {
+
+        $parentIds = [];
+        TaskUtil::collectParentIds($taskId, $parentIds);
+
+        $offset = (int)$offset;
+        $addOp = "DATE_ADD";
+        $offsetIsPositive = true;
+        if ($offset < 0) {
+            $offsetIsPositive = false;
+            $addOp = "DATE_SUB";
+            $offset = -$offset;
+            $originalDate = Task::getStartDate($taskId);
+        } else {
+            $originalDate = Task::getEndDate($taskId);
+        }
+        $childrenIds = [$taskId];
+        TaskUtil::collectChildrenIds($taskId, $childrenIds);
+        $sIds = implode(', ', $childrenIds);
+        $q = "
+update task set
+start_date=$addOp(start_date, INTERVAL $offset second),
+end_date=$addOp(end_date, INTERVAL $offset second)
+where id in ($sIds)";
+        GeneralUtil::debugLog($q);
+        QuickPdo::freeQuery($q);
+
+
+        if (count($parentIds) > 0) {
+            $sParentIds = implode(', ', $parentIds);
+            if (true === $offsetIsPositive) {
+                $limitTime = GeneralUtil::gmMysqlToTime($originalDate) + $offset;
+                $limitDate = gmdate("Y-m-d H:i:s", $limitTime);
+
+                $q = "
+update task set
+end_date='$limitDate'
+where 
+id in ($sParentIds)
+and end_date <'$limitDate'
+";
+            } else {
+                $limitTime = GeneralUtil::gmMysqlToTime($originalDate) - $offset;
+                $limitDate = gmdate("Y-m-d H:i:s", $limitTime);
+
+                $q = "
+update task set
+start_date='$limitDate'
+where 
+id in ($sParentIds)
+and start_date >'$limitDate'
+";
+            }
+            GeneralUtil::debugLog($q);
+            QuickPdo::freeExec($q);
+
+        }
+
     }
 
 }

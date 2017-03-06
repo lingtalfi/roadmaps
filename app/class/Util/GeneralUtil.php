@@ -3,6 +3,8 @@
 
 namespace Util;
 
+use QuickPdo\QuickPdo;
+
 class GeneralUtil
 {
     public static function toDecimal($string)
@@ -49,4 +51,36 @@ class GeneralUtil
         $ricSep = '--*--';
         return explode($ricSep, $ric);
     }
+
+
+    public static function gmMysqlToTime($dateTime)
+    {
+        $year = substr($dateTime, 0, 4);
+        $month = substr($dateTime, 5, 2);
+        $day = substr($dateTime, 8, 2);
+        $hour = substr($dateTime, 11, 2);
+        $minute = substr($dateTime, 14, 2);
+        $second = substr($dateTime, 17, 2);
+        return gmmktime($hour, $minute, $second, $month, $day, $year);
+    }
+
+
+    public static function debugLog($msg)
+    {
+        $file = "/myphp/roadmaps/app/logs/nullos.log";
+        file_put_contents($file, $msg . PHP_EOL, FILE_APPEND);
+
+
+        $tasks = QuickPdo::fetchAll("select start_date from task");
+        foreach ($tasks as $task) {
+            if ('00:00:00' !== substr($task['start_date'], -8)) {
+                file_put_contents($file, "-----ERROR IS JUST ABOVE-----", FILE_APPEND);
+            }
+        }
+
+
+    }
 }
+
+
+

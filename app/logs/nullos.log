@@ -1,34 +1,384 @@
-crud.pdoException.form.insert -- 2017-03-02 11:56:24
-----------
-exception 'PDOException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`roadmaps`.`task`, CONSTRAINT `fk_task_task` FOREIGN KEY (`parent_task_id`) REFERENCES `task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)' in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:114
-Stack trace:
-#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(114): PDOStatement->execute(Array)
-#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Crud/Form.php(150): QuickPdo\QuickPdo::insert('roadmaps.task', Array)
-#2 unknown file(unknown line): Crud\Form->Crud\{closure}(Array, 'Oops, something went wrong with the database, sorry...')
-#3 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickForm/QuickForm.php(216): call_user_func_array(Closure, Array)
-#4 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Crud/Form.php(166): QuickForm\QuickForm->play()
-#5 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/crud/form/roadmaps.task.php(37): Crud\Form->display()
-#6 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/modules/crud/crud.php(47): require_once('/Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/crud/form/roadmaps.task.php')
-#7 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Layout/Layout.php(159): require_once('/Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/modules/crud/crud.php')
-#8 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Layout/Layout.php(66): Layout\Layout->includeElement('body')
-#9 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/pages/modules/crud/crud.php(8): Layout\Layout->display()
-#10 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/index.php(50): require_once('/Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/pages/modules/crud/crud.php')
-#11 {main}
+update task set `start_date`=:start_date where `id` = :bzz_0
+-----ERROR IS JUST ABOVE-----update task set `start_date`=:start_date where `id` = :bzz_0
+-----ERROR IS JUST ABOVE-----update task set `start_date`=:start_date where `id` = :bzz_0
+update task set `start_date`=:start_date where `id` = :bzz_0
 
-crud.pdoException.form.insert -- 2017-03-02 11:57:34
-----------
-exception 'PDOException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`roadmaps`.`task`, CONSTRAINT `fk_task_task` FOREIGN KEY (`parent_task_id`) REFERENCES `task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)' in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:114
-Stack trace:
-#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(114): PDOStatement->execute(Array)
-#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Crud/Form.php(150): QuickPdo\QuickPdo::insert('roadmaps.task', Array)
-#2 unknown file(unknown line): Crud\Form->Crud\{closure}(Array, 'Oops, something went wrong with the database, sorry...')
-#3 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickForm/QuickForm.php(216): call_user_func_array(Closure, Array)
-#4 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Crud/Form.php(166): QuickForm\QuickForm->play()
-#5 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/crud/form/roadmaps.task.php(37): Crud\Form->display()
-#6 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/modules/crud/crud.php(47): require_once('/Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/crud/form/roadmaps.task.php')
-#7 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Layout/Layout.php(159): require_once('/Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/modules/crud/crud.php')
-#8 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Layout/Layout.php(66): Layout\Layout->includeElement('body')
-#9 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/pages/modules/crud/crud.php(8): Layout\Layout->display()
-#10 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/index.php(50): require_once('/Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/pages/modules/crud/crud.php')
-#11 {main}
+update task set start_date='2017-03-23 00:00:00' 
+where 
+id in (1)
+and start_date > '2017-03-23 00:00:00'
+                
 
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 86400 second),
+end_date=DATE_SUB(end_date, INTERVAL 86400 second)
+where id in (1, 2, 20, 3, 4, 5)
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 1209600 second),
+end_date=DATE_SUB(end_date, INTERVAL 1209600 second)
+where id in (1, 2, 20, 3, 4, 5)
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 518400 second),
+end_date=DATE_ADD(end_date, INTERVAL 518400 second)
+where id in (1, 2, 20, 3, 4, 5)
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 432000 second),
+end_date=DATE_ADD(end_date, INTERVAL 432000 second)
+where id in (1, 2, 20, 3, 4, 5)
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 777600 second),
+end_date=DATE_ADD(end_date, INTERVAL 777600 second)
+where id in (1, 2, 20, 3, 4, 5)
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 345600 second),
+end_date=DATE_ADD(end_date, INTERVAL 345600 second)
+where id in (1, 2, 20, 3, 4, 5)
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 345600 second),
+end_date=DATE_SUB(end_date, INTERVAL 345600 second)
+where id in (1, 2, 20, 3, 4, 5)
+update task set `start_date`=:start_date where `id` = :bzz_0
+
+update task set start_date='2017-03-29 00:00:00' 
+where 
+id in (1)
+and start_date > '2017-03-29 00:00:00'
+                
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 259200 second),
+end_date=DATE_ADD(end_date, INTERVAL 259200 second)
+where id in (4)
+
+update task set
+end_date='2017-04-08 00:00:00'
+where 
+id in (1)
+and end_date <'2017-04-08 00:00:00'
+
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 259200 second),
+end_date=DATE_SUB(end_date, INTERVAL 259200 second)
+where id in (5)
+
+update task set
+start_date='2017-03-26 00:00:00'
+where 
+id in (1)
+and start_date >'2017-03-26 00:00:00'
+
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 345600 second),
+end_date=DATE_SUB(end_date, INTERVAL 345600 second)
+where id in (4)
+
+update task set
+start_date='2017-03-27 00:00:00'
+where 
+id in (1)
+and start_date >'2017-03-27 00:00:00'
+
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 691200 second),
+end_date=DATE_SUB(end_date, INTERVAL 691200 second)
+where id in (4)
+
+update task set
+start_date='2017-03-19 00:00:00'
+where 
+id in (1)
+and start_date >'2017-03-19 00:00:00'
+
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 604800 second),
+end_date=DATE_SUB(end_date, INTERVAL 604800 second)
+where id in (5)
+
+update task set
+start_date='2017-03-19 00:00:00'
+where 
+id in (1)
+and start_date >'2017-03-19 00:00:00'
+
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 691200 second),
+end_date=DATE_SUB(end_date, INTERVAL 691200 second)
+where id in (1, 2, 20, 3, 4, 5)
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 604800 second),
+end_date=DATE_SUB(end_date, INTERVAL 604800 second)
+where id in (2, 20)
+
+update task set
+start_date='2017-03-17 00:00:00'
+where 
+id in (1)
+and start_date >'2017-03-17 00:00:00'
+
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 691200 second),
+end_date=DATE_SUB(end_date, INTERVAL 691200 second)
+where id in (3)
+
+update task set
+start_date='2017-03-17 00:00:00'
+where 
+id in (1)
+and start_date >'2017-03-17 00:00:00'
+
+update task set `end_date`=:end_date where `id` = :bzz_0
+
+update task set end_date='2017-03-31 00:00:00' 
+where 
+id in (2, 1)
+and end_date < '2017-03-31 00:00:00'
+                
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 259200 second),
+end_date=DATE_SUB(end_date, INTERVAL 259200 second)
+where id in (2, 20)
+
+update task set
+start_date='2017-03-14 00:00:00'
+where 
+id in (1)
+and start_date >'2017-03-14 00:00:00'
+
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 259200 second),
+end_date=DATE_SUB(end_date, INTERVAL 259200 second)
+where id in (1, 2, 20, 3, 4, 5)
+update task set `end_date`=:end_date where `id` = :bzz_0
+
+update task set end_date='2017-03-27 00:00:00' 
+where 
+id in (2, 20, 3, 4, 5)
+and end_date > '2017-03-27 00:00:00'
+                
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 172800 second),
+end_date=DATE_ADD(end_date, INTERVAL 172800 second)
+where id in (4)
+
+update task set
+end_date='2017-03-18 00:00:00'
+where 
+id in (1)
+and end_date <'2017-03-18 00:00:00'
+
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 518400 second),
+end_date=DATE_ADD(end_date, INTERVAL 518400 second)
+where id in (5)
+
+update task set
+end_date='2017-03-24 00:00:00'
+where 
+id in (1)
+and end_date <'2017-03-24 00:00:00'
+
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 86400 second),
+end_date=DATE_SUB(end_date, INTERVAL 86400 second)
+where id in (5)
+
+update task set
+start_date='2017-03-13 00:00:00'
+where 
+id in (1)
+and start_date >'2017-03-13 00:00:00'
+
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 259200 second),
+end_date=DATE_SUB(end_date, INTERVAL 259200 second)
+where id in (5)
+
+update task set
+start_date='2017-03-10 00:00:00'
+where 
+id in (1)
+and start_date >'2017-03-10 00:00:00'
+
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 518400 second),
+end_date=DATE_ADD(end_date, INTERVAL 518400 second)
+where id in (5)
+
+update task set
+end_date='2017-03-26 00:00:00'
+where 
+id in (1)
+and end_date <'2017-03-26 00:00:00'
+
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 345600 second),
+end_date=DATE_ADD(end_date, INTERVAL 345600 second)
+where id in (5)
+
+update task set
+end_date='2017-03-30 00:00:00'
+where 
+id in (1)
+and end_date <'2017-03-30 00:00:00'
+
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 1123200 second),
+end_date=DATE_SUB(end_date, INTERVAL 1123200 second)
+where id in (5)
+
+update task set
+start_date='2017-03-07 00:00:00'
+where 
+id in (1)
+and start_date >'2017-03-07 00:00:00'
+
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 432000 second),
+end_date=DATE_ADD(end_date, INTERVAL 432000 second)
+where id in (5)
+
+update task set
+end_date='2017-03-22 00:00:00'
+where 
+id in (1)
+and end_date <'2017-03-22 00:00:00'
+
+update task set `start_date`=:start_date where `id` = :bzz_0
+
+update task set start_date='2017-03-10 00:00:00' 
+where 
+id in (2, 20, 3, 4, 5)
+and start_date < '2017-03-10 00:00:00'
+                
+update task set `end_date`=:end_date where `id` = :bzz_0
+
+update task set end_date='2017-03-27 00:00:00' 
+where 
+id in (2, 20, 3, 4, 5)
+and end_date > '2017-03-27 00:00:00'
+                
+update task set `start_date`=:start_date where `id` = :bzz_0
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 172800 second),
+end_date=DATE_ADD(end_date, INTERVAL 172800 second)
+where id in (5)
+
+update task set
+end_date='2017-03-24 00:00:00'
+where 
+id in (1)
+and end_date <'2017-03-24 00:00:00'
+
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 172800 second),
+end_date=DATE_ADD(end_date, INTERVAL 172800 second)
+where id in (4)
+
+update task set
+end_date='2017-03-20 00:00:00'
+where 
+id in (1)
+and end_date <'2017-03-20 00:00:00'
+
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 172800 second),
+end_date=DATE_SUB(end_date, INTERVAL 172800 second)
+where id in (5)
+
+update task set
+start_date='2017-03-12 00:00:00'
+where 
+id in (1)
+and start_date >'2017-03-12 00:00:00'
+
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 86400 second),
+end_date=DATE_SUB(end_date, INTERVAL 86400 second)
+where id in (5)
+
+update task set
+start_date='2017-03-11 00:00:00'
+where 
+id in (1)
+and start_date >'2017-03-11 00:00:00'
+
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 172800 second),
+end_date=DATE_SUB(end_date, INTERVAL 172800 second)
+where id in (4)
+
+update task set
+start_date='2017-03-10 00:00:00'
+where 
+id in (1)
+and start_date >'2017-03-10 00:00:00'
+
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 172800 second),
+end_date=DATE_ADD(end_date, INTERVAL 172800 second)
+where id in (5)
+
+update task set
+end_date='2017-03-23 00:00:00'
+where 
+id in (1)
+and end_date <'2017-03-23 00:00:00'
+
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 259200 second),
+end_date=DATE_ADD(end_date, INTERVAL 259200 second)
+where id in (4)
+
+update task set
+end_date='2017-03-21 00:00:00'
+where 
+id in (1)
+and end_date <'2017-03-21 00:00:00'
+
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 86400 second),
+end_date=DATE_SUB(end_date, INTERVAL 86400 second)
+where id in (20)
+
+update task set
+start_date='2017-03-13 00:00:00'
+where 
+id in (2, 1)
+and start_date >'2017-03-13 00:00:00'
+
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 345600 second),
+end_date=DATE_ADD(end_date, INTERVAL 345600 second)
+where id in (1, 2, 20, 3, 4, 5)

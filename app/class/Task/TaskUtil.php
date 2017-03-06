@@ -5,6 +5,7 @@ namespace Task;
 
 
 use QuickPdo\QuickPdo;
+use Util\GeneralUtil;
 
 class TaskUtil
 {
@@ -15,7 +16,7 @@ class TaskUtil
         $items = QuickPdo::fetchAll("select * from task 
 where project_id=" . (int)$projectId . "
 and parent_task_id is null
-order by start_date asc
+order by `order` asc
 ");
 
         $level = 0;
@@ -28,8 +29,8 @@ order by start_date asc
         // add hasChildren and timeStart/timeEnd helpers
         foreach ($ret as $k => $v) {
 
-            $timeStart = strtotime($v['start_date']);
-            $timeEnd = strtotime($v['end_date']);
+            $timeStart = GeneralUtil::gmMysqlToTime($v['start_date']);
+            $timeEnd = GeneralUtil::gmMysqlToTime($v['end_date']);
 
             $ret[$k]['timeStart'] = $timeStart;
             $ret[$k]['timeEnd'] = $timeEnd;
@@ -96,5 +97,6 @@ where id=" . (int)$taskId . "
             self::collectParentIds($parentId, $ids);
         }
     }
+
 
 }

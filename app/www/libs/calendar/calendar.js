@@ -24,7 +24,6 @@ if ("undefined" === typeof window.Calendar) {
             this.plotsMaxIndex = 0;
             this.currentIndex = 0;
             this.indexOffset = 0;
-            this.maxIndex = 0;
             this.nbNonThTime = 0;
             this.jFirst = null;
             this.jDrag = null;
@@ -32,19 +31,21 @@ if ("undefined" === typeof window.Calendar) {
             this.aChildrenTrs = null;
             this.aParentTrs = null;
             this.clickIndex = null;
+            this.updatedId = null;
+            this.currentTask = null;
         };
 
 
         window.Calendar.prototype = {
-            draw: function () {
+            draw: function (fnDrawAfter) {
                 this.prepare();
-
 
                 var tasks = this.options.tasks;
                 for (var i in tasks) {
                     var task = tasks[i];
                     this.drawTask(task);
                 }
+                fnDrawAfter && fnDrawAfter();
             },
             drawTask: function (task) {
                 var plots = this.options.plots;
@@ -136,11 +137,15 @@ if ("undefined" === typeof window.Calendar) {
                     var task = this.options.tasks[i];
 
                     var newTask = {
-                        // timeStart: task['timeStart'],
-                        // timeEnd: task['timeEnd'],
-                        plotStart: getPlotIndex(task['timeStart'], this.plots, true),
-                        plotEnd: getPlotIndex(task['timeEnd'], this.plots, false)
+                        id: task['id'],
+                        // dateStart: task['start_date'],
+                        timeStart: task['timeStart'],
+                        timeEnd: task['timeEnd'],
+                        plotStart: this.getPlotIndex(task["id"], task['timeStart'], this.plots, true),
+                        plotEnd: this.getPlotIndex(task["id"], task['timeEnd'], this.plots, false)
                     };
+
+
                     this.tasks[task['id']] = newTask;
                     jTr.attr("data-id", task['id']);
                     jTr.data("original", newTask);
@@ -191,7 +196,7 @@ if ("undefined" === typeof window.Calendar) {
                         zis.jDrag = null;
 
                         //----------------------------------------
-                        // COMMIT GUI
+                        // COMMIT GUI AND MODEL
                         //----------------------------------------
                         zis.jTable.find('tr.redrawn').each(function () {
                             var redraw = $(this).data("redrawn");
@@ -210,13 +215,37 @@ if ("undefined" === typeof window.Calendar) {
 
                             // now apply into gui memory
                             var originalTask = zis.getTask($(this));
+                            var originalPlotStart = originalTask.plotStart;
+                            var originalPlotEnd = originalTask.plotEnd;
                             originalTask.plotStart = redraw.plotStart;
                             originalTask.plotEnd = redraw.plotEnd;
 
+                            // now update the db
+                            var id = getTaskId($(this));
+                            if (id === zis.updatedId) {
+                                /**
+                                 * To update the db, we need to pass it the number of seconds that we have
+                                 * added/removed to the original event.
+                                 *
+                                 */
+                                var offsetStart = zis.options.periodInterval * (redraw.plotStart - originalPlotStart);
+                                var offsetEnd = zis.options.periodInterval * (redraw.plotEnd - originalPlotEnd);
+
+                                var url = "/services/roadmaps.php?action=calendrier-update-" + zis.dragType;
+
+
+                                $.post(url, {
+                                    id: id,
+                                    offsetLeft: offsetStart,
+                                    offsetRight: offsetEnd
+                                }, function (data) {
+                                    if ("ok" === data) {
+                                        window.location.reload();
+                                    }
+                                }, 'json');
+                            }
 
                         });
-
-
                     }
                     $(window).off('mousemove.calendar');
                 });
@@ -227,41 +256,40 @@ if ("undefined" === typeof window.Calendar) {
 
                 var zis = this;
                 this.jDragTr = $(e.target).closest("tr");
+                this.updatedId = getTaskId(this.jDragTr);
 
                 if ('left' === this.dragType) {
                     this.jDrag = $(e.target).closest("td");
-                    this.maxIndex = this.getMaxIndex(e);
                     this.jFirst = $(e.target).closest("tr").find("td.cell:first");
                     this.aChildrenTrs = this.getChildrenTrs(this.jDrag);
                     this.aParentTrs = this.getParentTrs(this.jDrag);
                     this.clickIndex = this.getTokenIndexByMouse(e);
 
+
                     $(window).on('mousemove.calendar', function (e) {
                         zis.moveLeft(e);
                     });
                 }
-
-
-                // this.jDrag = $(e.target).closest("td");
-                // aChildrenTrs = getChildrenTrs(jDrag);
-                // aParentTrs = getParentTrs(jDrag);
-                // jFirst = $(e.target).closest("tr").find("td.cell:first");
-                //
-                //
-                // startIndex = getStartIndex(e);
-                // endIndex = getEndIndex(e);
-                //
-                // if ("left" === dragType) {
-                //     window.addEventListener('mousemove', moveLeft);
-                // }
-                // else if ("right" === dragType) {
-                //     window.addEventListener('mousemove', moveRight);
-                // }
-                // else if ("grab" === dragType) {
-                //     clickIndex = getTokenIndexByMouse(e);
-                //     aIndexesTree = getIndexTree(jDrag);
-                //     window.addEventListener('mousemove', moveGrab);
-                // }
+                else if ('right' === this.dragType) {
+                    this.jDrag = $(e.target).closest("td");
+                    this.jFirst = $(e.target).closest("tr").find("td.cell:first");
+                    this.aChildrenTrs = this.getChildrenTrs(this.jDrag);
+                    this.aParentTrs = this.getParentTrs(this.jDrag);
+                    this.clickIndex = this.getTokenIndexByMouse(e);
+                    $(window).on('mousemove.calendar', function (e) {
+                        zis.moveRight(e);
+                    });
+                }
+                else if ('grab' === this.dragType) {
+                    this.jDrag = $(e.target).closest("td");
+                    this.jFirst = $(e.target).closest("tr").find("td.cell:first");
+                    this.aChildrenTrs = this.getChildrenTrs(this.jDrag);
+                    this.aParentTrs = this.getParentTrs(this.jDrag);
+                    this.clickIndex = this.getTokenIndexByMouse(e);
+                    $(window).on('mousemove.calendar', function (e) {
+                        zis.moveGrab(e);
+                    });
+                }
             },
             moveLeft: function (e) {
 
@@ -269,6 +297,7 @@ if ("undefined" === typeof window.Calendar) {
 
                 var offset = this.currentIndex - this.clickIndex;
                 var task = this.getTask(this.jDragTr);
+                this.currentTask = task;
 
                 var start = task["plotStart"] + offset;
                 if (start > task['plotEnd']) {
@@ -278,6 +307,7 @@ if ("undefined" === typeof window.Calendar) {
                     plotStart: start,
                     plotEnd: task["plotEnd"]
                 };
+
 
                 this.redrawTask(this.jDragTr, drawTask);
                 if (null !== this.aChildrenTrs) {
@@ -295,22 +325,133 @@ if ("undefined" === typeof window.Calendar) {
                         this.redrawTask(jTr, trDrawTask);
                     }
                 }
-                // todo here:
-                // if (null !== this.aParentTrs) {
-                //     for (var i in this.aParentTrs) {
-                //         var jTr = this.aParentTrs[i];
-                //         var trTask = this.getTask(jTr);
-                //         var plotStart = trTask.plotStart;
-                //         if (start > plotStart) {
-                //             plotStart = start;
-                //         }
-                //         var trDrawTask = {
-                //             plotStart: plotStart,
-                //             plotEnd: trTask.plotEnd
-                //         };
-                //         this.redrawTask(jTr, trDrawTask);
-                //     }
-                // }
+
+                if (null !== this.aParentTrs) {
+                    for (var i in this.aParentTrs) {
+                        var jTr = this.aParentTrs[i];
+                        var trTask = this.getTask(jTr);
+                        var plotStart = trTask.plotStart;
+                        if (start < plotStart) {
+                            plotStart = start;
+                        }
+                        var trDrawTask = {
+                            plotStart: plotStart,
+                            plotEnd: trTask.plotEnd
+                        };
+                        this.redrawTask(jTr, trDrawTask);
+                    }
+                }
+
+            },
+            moveRight: function (e) {
+
+                this.currentIndex = this.getTokenIndexByMouse(e);
+                var offset = this.currentIndex - this.clickIndex;
+                var task = this.getTask(this.jDragTr);
+                this.currentTask = task;
+
+                var end = task["plotEnd"] + offset;
+                if (end < task['plotStart']) {
+                    end = task['plotStart'];
+                }
+                var drawTask = {
+                    plotStart: task["plotStart"],
+                    plotEnd: end
+                };
+
+                this.redrawTask(this.jDragTr, drawTask);
+
+                if (null !== this.aChildrenTrs) {
+                    for (var i in this.aChildrenTrs) {
+                        var jTr = this.aChildrenTrs[i];
+                        var trTask = this.getTask(jTr);
+                        var plotEnd = trTask.plotEnd;
+                        if (end < plotEnd) {
+                            plotEnd = end;
+                        }
+                        var trDrawTask = {
+                            plotStart: trTask.plotStart,
+                            plotEnd: plotEnd
+                        };
+                        this.redrawTask(jTr, trDrawTask);
+                    }
+                }
+
+                if (null !== this.aParentTrs) {
+                    for (var i in this.aParentTrs) {
+                        var jTr = this.aParentTrs[i];
+                        var trTask = this.getTask(jTr);
+                        var plotEnd = trTask.plotEnd;
+                        if (end > plotEnd) {
+                            plotEnd = end;
+                        }
+                        var trDrawTask = {
+                            plotStart: trTask.plotStart,
+                            plotEnd: plotEnd
+                        };
+                        this.redrawTask(jTr, trDrawTask);
+                    }
+                }
+
+            },
+            moveGrab: function (e) {
+
+                this.currentIndex = this.getTokenIndexByMouse(e);
+
+                var offset = this.currentIndex - this.clickIndex;
+                var task = this.getTask(this.jDragTr);
+                this.currentTask = task;
+                var start = task["plotStart"] + offset;
+                var end = task["plotEnd"] + offset;
+                this.debug();
+                var drawTask = {
+                    plotStart: start,
+                    plotEnd: end
+                };
+                this.redrawTask(this.jDragTr, drawTask);
+
+                if (null !== this.aChildrenTrs) {
+                    for (var i in this.aChildrenTrs) {
+                        var jTr = this.aChildrenTrs[i];
+                        var trTask = this.getTask(jTr);
+                        var plotStart = trTask.plotStart;
+                        var plotEnd = trTask.plotEnd;
+
+
+                        plotStart += offset;
+                        plotEnd += offset;
+
+                        var trDrawTask = {
+                            plotStart: plotStart,
+                            plotEnd: plotEnd
+                        };
+                        this.redrawTask(jTr, trDrawTask);
+                    }
+                }
+
+                if (null !== this.aParentTrs) {
+                    for (var i in this.aParentTrs) {
+                        var jTr = this.aParentTrs[i];
+                        var trTask = this.getTask(jTr);
+                        var plotStart = trTask.plotStart;
+                        var plotEnd = trTask.plotEnd;
+
+
+                        if (offset > 0 && end > plotEnd) {
+                            plotEnd = end;
+                        }
+                        if (offset < 0 && start < plotStart) {
+                            plotStart = start;
+                        }
+
+                        var trDrawTask = {
+                            plotStart: plotStart,
+                            plotEnd: plotEnd
+                        };
+                        this.redrawTask(jTr, trDrawTask);
+                    }
+                }
+
 
             },
             redrawTask: function (jTr, drawTask) {
@@ -375,10 +516,11 @@ if ("undefined" === typeof window.Calendar) {
                 var ret = [];
                 while (level > 0) {
                     jTr = jTr.prev();
-                    if (jTr) {
+                    if (jTr.length) {
                         var taskLevel = parseInt(jTr.attr("data-level"));
                         if (taskLevel < level) {
                             ret.push(jTr);
+                            level = taskLevel;
                         }
                         if (0 === taskLevel) {
                             break;
@@ -393,12 +535,46 @@ if ("undefined" === typeof window.Calendar) {
                 }
                 return null;
             },
-            debug: function (e) {
+            getPlotIndex: function (taskId, time, plots, isStart) {
+                var broken = false;
+                if (time < plots[0]) {
+                    var index = 0;
+                    var plotTime = plots[0];
+                    while (time < plotTime) {
+                        plotTime -= this.options.periodInterval;
+                        index--;
+                    }
+                    return (true === isStart) ? index : index - 1;
+                }
+                else if (time > plots[plots.length - 1]) {
+                    var index = plots.length - 1;
+                    var plotTime = plots[plots.length - 1];
+                    while (time > plotTime) {
+                        plotTime += this.options.periodInterval;
+                        index++;
+                    }
+                    return (true === isStart) ? index : index - 1;
+                }
+
+                for (var i in plots) {
+                    if (
+                        (true === isStart && time < plots[i]) ||
+                        (false === isStart && time <= plots[i])
+                    ) {
+                        broken = true;
+                        break;
+                    }
+                }
+
+
+                return (true === broken) ? parseInt(i) - 1 : parseInt(i);
+            },
+            debug: function () {
                 screenDebug({
-                    mousePageX: e.pageX,
                     currentIndex: this.currentIndex,
-                    maxIndex: this.maxIndex,
-                    indexOffset: this.indexOffset
+                    clickIndex: this.clickIndex,
+                    currentTaskStart: this.currentTask['plotStart'],
+                    currentTaskEnd: this.currentTask['plotEnd']
                 });
             }
         };
@@ -418,18 +594,8 @@ if ("undefined" === typeof window.Calendar) {
             return (time >= task.timeStart && time < task.timeEnd);
         }
 
-        function getPlotIndex(time, plots, isStart) {
-            var broken = false;
-            for (var i in plots) {
-                if (
-                    (true === isStart && time < plots[i]) ||
-                    (false === isStart && time <= plots[i])
-                ) {
-                    broken = true;
-                    break;
-                }
-            }
-            return (true === broken) ? parseInt(i) - 1 : parseInt(i);
+        function getTaskId(jTr) {
+            return jTr.attr('data-id');
         }
 
 

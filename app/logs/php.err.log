@@ -162,3 +162,24 @@ Stack trace:
 #2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/dbgen.php(6): require_once('/Volumes/Macint...')
 #3 {main}
   thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 307
+[06-Mar-2017 08:55:54 Europe/Paris] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY000] [2002] No such file or directory' in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:41
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(41): PDO->__construct('mysql:host=loca...', 'root', 'root', Array)
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/init.php(92): QuickPdo\QuickPdo::setConnection('mysql:host=loca...', 'root', 'root', Array)
+#2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/index.php(6): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 41
+[06-Mar-2017 08:59:01 Europe/Paris] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1' for key 'PRIMARY'' in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:307
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(307): PDO->exec('INSERT INTO `pr...')
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/tools/reset-db.php(9): QuickPdo\QuickPdo::freeExec('INSERT INTO `pr...')
+#2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/dbgen.php(6): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 307
+[06-Mar-2017 10:51:03 Europe/Paris] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1' for key 'PRIMARY'' in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:307
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(307): PDO->exec('INSERT INTO `pr...')
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/tools/reset-db.php(9): QuickPdo\QuickPdo::freeExec('INSERT INTO `pr...')
+#2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/dbgen.php(6): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 307

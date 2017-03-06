@@ -3,6 +3,8 @@
 
 namespace Period;
 
+use Util\GeneralUtil;
+
 class InlinePeriodHelper
 {
     private $period;
@@ -17,15 +19,17 @@ class InlinePeriodHelper
     {
         $ret = [];
 
-        $dateStart = new \DateTime($this->period->getStartDate());
-        $dateEnd = new \DateTime($this->period->getEndDate());
 
-        $interval = $dateEnd->getTimestamp() - $dateStart->getTimestamp();
+        $timeStart = GeneralUtil::gmMysqlToTime($this->period->getStartDate());
+        $timeEnd = GeneralUtil::gmMysqlToTime($this->period->getEndDate());
+
+
+        $interval = $timeEnd - $timeStart;
         if ($interval > 0) {
             $periodUnit = $this->period->getInterval();
             $nbPeriods = ceil($interval / $periodUnit);
+            $time = $timeStart;
 
-            $time = $dateStart->getTimestamp();
             for ($i = 0; $i < $nbPeriods; $i++) {
                 $ret[] = $time;
                 $time += $periodUnit;

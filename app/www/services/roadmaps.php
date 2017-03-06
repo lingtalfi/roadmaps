@@ -2,6 +2,9 @@
 
 
 use Calendar\CalendarApi;
+use Task\Task;
+use Task\TaskUtil;
+
 require_once __DIR__ . "/../../init.php";
 
 
@@ -29,6 +32,36 @@ if (array_key_exists('action', $_GET)) {
                 } else {
                     CalendarApi::setEndDate($taskId, $fullDate);
                 }
+                $output = "ok";
+            }
+
+            break;
+        case 'calendrier-update-left':
+        case 'calendrier-update-right':
+        case 'calendrier-update-grab':
+
+            if (
+                array_key_exists("id", $_POST) &&
+                array_key_exists("offsetLeft", $_POST) &&
+                array_key_exists("offsetRight", $_POST)
+            ) {
+                $taskId = $_POST['id'];
+                $offsetLeft = $_POST['offsetLeft'];
+                $offsetRight = $_POST['offsetRight'];
+
+                if ('calendrier-update-left' === $action) {
+                    $time = Task::getStartTime($taskId);
+                    $time += $offsetLeft;
+                    CalendarApi::setStartDate($taskId, gmdate("Y-m-d H:i:s", $time));
+                } elseif ('calendrier-update-right' === $action) {
+                    $time = Task::getEndTime($taskId);
+                    $time += $offsetRight;
+                    CalendarApi::setEndDate($taskId, gmdate("Y-m-d H:i:s", $time));
+                } elseif ('calendrier-update-grab' === $action) {
+                    CalendarApi::move($taskId, $offsetLeft);
+                }
+
+
                 $output = "ok";
             }
 

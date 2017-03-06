@@ -16,10 +16,12 @@ $projectId = 1;
 $projectName = Project::getName($projectId);
 
 AssetsList::css("/style/roadmaps.css");
+AssetsList::css("/iconfont/material-icons.css");
 AssetsList::css("/libs/screendebug/css/screendebug.css");
 AssetsList::js("/libs/simpledrag/simpledrag.js");
 AssetsList::js("/libs/screendebug/js/screendebug.js");
 AssetsList::js("/libs/calendar/calendar.js");
+
 
 ?>
 <div class="panes-container" style="height: 100%">
@@ -29,8 +31,8 @@ AssetsList::js("/libs/calendar/calendar.js");
         $periodInterval = 86400;
 
         $p = \Period\Period::create();
-        $p->setStartDate(date("Y-m-d 00:00:00"));
-        $p->setEndDate(date("Y-m-d 00:00:00", time() + 30 * 86400));
+        $p->setStartDate(gmdate("Y-m-d 00:00:00"));
+        $p->setEndDate(gmdate("Y-m-d 00:00:00", time() + 30 * 86400));
         $p->setInterval($periodInterval);
 
 
@@ -64,7 +66,7 @@ AssetsList::js("/libs/calendar/calendar.js");
         {
             $month = (int)date('m', $timestamp);
             $monthName = $months[$month];
-            return date("d", $timestamp) . " " . ucfirst($monthName);
+            return gmdate("d", $timestamp) . " " . ucfirst($monthName);
         }
 
 
@@ -82,7 +84,7 @@ AssetsList::js("/libs/calendar/calendar.js");
                     <th>End date</th>
                     <?php
                     $plots = $helper->getTimeScalePlots();
-                    foreach ($plots as $time) {
+                    foreach ($plots as $k => $time) {
                         ?>
                         <th class="th-time">
                             <?php echo formatDate($time, $months); ?>
@@ -103,10 +105,18 @@ AssetsList::js("/libs/calendar/calendar.js");
                         data-level="<?php echo $task['level']; ?>"
                     >
                         <td<?php echo $style; ?> class="infocell">
-                            <?php if (true === $task['hasChildren']): ?>
-                                <button class="toggler">-</button>
-                            <?php endif; ?>
-                            <?php echo $task['label'] . " (" . $task['id'] . ")"; ?>
+
+                            <div class="first-column-cell">
+                                <?php if (true === $task['hasChildren']): ?>
+                                    <button class="toggler">-</button>
+                                <?php endif; ?>
+                                <span class="label"><?php echo $task['label'] . " (" . $task['id'] . ")"; ?></span>
+                                <div class="sort-container">
+                                    <button class="up"><i class="material-icons">arrow_drop_up</i></button>
+                                    <button class="down"><i class="material-icons">arrow_drop_down</i></button>
+                                </div>
+                            </div>
+
                         </td>
                         <td data-id="<?php echo $task['id']; ?>"
                             class="infocell start-date-update-trigger"
@@ -188,6 +198,9 @@ AssetsList::js("/libs/calendar/calendar.js");
     }
 
     $(document).ready(function () {
+
+
+        var jTable = $("#roadmaps-table");
 
 
         $("body").on('click', function (e) {
@@ -298,6 +311,20 @@ AssetsList::js("/libs/calendar/calendar.js");
 
 
         //----------------------------------------
+        // SORT ARROWS
+        //----------------------------------------
+        function updateSortArrows() {
+            jTable.find('tr').each(function () {
+                var hasPrevSibling = trHasPrevSibling($(this));
+                var hasNextSibling = trHasNextSibling($(this));
+
+
+            });
+
+        }
+
+
+        //----------------------------------------
         // GUI DRAG
         //----------------------------------------
         var tasks = <?php echo json_encode($tasks); ?>;
@@ -310,7 +337,15 @@ AssetsList::js("/libs/calendar/calendar.js");
             periodInterval: periodInterval,
             plots: plots
         });
-        oCalendar.draw();
+        oCalendar.draw(function () {
+            var jFirstTr = jTable.find("tr[data-id=6]");
+
+
+            var jSiblings = jFirstTr.nextAll("[data-level=0]").addBack().add(jFirstTr.prevAll("[data-level=0]"));
+            console.log(jFirstTr);
+            console.log(jSiblings);
+            console.log("j");
+        });
         oCalendar.listen();
 
     });
