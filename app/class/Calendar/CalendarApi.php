@@ -44,7 +44,7 @@ class CalendarApi
         ], [
             ["id", "=", $taskId],
         ]);
-        GeneralUtil::debugLog(QuickPdo::getQuery());
+        GeneralUtil::debugLog(QuickPdo::getQuery(), "setStartDate:main");
 
 
         if (true === Task::hasChildren($taskId)) {
@@ -67,7 +67,7 @@ where
 id in ($sIds)
 and start_date < '$newStartDate'
                 ";
-                    GeneralUtil::debugLog($q);
+                    GeneralUtil::debugLog($q, "setStartDate:children");
                     QuickPdo::freeQuery($q);
                 }
             }
@@ -91,7 +91,7 @@ where
 id in ($sIds)
 and start_date > '$newStartDate'
                 ";
-                    GeneralUtil::debugLog($q);
+                    GeneralUtil::debugLog($q, "setStartDate:parents");
                     QuickPdo::freeQuery($q);
                 }
             }
@@ -107,7 +107,7 @@ and start_date > '$newStartDate'
         ], [
             ["id", "=", $taskId],
         ]);
-        GeneralUtil::debugLog(QuickPdo::getQuery());
+        GeneralUtil::debugLog(QuickPdo::getQuery(), "setEndDate:main");
 
 
         if (true === Task::hasChildren($taskId)) {
@@ -130,7 +130,7 @@ where
 id in ($sIds)
 and end_date > '$newEndDate'
                 ";
-                    GeneralUtil::debugLog($q);
+                    GeneralUtil::debugLog($q, "setEndDate:children");
                     QuickPdo::freeQuery($q);
                 }
             }
@@ -154,7 +154,7 @@ where
 id in ($sIds)
 and end_date < '$newEndDate'
                 ";
-                    GeneralUtil::debugLog($q);
+                    GeneralUtil::debugLog($q, "setEndDate:parents");
                     QuickPdo::freeQuery($q);
                 }
             }
@@ -187,7 +187,7 @@ update task set
 start_date=$addOp(start_date, INTERVAL $offset second),
 end_date=$addOp(end_date, INTERVAL $offset second)
 where id in ($sIds)";
-        GeneralUtil::debugLog($q);
+        GeneralUtil::debugLog($q, "move:main");
         QuickPdo::freeQuery($q);
 
 
@@ -216,7 +216,7 @@ id in ($sParentIds)
 and start_date >'$limitDate'
 ";
             }
-            GeneralUtil::debugLog($q);
+            GeneralUtil::debugLog($q, "move:parents");
             QuickPdo::freeExec($q);
 
         }

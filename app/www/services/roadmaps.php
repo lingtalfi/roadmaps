@@ -4,6 +4,7 @@
 use Calendar\CalendarApi;
 use Task\Task;
 use Task\TaskUtil;
+use Util\GeneralUtil;
 
 require_once __DIR__ . "/../../init.php";
 
@@ -151,6 +152,28 @@ if (array_key_exists('action', $_GET)) {
                 $_SESSION['periodStartDate'] = $dateStart;
                 $_SESSION['periodInterval'] = $interval;
                 $_SESSION['periodNbSegments'] = $segments;
+
+                $output = "ok";
+            }
+            break;
+        case 'calendrier-move-period':
+            if (array_key_exists("direction", $_GET)
+            ) {
+                $direction = $_GET['direction'];
+                $interval = (array_key_exists("periodInterval", $_SESSION)) ? $_SESSION['periodInterval'] : 86400;
+                $date = (array_key_exists("periodStartDate", $_SESSION)) ? $_SESSION['periodStartDate'] : date("Y-m-d 00:00:00");
+
+                $time = GeneralUtil::gmMysqlToTime($date);
+
+                if ('prev' === $direction) {
+                    $time -= $interval;
+                } else {
+                    $time += $interval;
+                }
+
+                $newDate = gmdate("Y-m-d 00:00:00", $time);
+                $_SESSION['periodStartDate'] = $newDate;
+
 
                 $output = "ok";
             }

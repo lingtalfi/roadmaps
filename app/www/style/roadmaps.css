@@ -186,6 +186,16 @@ th.first-column-cell button:hover i {
     align-items: center;
 }
 
-.action-topcontainer div{
+.action-topcontainer div {
     margin: 5px;
+}
+
+.period-prev,
+.period-next {
+    cursor: pointer;
+}
+
+.period-prev:hover,
+.period-next:hover {
+    color: #666;
 }

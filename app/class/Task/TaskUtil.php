@@ -58,10 +58,19 @@ order by `order` asc
             $tEnd = $v['timeEnd'];
             $newStart = self::alignTime($tStart, $periodStartTime, $interval);
             $newEnd = self::alignTime($tEnd, $periodStartTime, $interval);
+
+            if ($newEnd === $newStart) {
+                /**
+                 * In some instances, with a zoom too large, the events appear very small,
+                 * so small that they would disappear if we didn't write the condition below.
+                 */
+                $newEnd += $interval;
+            }
+
             $ret[$k]['timeStart'] = $newStart;
             $ret[$k]['timeEnd'] = $newEnd;
-            $ret[$k]['start_date'] = gmdate("Y-m-d H:i:s", $newStart);
-            $ret[$k]['end_date'] = gmdate("Y-m-d H:i:s", $newEnd);
+//            $ret[$k]['start_date'] = gmdate("Y-m-d H:i:s", $newStart);
+//            $ret[$k]['end_date'] = gmdate("Y-m-d H:i:s", $newEnd);
         }
 
         return $ret;

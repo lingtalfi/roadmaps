@@ -1,502 +1,762 @@
-update task set `start_date`=:start_date where `id` = :bzz_0
------ERROR IS JUST ABOVE-----update task set `start_date`=:start_date where `id` = :bzz_0
------ERROR IS JUST ABOVE-----update task set `start_date`=:start_date where `id` = :bzz_0
-update task set `start_date`=:start_date where `id` = :bzz_0
 
-update task set start_date='2017-03-23 00:00:00' 
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 0 second),
+end_date=DATE_ADD(end_date, INTERVAL 0 second)
+where id in (6, 10, 11, 12)
+-----ERROR IS JUST ABOVE-----update task set `end_date`=:end_date where `id` = :bzz_0
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 864000 second),
+end_date=DATE_ADD(end_date, INTERVAL 864000 second)
+where id in (10)
+-----ERROR IS JUST ABOVE-----
+update task set
+end_date='2017-04-08 00:00:00'
 where 
-id in (1)
-and start_date > '2017-03-23 00:00:00'
-                
+id in (6)
+and end_date <'2017-04-08 00:00:00'
 
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 86400 second),
-end_date=DATE_SUB(end_date, INTERVAL 86400 second)
-where id in (1, 2, 20, 3, 4, 5)
-
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 1209600 second),
-end_date=DATE_SUB(end_date, INTERVAL 1209600 second)
-where id in (1, 2, 20, 3, 4, 5)
-
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 518400 second),
-end_date=DATE_ADD(end_date, INTERVAL 518400 second)
-where id in (1, 2, 20, 3, 4, 5)
-
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 432000 second),
-end_date=DATE_ADD(end_date, INTERVAL 432000 second)
-where id in (1, 2, 20, 3, 4, 5)
-
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 777600 second),
-end_date=DATE_ADD(end_date, INTERVAL 777600 second)
-where id in (1, 2, 20, 3, 4, 5)
-
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 345600 second),
-end_date=DATE_ADD(end_date, INTERVAL 345600 second)
-where id in (1, 2, 20, 3, 4, 5)
-
+-----ERROR IS JUST ABOVE-----
 update task set
 start_date=DATE_SUB(start_date, INTERVAL 345600 second),
 end_date=DATE_SUB(end_date, INTERVAL 345600 second)
-where id in (1, 2, 20, 3, 4, 5)
-update task set `start_date`=:start_date where `id` = :bzz_0
-
-update task set start_date='2017-03-29 00:00:00' 
+where id in (10)
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date='2017-03-25 00:00:00'
 where 
-id in (1)
-and start_date > '2017-03-29 00:00:00'
+id in (6)
+and start_date >'2017-03-25 00:00:00'
+
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 1382400 second),
+end_date=DATE_ADD(end_date, INTERVAL 1382400 second)
+where id in (12)
+-----ERROR IS JUST ABOVE-----
+update task set
+end_date='2017-04-10 00:00:00'
+where 
+id in (6)
+and end_date <'2017-04-10 00:00:00'
+
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 1209600 second),
+end_date=DATE_SUB(end_date, INTERVAL 1209600 second)
+where id in (12)
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date='2017-03-22 00:00:00'
+where 
+id in (6)
+and start_date >'2017-03-22 00:00:00'
+
+-----ERROR IS JUST ABOVE-----update task set `end_date`=:end_date where `id` = :bzz_0
+-----ERROR IS JUST ABOVE-----
+update task set end_date='2017-03-31 00:00:00' 
+where 
+id in (10, 11, 12)
+and end_date > '2017-03-31 00:00:00'
                 
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 86400 second),
+end_date=DATE_ADD(end_date, INTERVAL 86400 second)
+where id in (12)
+-----ERROR IS JUST ABOVE-----
+update task set
+end_date='2017-03-28 00:00:00'
+where 
+id in (6)
+and end_date <'2017-03-28 00:00:00'
+
+-----ERROR IS JUST ABOVE-----update task set `end_date`=:end_date where `id` = :bzz_0
+-----ERROR IS JUST ABOVE-----
+update task set end_date='2017-04-07 00:00:00' 
+where 
+id in (6)
+and end_date < '2017-04-07 00:00:00'
+                
+-----ERROR IS JUST ABOVE-----update task set `end_date`=:end_date where `id` = :bzz_0
+-----ERROR IS JUST ABOVE-----
+update task set end_date='2017-03-30 00:00:00' 
+where 
+id in (10, 11, 12)
+and end_date > '2017-03-30 00:00:00'
+                
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 691200 second),
+end_date=DATE_SUB(end_date, INTERVAL 691200 second)
+where id in (12)
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date='2017-03-15 00:00:00'
+where 
+id in (6)
+and start_date >'2017-03-15 00:00:00'
+
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 172800 second),
+end_date=DATE_ADD(end_date, INTERVAL 172800 second)
+where id in (11)
+-----ERROR IS JUST ABOVE-----
+update task set
+end_date='2017-03-22 00:00:00'
+where 
+id in (6)
+and end_date <'2017-03-22 00:00:00'
+
+-----ERROR IS JUST ABOVE-----update task set `end_date`=:end_date where `id` = :bzz_0
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 777600 second),
+end_date=DATE_ADD(end_date, INTERVAL 777600 second)
+where id in (12)
+-----ERROR IS JUST ABOVE-----
+update task set
+end_date='2017-03-25 00:00:00'
+where 
+id in (6)
+and end_date <'2017-03-25 00:00:00'
+
+-----ERROR IS JUST ABOVE-----update task set `end_date`=:end_date where `id` = :bzz_0
+-----ERROR IS JUST ABOVE-----
+update task set end_date='2017-04-08 00:00:00' 
+where 
+id in (6)
+and end_date < '2017-04-08 00:00:00'
+                
+-----ERROR IS JUST ABOVE-----setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+setEndDate:children
+
+update task set end_date='2017-03-29 00:00:00' 
+where 
+id in (10, 11, 12)
+and end_date > '2017-03-29 00:00:00'
+                
+-------------
+move:A
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 518400 second),
+end_date=DATE_SUB(end_date, INTERVAL 518400 second)
+where id in (12)
+-------------
+move:B
+
+update task set
+start_date='2017-03-18 00:00:00'
+where 
+id in (6)
+and start_date >'2017-03-18 00:00:00'
+
+-------------
+setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+setEndDate:parents
+
+update task set end_date='2017-04-01 00:00:00' 
+where 
+id in (6)
+and end_date < '2017-04-01 00:00:00'
+                
+-------------
+setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+move:A
 
 update task set
 start_date=DATE_ADD(start_date, INTERVAL 259200 second),
 end_date=DATE_ADD(end_date, INTERVAL 259200 second)
-where id in (4)
+where id in (12)
+-------------
+move:B
 
 update task set
-end_date='2017-04-08 00:00:00'
+end_date='2017-03-29 00:00:00'
 where 
-id in (1)
-and end_date <'2017-04-08 00:00:00'
+id in (6)
+and end_date <'2017-03-29 00:00:00'
 
+-------------
+setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+setEndDate:children
 
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 259200 second),
-end_date=DATE_SUB(end_date, INTERVAL 259200 second)
-where id in (5)
-
-update task set
-start_date='2017-03-26 00:00:00'
+update task set end_date='2017-03-30 00:00:00' 
 where 
-id in (1)
-and start_date >'2017-03-26 00:00:00'
+id in (10, 11, 12)
+and end_date > '2017-03-30 00:00:00'
+                
+-------------
+setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+setEndDate:parents
 
+update task set end_date='2017-04-06 00:00:00' 
+where 
+id in (6)
+and end_date < '2017-04-06 00:00:00'
+                
+-------------
+100829: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+100837: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+100844: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+100845: setEndDate:parents
+
+update task set end_date='2017-04-18 00:00:00' 
+where 
+id in (6)
+and end_date < '2017-04-18 00:00:00'
+                
+-------------
+100847: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+100847: setEndDate:children
+
+update task set end_date='2017-04-04 00:00:00' 
+where 
+id in (10, 11, 12)
+and end_date > '2017-04-04 00:00:00'
+                
+-------------
+100849: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+100855: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+100855: setEndDate:children
+
+update task set end_date='2017-03-31 00:00:00' 
+where 
+id in (10, 11, 12)
+and end_date > '2017-03-31 00:00:00'
+                
+-------------
+100858: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+100859: move:main
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 432000 second),
+end_date=DATE_ADD(end_date, INTERVAL 432000 second)
+where id in (12)
+-------------
+100859: move:parents
+
+update task set
+end_date='2017-03-28 00:00:00'
+where 
+id in (6)
+and end_date <'2017-03-28 00:00:00'
+
+-------------
+100901: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+100909: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+100909: setEndDate:parents
+
+update task set end_date='2017-04-04 00:00:00' 
+where 
+id in (6)
+and end_date < '2017-04-04 00:00:00'
+                
+-------------
+100924: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+100926: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+100926: setEndDate:children
+
+update task set end_date='2017-03-31 00:00:00' 
+where 
+id in (10, 11, 12)
+and end_date > '2017-03-31 00:00:00'
+                
+-------------
+100928: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+100928: setEndDate:parents
+
+update task set end_date='2017-04-04 00:00:00' 
+where 
+id in (6)
+and end_date < '2017-04-04 00:00:00'
+                
+-------------
+100930: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+100932: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+100932: setEndDate:children
+
+update task set end_date='2017-03-31 00:00:00' 
+where 
+id in (10, 11, 12)
+and end_date > '2017-03-31 00:00:00'
+                
+-------------
+100939: move:main
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 0 second),
+end_date=DATE_ADD(end_date, INTERVAL 0 second)
+where id in (12)
+-------------
+100939: move:parents
+
+update task set
+end_date='2017-03-29 00:00:00'
+where 
+id in (6)
+and end_date <'2017-03-29 00:00:00'
+
+-------------
+100945: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+100945: setEndDate:parents
+
+update task set end_date='2017-04-04 00:00:00' 
+where 
+id in (6)
+and end_date < '2017-04-04 00:00:00'
+                
+-------------
+100950: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+100950: setEndDate:children
+
+update task set end_date='2017-03-30 00:00:00' 
+where 
+id in (10, 11, 12)
+and end_date > '2017-03-30 00:00:00'
+                
+-------------
+100952: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+100958: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+100958: setEndDate:parents
+
+update task set end_date='2017-04-05 00:00:00' 
+where 
+id in (6)
+and end_date < '2017-04-05 00:00:00'
+                
+-------------
+101005: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101006: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101006: setEndDate:parents
+
+update task set end_date='2017-04-11 00:00:00' 
+where 
+id in (6)
+and end_date < '2017-04-11 00:00:00'
+                
+-------------
+101009: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101012: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101012: setEndDate:children
+
+update task set end_date='2017-03-30 00:00:00' 
+where 
+id in (10, 11, 12)
+and end_date > '2017-03-30 00:00:00'
+                
+-------------
+101018: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101021: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101021: setEndDate:parents
+
+update task set end_date='2017-04-06 00:00:00' 
+where 
+id in (6)
+and end_date < '2017-04-06 00:00:00'
+                
+-------------
+101038: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101038: setEndDate:children
+
+update task set end_date='2017-03-31 00:00:00' 
+where 
+id in (10, 11, 12)
+and end_date > '2017-03-31 00:00:00'
+                
+-------------
+101039: move:main
 
 update task set
 start_date=DATE_SUB(start_date, INTERVAL 345600 second),
 end_date=DATE_SUB(end_date, INTERVAL 345600 second)
-where id in (4)
+where id in (12)
+-------------
+101039: move:parents
 
 update task set
-start_date='2017-03-27 00:00:00'
+start_date='2017-03-22 00:00:00'
 where 
-id in (1)
-and start_date >'2017-03-27 00:00:00'
+id in (6)
+and start_date >'2017-03-22 00:00:00'
 
-
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 691200 second),
-end_date=DATE_SUB(end_date, INTERVAL 691200 second)
-where id in (4)
-
-update task set
-start_date='2017-03-19 00:00:00'
-where 
-id in (1)
-and start_date >'2017-03-19 00:00:00'
-
-
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 604800 second),
-end_date=DATE_SUB(end_date, INTERVAL 604800 second)
-where id in (5)
-
-update task set
-start_date='2017-03-19 00:00:00'
-where 
-id in (1)
-and start_date >'2017-03-19 00:00:00'
-
-
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 691200 second),
-end_date=DATE_SUB(end_date, INTERVAL 691200 second)
-where id in (1, 2, 20, 3, 4, 5)
-
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 604800 second),
-end_date=DATE_SUB(end_date, INTERVAL 604800 second)
-where id in (2, 20)
-
-update task set
-start_date='2017-03-17 00:00:00'
-where 
-id in (1)
-and start_date >'2017-03-17 00:00:00'
-
-
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 691200 second),
-end_date=DATE_SUB(end_date, INTERVAL 691200 second)
-where id in (3)
-
-update task set
-start_date='2017-03-17 00:00:00'
-where 
-id in (1)
-and start_date >'2017-03-17 00:00:00'
-
+-------------
+101046: setStartDate:main
+update task set `start_date`=:start_date where `id` = :bzz_0
+-------------
+101052: setEndDate:main
 update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101052: setEndDate:parents
+
+update task set end_date='2017-04-04 00:00:00' 
+where 
+id in (6)
+and end_date < '2017-04-04 00:00:00'
+                
+-------------
+101055: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101057: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101057: setEndDate:parents
+
+update task set end_date='2017-04-10 00:00:00' 
+where 
+id in (6)
+and end_date < '2017-04-10 00:00:00'
+                
+-------------
+101059: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101101: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101101: setEndDate:children
 
 update task set end_date='2017-03-31 00:00:00' 
 where 
-id in (2, 1)
-and end_date < '2017-03-31 00:00:00'
+id in (10, 11, 12)
+and end_date > '2017-03-31 00:00:00'
                 
+-------------
+101105: move:main
 
 update task set
-start_date=DATE_SUB(start_date, INTERVAL 259200 second),
-end_date=DATE_SUB(end_date, INTERVAL 259200 second)
-where id in (2, 20)
-
-update task set
-start_date='2017-03-14 00:00:00'
-where 
-id in (1)
-and start_date >'2017-03-14 00:00:00'
-
-
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 259200 second),
-end_date=DATE_SUB(end_date, INTERVAL 259200 second)
-where id in (1, 2, 20, 3, 4, 5)
-update task set `end_date`=:end_date where `id` = :bzz_0
-
-update task set end_date='2017-03-27 00:00:00' 
-where 
-id in (2, 20, 3, 4, 5)
-and end_date > '2017-03-27 00:00:00'
-                
-
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 172800 second),
-end_date=DATE_ADD(end_date, INTERVAL 172800 second)
-where id in (4)
-
-update task set
-end_date='2017-03-18 00:00:00'
-where 
-id in (1)
-and end_date <'2017-03-18 00:00:00'
-
-
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 518400 second),
-end_date=DATE_ADD(end_date, INTERVAL 518400 second)
-where id in (5)
-
-update task set
-end_date='2017-03-24 00:00:00'
-where 
-id in (1)
-and end_date <'2017-03-24 00:00:00'
-
-
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 86400 second),
-end_date=DATE_SUB(end_date, INTERVAL 86400 second)
-where id in (5)
-
-update task set
-start_date='2017-03-13 00:00:00'
-where 
-id in (1)
-and start_date >'2017-03-13 00:00:00'
-
-
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 259200 second),
-end_date=DATE_SUB(end_date, INTERVAL 259200 second)
-where id in (5)
-
-update task set
-start_date='2017-03-10 00:00:00'
-where 
-id in (1)
-and start_date >'2017-03-10 00:00:00'
-
-
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 518400 second),
-end_date=DATE_ADD(end_date, INTERVAL 518400 second)
-where id in (5)
-
-update task set
-end_date='2017-03-26 00:00:00'
-where 
-id in (1)
-and end_date <'2017-03-26 00:00:00'
-
-
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 345600 second),
-end_date=DATE_ADD(end_date, INTERVAL 345600 second)
-where id in (5)
+start_date=DATE_ADD(start_date, INTERVAL 86400 second),
+end_date=DATE_ADD(end_date, INTERVAL 86400 second)
+where id in (12)
+-------------
+101105: move:parents
 
 update task set
 end_date='2017-03-30 00:00:00'
 where 
-id in (1)
+id in (6)
 and end_date <'2017-03-30 00:00:00'
 
-
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 1123200 second),
-end_date=DATE_SUB(end_date, INTERVAL 1123200 second)
-where id in (5)
-
-update task set
-start_date='2017-03-07 00:00:00'
-where 
-id in (1)
-and start_date >'2017-03-07 00:00:00'
-
-
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 432000 second),
-end_date=DATE_ADD(end_date, INTERVAL 432000 second)
-where id in (5)
-
-update task set
-end_date='2017-03-22 00:00:00'
-where 
-id in (1)
-and end_date <'2017-03-22 00:00:00'
-
-update task set `start_date`=:start_date where `id` = :bzz_0
-
-update task set start_date='2017-03-10 00:00:00' 
-where 
-id in (2, 20, 3, 4, 5)
-and start_date < '2017-03-10 00:00:00'
-                
+-------------
+101112: setEndDate:main
 update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101112: setEndDate:parents
 
-update task set end_date='2017-03-27 00:00:00' 
+update task set end_date='2017-04-05 00:00:00' 
 where 
-id in (2, 20, 3, 4, 5)
-and end_date > '2017-03-27 00:00:00'
+id in (6)
+and end_date < '2017-04-05 00:00:00'
                 
+-------------
+101114: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101120: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101120: setEndDate:children
+
+update task set end_date='2017-03-30 00:00:00' 
+where 
+id in (10, 11, 12)
+and end_date > '2017-03-30 00:00:00'
+                
+-------------
+101125: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101125: setEndDate:parents
+
+update task set end_date='2017-04-05 00:00:00' 
+where 
+id in (6)
+and end_date < '2017-04-05 00:00:00'
+                
+-------------
+101131: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101131: setEndDate:children
+
+update task set end_date='2017-03-30 00:00:00' 
+where 
+id in (10, 11, 12)
+and end_date > '2017-03-30 00:00:00'
+                
+-------------
+101132: move:main
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 172800 second),
+end_date=DATE_SUB(end_date, INTERVAL 172800 second)
+where id in (12)
+-------------
+101132: move:parents
+
+update task set
+start_date='2017-03-25 00:00:00'
+where 
+id in (6)
+and start_date >'2017-03-25 00:00:00'
+
+-------------
+101135: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101152: move:main
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 86400 second),
+end_date=DATE_ADD(end_date, INTERVAL 86400 second)
+where id in (12)
+-------------
+101152: move:parents
+
+update task set
+end_date='2017-03-27 00:00:00'
+where 
+id in (6)
+and end_date <'2017-03-27 00:00:00'
+
+-------------
+101206: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101206: setEndDate:parents
+
+update task set end_date='2017-04-04 00:00:00' 
+where 
+id in (6)
+and end_date < '2017-04-04 00:00:00'
+                
+-------------
+101550: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101550: setEndDate:children
+
+update task set end_date='2017-03-31 00:00:00' 
+where 
+id in (10, 11, 12)
+and end_date > '2017-03-31 00:00:00'
+                
+-------------
+101553: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101558: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101558: setEndDate:parents
+
+update task set end_date='2017-04-04 00:00:00' 
+where 
+id in (6)
+and end_date < '2017-04-04 00:00:00'
+                
+-------------
+101600: move:main
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 0 second),
+end_date=DATE_ADD(end_date, INTERVAL 0 second)
+where id in (12)
+-------------
+101600: move:parents
+
+update task set
+end_date='2017-04-04 00:00:00'
+where 
+id in (6)
+and end_date <'2017-04-04 00:00:00'
+
+-------------
+101601: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101603: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101603: setEndDate:children
+
+update task set end_date='2017-03-31 00:00:00' 
+where 
+id in (10, 11, 12)
+and end_date > '2017-03-31 00:00:00'
+                
+-------------
+101633: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101635: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101635: setEndDate:children
+
+update task set end_date='2017-03-31 00:00:00' 
+where 
+id in (10, 11, 12)
+and end_date > '2017-03-31 00:00:00'
+                
+-------------
+101638: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101638: setEndDate:parents
+
+update task set end_date='2017-04-06 00:00:00' 
+where 
+id in (6)
+and end_date < '2017-04-06 00:00:00'
+                
+-------------
+101641: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101641: setEndDate:children
+
+update task set end_date='2017-03-31 00:00:00' 
+where 
+id in (10, 11, 12)
+and end_date > '2017-03-31 00:00:00'
+                
+-------------
+101642: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101648: setStartDate:main
 update task set `start_date`=:start_date where `id` = :bzz_0
-
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 172800 second),
-end_date=DATE_ADD(end_date, INTERVAL 172800 second)
-where id in (5)
-
-update task set
-end_date='2017-03-24 00:00:00'
-where 
-id in (1)
-and end_date <'2017-03-24 00:00:00'
-
-
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 172800 second),
-end_date=DATE_ADD(end_date, INTERVAL 172800 second)
-where id in (4)
-
-update task set
-end_date='2017-03-20 00:00:00'
-where 
-id in (1)
-and end_date <'2017-03-20 00:00:00'
-
+-------------
+101653: move:main
 
 update task set
 start_date=DATE_SUB(start_date, INTERVAL 172800 second),
 end_date=DATE_SUB(end_date, INTERVAL 172800 second)
-where id in (5)
+where id in (12)
+-------------
+101653: move:parents
 
 update task set
-start_date='2017-03-12 00:00:00'
+start_date='2017-03-26 00:00:00'
 where 
-id in (1)
-and start_date >'2017-03-12 00:00:00'
+id in (6)
+and start_date >'2017-03-26 00:00:00'
 
+-------------
+101655: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101655: setEndDate:parents
 
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 86400 second),
-end_date=DATE_SUB(end_date, INTERVAL 86400 second)
-where id in (5)
-
-update task set
-start_date='2017-03-11 00:00:00'
+update task set end_date='2017-04-04 00:00:00' 
 where 
-id in (1)
-and start_date >'2017-03-11 00:00:00'
-
-
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 172800 second),
-end_date=DATE_SUB(end_date, INTERVAL 172800 second)
-where id in (4)
-
-update task set
-start_date='2017-03-10 00:00:00'
-where 
-id in (1)
-and start_date >'2017-03-10 00:00:00'
-
-
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 172800 second),
-end_date=DATE_ADD(end_date, INTERVAL 172800 second)
-where id in (5)
-
-update task set
-end_date='2017-03-23 00:00:00'
-where 
-id in (1)
-and end_date <'2017-03-23 00:00:00'
-
-
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 259200 second),
-end_date=DATE_ADD(end_date, INTERVAL 259200 second)
-where id in (4)
-
-update task set
-end_date='2017-03-21 00:00:00'
-where 
-id in (1)
-and end_date <'2017-03-21 00:00:00'
-
-
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 86400 second),
-end_date=DATE_SUB(end_date, INTERVAL 86400 second)
-where id in (20)
-
-update task set
-start_date='2017-03-13 00:00:00'
-where 
-id in (2, 1)
-and start_date >'2017-03-13 00:00:00'
-
-
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 345600 second),
-end_date=DATE_ADD(end_date, INTERVAL 345600 second)
-where id in (1, 2, 20, 3, 4, 5)
-
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 432000 second),
-end_date=DATE_SUB(end_date, INTERVAL 432000 second)
-where id in (1, 2, 20, 3, 4, 5)
------ERROR IS JUST ABOVE-----
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 345600 second),
-end_date=DATE_ADD(end_date, INTERVAL 345600 second)
-where id in (4)
------ERROR IS JUST ABOVE-----
-update task set
-end_date='2017-03-26 00:00:00'
-where 
-id in (1)
-and end_date <'2017-03-26 00:00:00'
-
------ERROR IS JUST ABOVE-----
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 432000 second),
-end_date=DATE_SUB(end_date, INTERVAL 432000 second)
-where id in (4)
------ERROR IS JUST ABOVE-----
-update task set
-start_date='2017-03-10 00:00:00'
-where 
-id in (1)
-and start_date >'2017-03-10 00:00:00'
-
------ERROR IS JUST ABOVE-----update task set `start_date`=:start_date where `id` = :bzz_0
------ERROR IS JUST ABOVE-----
-update task set start_date='2017-03-08 00:00:00' 
-where 
-id in (1)
-and start_date > '2017-03-08 00:00:00'
+id in (6)
+and end_date < '2017-04-04 00:00:00'
                 
------ERROR IS JUST ABOVE-----
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 172800 second),
-end_date=DATE_SUB(end_date, INTERVAL 172800 second)
-where id in (20)
------ERROR IS JUST ABOVE-----
-update task set
-start_date='2017-03-13 00:00:00'
-where 
-id in (2, 1)
-and start_date >'2017-03-13 00:00:00'
+-------------
+101700: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101703: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101703: setEndDate:children
 
------ERROR IS JUST ABOVE-----
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 432000 second),
-end_date=DATE_SUB(end_date, INTERVAL 432000 second)
-where id in (3)
------ERROR IS JUST ABOVE-----
-update task set
-start_date='2017-03-09 00:00:00'
+update task set end_date='2017-03-31 00:00:00' 
 where 
-id in (1)
-and start_date >'2017-03-09 00:00:00'
+id in (10, 11, 12)
+and end_date > '2017-03-31 00:00:00'
+                
+-------------
+101708: setStartDate:main
+update task set `start_date`=:start_date where `id` = :bzz_0
+-------------
+101714: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101714: setEndDate:parents
 
------ERROR IS JUST ABOVE-----
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 259200 second),
-end_date=DATE_SUB(end_date, INTERVAL 259200 second)
-where id in (1, 2, 20, 3, 4, 5)
------ERROR IS JUST ABOVE-----
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 345600 second),
-end_date=DATE_SUB(end_date, INTERVAL 345600 second)
-where id in (1, 2, 20, 3, 4, 5)
------ERROR IS JUST ABOVE-----update task set `end_date`=:end_date where `id` = :bzz_0
------ERROR IS JUST ABOVE-----
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 2419200 second),
-end_date=DATE_ADD(end_date, INTERVAL 2419200 second)
-where id in (1, 2, 20, 3, 4, 5)
------ERROR IS JUST ABOVE-----
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 1209600 second),
-end_date=DATE_ADD(end_date, INTERVAL 1209600 second)
-where id in (1, 2, 20, 3, 4, 5)
------ERROR IS JUST ABOVE-----
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 2419200 second),
-end_date=DATE_ADD(end_date, INTERVAL 2419200 second)
-where id in (1, 2, 20, 3, 4, 5)
------ERROR IS JUST ABOVE-----
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 1209600 second),
-end_date=DATE_ADD(end_date, INTERVAL 1209600 second)
-where id in (1, 2, 20, 3, 4, 5)
------ERROR IS JUST ABOVE-----update task set `start_date`=:start_date where `id` = :bzz_0
------ERROR IS JUST ABOVE-----
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 259200 second),
-end_date=DATE_SUB(end_date, INTERVAL 259200 second)
-where id in (1, 2, 20, 3, 4, 5)
------ERROR IS JUST ABOVE-----
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 8467200 second),
-end_date=DATE_ADD(end_date, INTERVAL 8467200 second)
-where id in (1, 2, 20, 3, 4, 5)
------ERROR IS JUST ABOVE-----
-update task set
-start_date=DATE_ADD(start_date, INTERVAL 2419200 second),
-end_date=DATE_ADD(end_date, INTERVAL 2419200 second)
-where id in (1, 2, 20, 3, 4, 5)
------ERROR IS JUST ABOVE-----
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 1209600 second),
-end_date=DATE_SUB(end_date, INTERVAL 1209600 second)
-where id in (1, 2, 20, 3, 4, 5)
------ERROR IS JUST ABOVE-----
-update task set
-start_date=DATE_SUB(start_date, INTERVAL 1382400 second),
-end_date=DATE_SUB(end_date, INTERVAL 1382400 second)
-where id in (1, 2, 20, 3, 4, 5)
------ERROR IS JUST ABOVE-----
+update task set end_date='2017-04-04 00:00:00' 
+where 
+id in (6)
+and end_date < '2017-04-04 00:00:00'
+                
+-------------
+101727: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+101727: setEndDate:children
+
+update task set end_date='2017-03-31 00:00:00' 
+where 
+id in (10, 11, 12)
+and end_date > '2017-03-31 00:00:00'
+                
+-------------
+101732: setStartDate:main
+update task set `start_date`=:start_date where `id` = :bzz_0
+-------------

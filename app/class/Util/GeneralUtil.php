@@ -65,18 +65,23 @@ class GeneralUtil
     }
 
 
-    public static function debugLog($msg)
+    public static function debugLog($msg, $type = null)
     {
         $file = "/myphp/roadmaps/app/logs/nullos.log";
+        if (null !== $type) {
+            $msg = $type . PHP_EOL . $msg;
+        }
+        $msg .= PHP_EOL . "-------------";
+        $msg = date("His: ") . $msg;
         file_put_contents($file, $msg . PHP_EOL, FILE_APPEND);
 
 
-        $tasks = QuickPdo::fetchAll("select start_date from task");
-        foreach ($tasks as $task) {
-            if ('00:00:00' !== substr($task['start_date'], -8)) {
-                file_put_contents($file, "-----ERROR IS JUST ABOVE-----", FILE_APPEND);
-            }
-        }
+//        $tasks = QuickPdo::fetchAll("select start_date from task");
+//        foreach ($tasks as $task) {
+//            if ('00:00:00' !== substr($task['start_date'], -8)) {
+//                file_put_contents($file, "-----ERROR IS JUST ABOVE-----", FILE_APPEND);
+//            }
+//        }
 
 
     }

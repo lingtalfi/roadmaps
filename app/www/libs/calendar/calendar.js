@@ -58,6 +58,7 @@ if ("undefined" === typeof window.Calendar) {
                     // FILLED?
                     //----------------------------------------
                     var isFilled = isTaskFilled(time, task);
+                    // console.log(jTd, isFilled, time, task['timeStart'], task['timeEnd']);
                     if (true === isFilled) {
                         jTd.addClass("filled");
                         cptFilled++;

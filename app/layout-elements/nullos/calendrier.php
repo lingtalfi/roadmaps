@@ -10,13 +10,12 @@ use Util\GeneralUtil;
 
 
 $projectId = 1;
-$periodStartDate = array_key_exists('periodStartDate', $_SESSION) ? $_SESSION['periodStartDate'] : gmdate("Y-m-d 00:00:00");
-$periodInterval = array_key_exists('periodInterval', $_SESSION) ? $_SESSION['periodInterval'] : 86400;
+$periodStartDate = array_key_exists('periodStartDate', $_SESSION) ? $_SESSION['periodStartDate'] : $projectStartDate . " 00:00:00";
+$periodInterval = array_key_exists('periodInterval', $_SESSION) ? (int)$_SESSION['periodInterval'] : 86400;
 $periodNbSegments = array_key_exists('periodNbSegments', $_SESSION) ? (int)$_SESSION['periodNbSegments'] : 30;
 
 
-
-az($periodStartDate, $periodInterval, $periodNbSegments);
+//a($periodStartDate, $periodInterval, $periodNbSegments);
 
 
 //--------------------------------------------
@@ -34,7 +33,7 @@ AssetsList::js("/libs/screendebug/js/screendebug.js");
 AssetsList::js("/libs/calendar/calendar.js");
 
 
-$periodIntervals = [
+$_periodIntervals = [
     1 => "1 jour",
     2 => "2 jours",
     5 => "5 jours",
@@ -46,14 +45,20 @@ $periodIntervals = [
     180 => "environ 6 mois",
     365 => "environ 1 an",
 ];
+$periodIntervals = [];
+foreach ($_periodIntervals as $k => $v) {
+    $periodIntervals[$k * 86400] = $v;
+}
 
 
 ?>
 <div class="action-topcontainer">
+    <i class="material-icons period-prev">arrow_back</i>
+    <i class="material-icons period-next">arrow_forward</i>
     <div>
         <label>
             Date de début
-            <input type="text" id="period_datestart" value="<?php echo substr($projectStartDate, 0, 10); ?>">
+            <input type="text" id="period_datestart" value="<?php echo substr($periodStartDate, 0, 10); ?>">
         </label>
     </div>
     <div>
@@ -148,7 +153,7 @@ $periodIntervals = [
                     $plots = $helper->getTimeScalePlots();
                     foreach ($plots as $k => $time) {
                         ?>
-                        <th class="th-time">
+                        <th class="th-time" title="<?php echo date("Y", $time); ?>">
                             <?php echo formatDate($time, $months); ?>
                         </th>
                         <?php
@@ -614,10 +619,25 @@ $periodIntervals = [
                     }
                 });
             }
+            else if (jTarget.hasClass("period-prev") ||
+                jTarget.hasClass("period-next")) {
+                var dir = "prev";
+                if (jTarget.hasClass("period-next")) {
+                    dir = "next";
+                }
+
+                e.preventDefault();
+                $.getJSON("/services/roadmaps.php?action=calendrier-move-period&direction=" + dir, function (data) {
+                    if ("ok" === data) {
+                        window.location.reload();
+                    }
+                });
+
+            }
         });
 
 
-        $(document).tooltip();
+//        $(document).tooltip();
 
 
         //----------------------------------------
