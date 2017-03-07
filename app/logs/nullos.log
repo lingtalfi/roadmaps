@@ -382,3 +382,121 @@ update task set
 start_date=DATE_ADD(start_date, INTERVAL 345600 second),
 end_date=DATE_ADD(end_date, INTERVAL 345600 second)
 where id in (1, 2, 20, 3, 4, 5)
+
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 432000 second),
+end_date=DATE_SUB(end_date, INTERVAL 432000 second)
+where id in (1, 2, 20, 3, 4, 5)
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 345600 second),
+end_date=DATE_ADD(end_date, INTERVAL 345600 second)
+where id in (4)
+-----ERROR IS JUST ABOVE-----
+update task set
+end_date='2017-03-26 00:00:00'
+where 
+id in (1)
+and end_date <'2017-03-26 00:00:00'
+
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 432000 second),
+end_date=DATE_SUB(end_date, INTERVAL 432000 second)
+where id in (4)
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date='2017-03-10 00:00:00'
+where 
+id in (1)
+and start_date >'2017-03-10 00:00:00'
+
+-----ERROR IS JUST ABOVE-----update task set `start_date`=:start_date where `id` = :bzz_0
+-----ERROR IS JUST ABOVE-----
+update task set start_date='2017-03-08 00:00:00' 
+where 
+id in (1)
+and start_date > '2017-03-08 00:00:00'
+                
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 172800 second),
+end_date=DATE_SUB(end_date, INTERVAL 172800 second)
+where id in (20)
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date='2017-03-13 00:00:00'
+where 
+id in (2, 1)
+and start_date >'2017-03-13 00:00:00'
+
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 432000 second),
+end_date=DATE_SUB(end_date, INTERVAL 432000 second)
+where id in (3)
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date='2017-03-09 00:00:00'
+where 
+id in (1)
+and start_date >'2017-03-09 00:00:00'
+
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 259200 second),
+end_date=DATE_SUB(end_date, INTERVAL 259200 second)
+where id in (1, 2, 20, 3, 4, 5)
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 345600 second),
+end_date=DATE_SUB(end_date, INTERVAL 345600 second)
+where id in (1, 2, 20, 3, 4, 5)
+-----ERROR IS JUST ABOVE-----update task set `end_date`=:end_date where `id` = :bzz_0
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 2419200 second),
+end_date=DATE_ADD(end_date, INTERVAL 2419200 second)
+where id in (1, 2, 20, 3, 4, 5)
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 1209600 second),
+end_date=DATE_ADD(end_date, INTERVAL 1209600 second)
+where id in (1, 2, 20, 3, 4, 5)
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 2419200 second),
+end_date=DATE_ADD(end_date, INTERVAL 2419200 second)
+where id in (1, 2, 20, 3, 4, 5)
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 1209600 second),
+end_date=DATE_ADD(end_date, INTERVAL 1209600 second)
+where id in (1, 2, 20, 3, 4, 5)
+-----ERROR IS JUST ABOVE-----update task set `start_date`=:start_date where `id` = :bzz_0
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 259200 second),
+end_date=DATE_SUB(end_date, INTERVAL 259200 second)
+where id in (1, 2, 20, 3, 4, 5)
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 8467200 second),
+end_date=DATE_ADD(end_date, INTERVAL 8467200 second)
+where id in (1, 2, 20, 3, 4, 5)
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 2419200 second),
+end_date=DATE_ADD(end_date, INTERVAL 2419200 second)
+where id in (1, 2, 20, 3, 4, 5)
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 1209600 second),
+end_date=DATE_SUB(end_date, INTERVAL 1209600 second)
+where id in (1, 2, 20, 3, 4, 5)
+-----ERROR IS JUST ABOVE-----
+update task set
+start_date=DATE_SUB(start_date, INTERVAL 1382400 second),
+end_date=DATE_SUB(end_date, INTERVAL 1382400 second)
+where id in (1, 2, 20, 3, 4, 5)
+-----ERROR IS JUST ABOVE-----

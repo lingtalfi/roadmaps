@@ -19,6 +19,7 @@
     position: relative;
 }
 
+
 .roadmaps-table td.start-date-update-trigger,
 .roadmaps-table td.end-date-update-trigger {
     cursor: pointer;
@@ -91,6 +92,100 @@
     display: block;
 }
 
+.first-column-cell {
+    display: flex;
+    align-items: center;
+}
+
+th.first-column-cell {
+    display: table-cell;
+    position: relative;
+}
+
+/*.first-column-cell .sort-container,*/
+/*.first-column-cell .add-child-container, */
+/*.first-column-cell .remove-child-container */
+/*{*/
+    /*position: relative;*/
+    /*width: 20px;*/
+/*}*/
+
+.first-column-cell .label {
+    flex: auto;
+    white-space: nowrap;
+}
+
+th.first-column-cell .add-child-container
+{
+    position: absolute;
+    right: 0;
+}
+
+.first-column-cell .sort-container button,
+.first-column-cell .add-child-container button {
+    cursor: pointer;
+    border: none;
+    position: absolute;
+    left: 2px;
+    display: block;
+    width: 16px;
+    height: 8px;
+}
+
+.first-column-cell .sort-container button.up {
+    top: -10px;
+    background: transparent;
+    display: none;
+}
+
+.first-column-cell .sort-container button.down {
+    top: -1px;
+    background: transparent;
+    display: none;
+}
+
+.first-column-cell .sort-container button i,
+.first-column-cell .add-child-container button i {
+    position: absolute;
+    font-size: 20px;
+    color: #666;
+    cursor: pointer;
+    top: -4px;
+    left: -1px;
+}
+
+.first-column-cell .add-child-container button i {
+    font-size: 16px;
+}
+
+.first-column-cell .sort-container button:hover i,
+.first-column-cell .add-child-container button:hover i {
+    color: #ddd;
+}
+
+.has-prev-sibling .first-column-cell .sort-container button.up,
+.has-next-sibling .first-column-cell .sort-container button.down {
+    display: block;
+}
+
+.first-column-cell .add-child-container button {
+    top: -4px;
+    background: transparent;
+}
+
+th.first-column-cell .add-child-container button {
+    top: -10px;
+    background: transparent;
+}
+
+th.first-column-cell .add-child-container button i {
+    color: #eee;
+}
+
+th.first-column-cell .add-child-container button:hover i {
+    color: #ccc;
+}
+
 .dialog-standard {
     text-align: left;
     box-sizing: border-box;
@@ -105,87 +200,4 @@
     margin-top: 10px;
 }
 
-/*------------------------------------
-- FIRST CELL BUTTONS
-------------------------------------*/
 
-.first-column-cell {
-    display: flex;
-    align-items: center;
-}
-
-.first-column-cell .label {
-    flex: auto;
-    cursor: pointer;
-    /*white-space: nowrap;*/
-}
-
-.first-column-cell .label:hover {
-    text-decoration: underline;
-}
-
-.first-column-cell button {
-    border: none;
-    background: transparent;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    padding: 0;
-    margin: 0;
-}
-
-.first-column-cell button i {
-    font-size: 20px;
-}
-
-.first-column-cell button:hover i {
-    color: #666;
-}
-
-.first-column-cell .sort button {
-    width: 20px;
-    height: 12px;
-    position: relative;
-}
-
-.first-column-cell .sort button i {
-    position: absolute;
-    top: -2px;
-    left: -2px;
-}
-
-.first-column-cell .sort-up-trigger,
-.first-column-cell .sort-down-trigger {
-    display: none;
-}
-
-.has-prev-sibling .first-column-cell .sort-up-trigger,
-.has-next-sibling .first-column-cell .sort-down-trigger {
-    display: block;
-}
-
-th.first-column-cell {
-    display: table-cell;
-}
-
-th.first-column-cell button {
-    float: right;
-}
-
-th.first-column-cell button i {
-    color: #eee;
-}
-
-th.first-column-cell button:hover i {
-    color: #999;
-}
-
-.action-topcontainer {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.action-topcontainer div{
-    margin: 5px;
-}

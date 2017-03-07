@@ -223,4 +223,111 @@ and start_date >'$limitDate'
 
     }
 
+
+    public static function sortUp($taskId)
+    {
+        $childrenIds = Task::getOrderedChildren($taskId);
+        $taskId = (int)$taskId;
+
+        $pos = null;
+        foreach ($childrenIds as $k => $id) {
+            if ((int)$id === $taskId) {
+                unset($childrenIds[$k]);
+                $pos = $k;
+            }
+        }
+        $pos--;
+        if ($pos < 0) {
+            $pos = 0;
+        }
+        array_splice($childrenIds, $pos, 0, $taskId);
+        foreach ($childrenIds as $order => $id) {
+            QuickPdo::update("task", [
+                'order' => $order,
+            ], [
+                ["id", "=", $id],
+            ]);
+        }
+    }
+
+    public static function sortDown($taskId)
+    {
+        $childrenIds = Task::getOrderedChildren($taskId);
+
+        $taskId = (int)$taskId;
+
+        $pos = null;
+        foreach ($childrenIds as $k => $id) {
+            if ((int)$id === $taskId) {
+                unset($childrenIds[$k]);
+                $pos = $k;
+            }
+        }
+        $pos++;
+        $max = count($childrenIds);
+        if ($pos > $max) {
+            $pos = $max;
+        }
+        array_splice($childrenIds, $pos, 0, $taskId);
+
+        foreach ($childrenIds as $order => $id) {
+            QuickPdo::update("task", [
+                'order' => $order,
+            ], [
+                ["id", "=", $id],
+            ]);
+        }
+    }
+
+    public static function sortTop($taskId)
+    {
+        $childrenIds = Task::getOrderedChildren($taskId);
+        $taskId = (int)$taskId;
+
+        $pos = null;
+        foreach ($childrenIds as $k => $id) {
+            if ((int)$id === $taskId) {
+                unset($childrenIds[$k]);
+                $pos = $k;
+            }
+        }
+        $pos = 0;
+        array_splice($childrenIds, $pos, 0, $taskId);
+        foreach ($childrenIds as $order => $id) {
+            QuickPdo::update("task", [
+                'order' => $order,
+            ], [
+                ["id", "=", $id],
+            ]);
+        }
+    }
+
+
+    public static function sortBottom($taskId)
+    {
+        $childrenIds = Task::getOrderedChildren($taskId);
+
+        $taskId = (int)$taskId;
+
+        $pos = null;
+        foreach ($childrenIds as $k => $id) {
+            if ((int)$id === $taskId) {
+                unset($childrenIds[$k]);
+                $pos = $k;
+            }
+        }
+        $pos++;
+        $max = count($childrenIds);
+        $pos = $max;
+        array_splice($childrenIds, $pos, 0, $taskId);
+
+        foreach ($childrenIds as $order => $id) {
+            QuickPdo::update("task", [
+                'order' => $order,
+            ], [
+                ["id", "=", $id],
+            ]);
+        }
+    }
+
 }

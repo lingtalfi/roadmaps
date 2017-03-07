@@ -14,7 +14,8 @@ ta.label as task_label,
 t.done,
 t.project_id,
 p.name as project_name,
-t.order
+t.order,
+t.color
 ';
 
 
@@ -41,6 +42,7 @@ $table->columnLabels= [
     "done" => "done",
     "project_name" => "project",
     "order" => "order",
+    "color" => "color",
 ];
 
 

@@ -6,14 +6,25 @@
 //--------------------------------------------
 use AssetsList\AssetsList;
 use Project\Project;
+use Util\GeneralUtil;
+
 
 $projectId = 1;
+$periodStartDate = array_key_exists('periodStartDate', $_SESSION) ? $_SESSION['periodStartDate'] : gmdate("Y-m-d 00:00:00");
+$periodInterval = array_key_exists('periodInterval', $_SESSION) ? $_SESSION['periodInterval'] : 86400;
+$periodNbSegments = array_key_exists('periodNbSegments', $_SESSION) ? (int)$_SESSION['periodNbSegments'] : 30;
+
+
+
+az($periodStartDate, $periodInterval, $periodNbSegments);
 
 
 //--------------------------------------------
 // SCRIPT
 //--------------------------------------------
 $projectName = Project::getName($projectId);
+$projectStartDate = Project::getStartDate($projectId);
+
 
 AssetsList::css("/style/roadmaps.css");
 AssetsList::css("/iconfont/material-icons.css");
@@ -23,16 +34,59 @@ AssetsList::js("/libs/screendebug/js/screendebug.js");
 AssetsList::js("/libs/calendar/calendar.js");
 
 
+$periodIntervals = [
+    1 => "1 jour",
+    2 => "2 jours",
+    5 => "5 jours",
+    7 => "1 semaine",
+    14 => "2 semaines",
+    30 => "environ 1 mois",
+    60 => "environ 2 mois",
+    90 => "environ 3 mois",
+    180 => "environ 6 mois",
+    365 => "environ 1 an",
+];
+
+
 ?>
+<div class="action-topcontainer">
+    <div>
+        <label>
+            Date de début
+            <input type="text" id="period_datestart" value="<?php echo substr($projectStartDate, 0, 10); ?>">
+        </label>
+    </div>
+    <div>
+        <label>Intervalle</label>
+        <select id="period_interval">
+            <?php foreach ($periodIntervals as $key => $label):
+                $s = ($key === $periodInterval) ? 'selected="selected"' : '';
+                ?>
+                <option <?php echo $s; ?> value="<?php echo $key; ?>"><?php echo $label; ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    <div>
+        <label>
+            Nombre de segments
+            <select id="period_segments">
+                <?php for ($i = 1; $i <= 100; $i++):
+                    $s = ($i === $periodNbSegments) ? 'selected="selected"' : '';
+                    ?>
+                    <option <?php echo $s; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                <?php endfor; ?>
+            </select>
+        </label>
+    </div>
+</div>
 <div class="panes-container" style="height: 100%">
     <div id="three">
         <?php
 
-        $periodInterval = 86400;
 
         $p = \Period\Period::create();
-        $p->setStartDate(gmdate("Y-m-d 00:00:00"));
-        $p->setEndDate(gmdate("Y-m-d 00:00:00", time() + 30 * 86400));
+        $p->setStartDate($periodStartDate);
+        $p->setEndDate(gmdate("Y-m-d H:i:s", GeneralUtil::gmMysqlToTime($periodStartDate) + $periodInterval * $periodNbSegments));
         $p->setInterval($periodInterval);
 
 
@@ -79,8 +133,16 @@ AssetsList::js("/libs/calendar/calendar.js");
         <div class="roadmaps" id="roadmaps">
             <table class="roadmaps-table" id="roadmaps-table">
                 <tr>
-                    <th><?php echo $projectName; ?></th>
-                    <th>Start date</th>
+                    <th class="first-column-cell">
+                        <span class="label">
+                        <?php echo $projectName; ?>
+                            </span>
+
+                        <button class="add-child-trigger"><i class="material-icons add-child-trigger">add</i>
+                        </button>
+
+                    </th>
+                    <th style="clear: both;">Start date</th>
                     <th>End date</th>
                     <?php
                     $plots = $helper->getTimeScalePlots();
@@ -96,13 +158,16 @@ AssetsList::js("/libs/calendar/calendar.js");
                 </tr>
                 <?php
                 $i = 0;
+                $sStyle = '';
                 foreach ($tasks as $task):
+                    $sStyle .= ".filled.task-" . $task['id'] . ' { background-color: ' . $task['color'] . ' }' . PHP_EOL;
                     $ml = $task['level'] * 20 + 10;
                     $style = ' style="padding-left: ' . $ml . 'px"';
                     $sOddEven = (0 == $i++ % 2) ? "even" : "odd";
                     ?>
                     <tr class="<?php echo $sOddEven; ?> level-<?php echo $task['level']; ?> parent-open"
                         data-level="<?php echo $task['level']; ?>"
+                        data-color="<?php echo htmlspecialchars($task['color']); ?>"
                     >
                         <td<?php echo $style; ?> class="infocell">
 
@@ -110,10 +175,22 @@ AssetsList::js("/libs/calendar/calendar.js");
                                 <?php if (true === $task['hasChildren']): ?>
                                     <button class="toggler">-</button>
                                 <?php endif; ?>
-                                <span class="label"><?php echo $task['label'] . " (" . $task['id'] . ")"; ?></span>
-                                <div class="sort-container">
-                                    <button class="up"><i class="material-icons">arrow_drop_up</i></button>
-                                    <button class="down"><i class="material-icons">arrow_drop_down</i></button>
+                                <span class="label task-info-trigger"><span
+                                            class="labelonly task-info-trigger"><?php echo $task['label'] . '</span>' . " (" . $task['id'] . ")"; ?></span>
+
+                                <button class="add-child-trigger"><i
+                                            class="material-icons add-child-trigger">add</i></button>
+
+
+                                <button class="remove-child-trigger"><i class="material-icons remove-child-trigger">delete</i>
+                                </button>
+
+
+                                <div class="sort">
+                                    <button class="sort-up-trigger"><i class="material-icons sort-up-trigger">arrow_drop_up</i>
+                                    </button>
+                                    <button class="sort-down-trigger"><i class="material-icons sort-down-trigger">arrow_drop_down</i>
+                                    </button>
                                 </div>
                             </div>
 
@@ -130,7 +207,7 @@ AssetsList::js("/libs/calendar/calendar.js");
                         <?php
                         foreach ($plots as $k => $time):
                             ?>
-                            <td class="cell">
+                            <td class="cell task-<?php echo $task['id']; ?>">
                                 <div class="token-grab-handle"></div>
                                 <div class="token-resize-handle-left token-resize-handle"></div>
                                 <div class="token-resize-handle-right token-resize-handle"></div>
@@ -145,6 +222,11 @@ AssetsList::js("/libs/calendar/calendar.js");
     </div>
     <div id="four"></div>
 </div>
+
+<style>
+    <?php echo $sStyle; ?>
+</style>
+
 <script>
 
 
@@ -200,9 +282,46 @@ AssetsList::js("/libs/calendar/calendar.js");
     $(document).ready(function () {
 
 
+
+
+
+        //----------------------------------------
+        // PERIOD FORM
+        //----------------------------------------
+        var jPeriodStartDate = $("#period_datestart");
+        var jPeriodInterval = $("#period_interval");
+        var jPeriodSegments = $("#period_segments");
+        jPeriodStartDate.datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+        jPeriodStartDate.on('change', function () {
+            updatePeriodForm();
+        });
+        jPeriodInterval.on('change', function () {
+            updatePeriodForm();
+        });
+        jPeriodSegments.on('change', function () {
+            updatePeriodForm();
+        });
+
+
+        function updatePeriodForm() {
+            $.post("/services/roadmaps.php?action=calendrier-update-period", {
+                date_start: jPeriodStartDate.val(),
+                interval: jPeriodInterval.val(),
+                segments: jPeriodSegments.val()
+            }, function (data) {
+                if ('ok' === data) {
+                    window.location.reload();
+                }
+            }, 'json');
+        }
+
+
+        //----------------------------------------
+        // TABLE
+        //----------------------------------------
         var jTable = $("#roadmaps-table");
-
-
         $("body").on('click', function (e) {
             var jTarget = $(e.target);
             if (jTarget.hasClass("toggler")) {
@@ -265,8 +384,8 @@ AssetsList::js("/libs/calendar/calendar.js");
                         var date = jTarget.attr("data-date");
                         var horaire = date.split(" ")[1];
 
-                        var hour = parseInt(horaire.substr(0, 2));
-                        var minute = parseInt(horaire.substr(3, 2));
+                        var hour = horaire.substr(0, 2);
+                        var minute = horaire.substr(3, 2);
 
                         var jHour = $("#dialog-update-date").find('.hour');
                         var jMinute = $("#dialog-update-date").find('.minute');
@@ -304,6 +423,197 @@ AssetsList::js("/libs/calendar/calendar.js");
                     }
                 });
             }
+            else if (jTarget.hasClass("add-child-trigger")) {
+                e.preventDefault();
+
+                if ('undefined' !== typeof $("#dialog-create-task").dialog('instance')) {
+                    $("#dialog-create-task").dialog("close");
+                }
+
+                var parentId = jTarget.closest('tr').attr("data-id");
+                if ('undefined' === typeof parentId) {
+                    parentId = 0;
+                }
+
+
+                $("#dialog-create-task").dialog({
+                    position: {
+                        my: "center",
+                        at: "center",
+                        of: jTarget
+                    },
+                    width: 600,
+                    open: function (event, ui) {
+
+
+                        var date = "<?php echo gmdate('Y-m-d'); ?>";
+                        var jDial = $("#dialog-create-task");
+                        var jDate = jDial.find(".datepicker");
+                        jDate.datepicker({
+                            dateFormat: "yy-mm-dd"
+                        });
+                        jDate.datepicker("setDate", date);
+
+
+                        var hour = "00";
+                        var minute = "00";
+
+                        var jHour = jDial.find('.hour');
+                        var jMinute = jDial.find('.minute');
+
+                        jHour.val(hour);
+                        jMinute.val(minute);
+
+
+                    },
+                    buttons: {
+                        "Appliquer": function () {
+
+
+                            var jDial = $("#dialog-create-task");
+                            var label = jDial.find('.label').val();
+                            var date = jDial.find('.datepicker').val();
+                            var hour = jDial.find('.hour').val();
+                            var minute = jDial.find('.minute').val();
+                            var duree = jDial.find('.duration').val();
+                            var position = jDial.find('.position').val();
+
+
+                            $.post('/services/roadmaps.php?action=calendrier-task-create', {
+                                'projectId': <?php echo $projectId; ?>,
+                                'parentId': parentId,
+                                'label': label,
+                                'date': date,
+                                'hour': hour,
+                                'minute': minute,
+                                'duration': duree,
+                                'position': position
+                            }, function (data) {
+                                if ('ok' === data) {
+                                    location.reload();
+                                }
+                            }, 'json');
+                        },
+                        "Annuler": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            }
+            else if (jTarget.hasClass("sort-up-trigger")) {
+                e.preventDefault();
+                var id = jTarget.closest('tr').attr("data-id");
+                $.getJSON("/services/roadmaps.php?action=calendrier-sort-up&id=" + id, function (data) {
+                    if ("ok" === data) {
+                        window.location.reload();
+                    }
+                });
+            }
+            else if (jTarget.hasClass("sort-down-trigger")) {
+                e.preventDefault();
+                var id = jTarget.closest('tr').attr("data-id");
+                $.getJSON("/services/roadmaps.php?action=calendrier-sort-down&id=" + id, function (data) {
+                    if ("ok" === data) {
+                        window.location.reload();
+                    }
+                });
+            }
+            else if (jTarget.hasClass("remove-child-trigger")) {
+                e.preventDefault();
+                var id = jTarget.closest('tr').attr("data-id");
+                if (true === window.confirm("Are you sure you want to delete this task?")) {
+                    $.getJSON("/services/roadmaps.php?action=calendrier-remove-task&id=" + id, function (data) {
+                        if ("ok" === data) {
+                            window.location.reload();
+                        }
+                    });
+                }
+            }
+            else if (jTarget.hasClass("task-info-trigger")) {
+                e.preventDefault();
+                var jTr = jTarget.closest('tr');
+                var id = jTr.attr("data-id");
+                var color = jTr.attr("data-color");
+                var label = jTr.find(".labelonly").text();
+
+                var jDial = $("#dialog-taskinfo");
+
+                if ('undefined' !== typeof jDial.dialog('instance')) {
+                    jDial.dialog("close");
+                }
+
+                jDial.dialog({
+                    position: {
+                        my: "center",
+                        at: "center",
+                        of: jTarget
+                    },
+                    width: 600,
+                    open: function () {
+                        var jColor = jDial.find('.color');
+                        var jSpreadColor = jDial.find('.apply-color-to-children');
+                        jColor.val(color);
+                        var aChildrenTrs = getChildrenTasksByToggler(jTr);
+
+
+                        jColor.off().on('input', function () {
+                            var col = $(this).val();
+                            var spread = jSpreadColor.prop('checked');
+                            jTr.find(".filled").css("background-color", col);
+                            if (true === spread) {
+                                for (var i in aChildrenTrs) {
+                                    var jTrChild = aChildrenTrs[i];
+                                    jTrChild.find(".filled").css("background-color", col);
+                                }
+                            }
+                        });
+                        jDial.find('.label').val(label);
+
+                        jSpreadColor.off().on('change', function () {
+                            var checked = $(this).prop('checked');
+                            var _color = jColor.val();
+                            if (true === checked) {
+                                for (var i in aChildrenTrs) {
+                                    var jTrChild = aChildrenTrs[i];
+                                    jTrChild.find(".filled").css("background-color", _color);
+                                }
+                            }
+                            else {
+                                for (var i in aChildrenTrs) {
+                                    var jTrChild = aChildrenTrs[i];
+                                    var oldColor = jTrChild.attr("data-color");
+                                    jTrChild.find(".filled").css("background-color", oldColor);
+                                }
+                            }
+                        });
+
+
+                    },
+                    buttons: {
+                        "Appliquer": function () {
+
+                            var color = jDial.find('.color').val();
+                            var label = jDial.find('.label').val();
+                            var spread = jDial.find('.apply-color-to-children').prop("checked");
+
+                            $.post('/services/roadmaps.php?action=calendrier-task-update', {
+                                'id': id,
+                                'label': label,
+                                'color': color,
+                                'applyColorToChildren': spread
+                            }, function (data) {
+                                if ('ok' === data) {
+                                    location.reload();
+                                }
+                            }, 'json');
+                        },
+                        "Annuler": function () {
+                            $(this).dialog("close");
+                            jTr.find(".filled").css("background-color", color);
+                        }
+                    }
+                });
+            }
         });
 
 
@@ -319,8 +629,31 @@ AssetsList::js("/libs/calendar/calendar.js");
                 var hasNextSibling = trHasNextSibling($(this));
 
 
+                if (true === hasPrevSibling) {
+                    $(this).addClass('has-prev-sibling');
+                }
+                else {
+                    $(this).removeClass('has-prev-sibling');
+                }
+                if (true === hasNextSibling) {
+                    $(this).addClass('has-next-sibling');
+                }
+                else {
+                    $(this).removeClass('has-next-sibling');
+                }
             });
+        }
 
+        function trHasPrevSibling(jTr) {
+            var level = jTr.attr("data-level");
+            var jPrevSiblings = jTr.prevAll("[data-level=" + level + "]");
+            return (jPrevSiblings.length > 0);
+        }
+
+        function trHasNextSibling(jTr) {
+            var level = jTr.attr("data-level");
+            var jNextSiblings = jTr.nextAll("[data-level=" + level + "]");
+            return (jNextSiblings.length > 0);
         }
 
 
@@ -338,13 +671,7 @@ AssetsList::js("/libs/calendar/calendar.js");
             plots: plots
         });
         oCalendar.draw(function () {
-            var jFirstTr = jTable.find("tr[data-id=6]");
-
-
-            var jSiblings = jFirstTr.nextAll("[data-level=0]").addBack().add(jFirstTr.prevAll("[data-level=0]"));
-            console.log(jFirstTr);
-            console.log(jSiblings);
-            console.log("j");
+            updateSortArrows();
         });
         oCalendar.listen();
 
@@ -365,14 +692,18 @@ AssetsList::js("/libs/calendar/calendar.js");
             <li style="margin-top: 10px">
                 <label>Choisissez l'horaire</label>
                 <select class="hour">
-                    <?php for ($i = 0; $i < 24; $i++): ?>
-                        <option value="<?php echo $i; ?>"><?php echo sprintf("%02s", $i); ?></option>
+                    <?php for ($i = 0; $i < 24; $i++):
+                        $t = sprintf("%02s", $i);
+                        ?>
+                        <option value="<?php echo $t; ?>"><?php echo $t; ?></option>
                     <?php endfor; ?>
                 </select>
                 H
                 <select class="minute">
-                    <?php for ($i = 0; $i < 60; $i++): ?>
-                        <option value="<?php echo $i; ?>"><?php echo sprintf("%02s", $i); ?></option>
+                    <?php for ($i = 0; $i < 60; $i++):
+                        $t = sprintf("%02s", $i);
+                        ?>
+                        <option value="<?php echo $t; ?>"><?php echo $t; ?></option>
                     <?php endfor; ?>
                 </select>
                 m
@@ -381,5 +712,66 @@ AssetsList::js("/libs/calendar/calendar.js");
             <!--                Décaler les tâches suivantes <input type="checkbox" class="decaler-checkbox">-->
             <!--            </li>-->
         </ul>
+    </div>
+    <div id="dialog-create-task"
+         title="Créer une tâche"
+         class="dialog-standard">
+        <table>
+            <tr>
+                <td>Libellé</td>
+                <td><input type="text" class="label"></td>
+            </tr>
+            <tr>
+                <td>Durée (en jours)</td>
+                <td><input type="text" class="duration" value="1"></td>
+            </tr>
+            <tr>
+                <td>Date de début</td>
+                <td>
+                    <input type="text" class="datepicker">
+                    <select class="hour">
+                        <?php for ($i = 0; $i < 24; $i++):
+                            $t = sprintf("%02s", $i);
+                            ?>
+                            <option value="<?php echo $t; ?>"><?php echo $t; ?></option>
+                        <?php endfor; ?>
+                    </select>
+                    H
+                    <select class="minute">
+                        <?php for ($i = 0; $i < 60; $i++):
+                            $t = sprintf("%02s", $i);
+                            ?>
+                            <option value="<?php echo $t; ?>"><?php echo $t; ?></option>
+                        <?php endfor; ?>
+                    </select>
+                    m
+                </td>
+            </tr>
+            <tr>
+                <td>Ajouter</td>
+                <td><select class="position">
+                        <option value="first">au début</option>
+                        <option value="last">à la fin</option>
+                    </select></td>
+            </tr>
+        </table>
+    </div>
+    <div id="dialog-taskinfo"
+         title="Modifier les informations d'une tâche"
+         class="dialog-standard">
+        <table>
+            <tr>
+                <td>Label</td>
+                <td><input type="text" class="label"></td>
+            </tr>
+            <tr>
+                <td>Couleur</td>
+                <td><input type="color" class="color"></td>
+            </tr>
+            <tr>
+                <td>Appliquer la couleur aux enfants également</td>
+                <td><input type="checkbox" class="apply-color-to-children"></td>
+            </tr>
+        </table>
     </div>
 </div>

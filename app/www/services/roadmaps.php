@@ -66,6 +66,95 @@ if (array_key_exists('action', $_GET)) {
             }
 
             break;
+        case 'calendrier-sort-up':
+            if (array_key_exists("id", $_GET)) {
+                $taskId = $_GET['id'];
+                CalendarApi::sortUp($taskId);
+                $output = "ok";
+            }
+            break;
+        case 'calendrier-sort-down':
+            if (array_key_exists("id", $_GET)) {
+                $taskId = $_GET['id'];
+                CalendarApi::sortDown($taskId);
+                $output = "ok";
+            }
+            break;
+        case 'calendrier-task-create':
+            if (
+                array_key_exists("projectId", $_POST) &&
+                array_key_exists("parentId", $_POST) &&
+                array_key_exists("label", $_POST) &&
+                array_key_exists("date", $_POST) &&
+                array_key_exists("hour", $_POST) &&
+                array_key_exists("minute", $_POST) &&
+                array_key_exists("duration", $_POST) &&
+                array_key_exists("position", $_POST)
+            ) {
+
+                $projectId = $_POST['projectId'];
+                $parentId = $_POST['parentId'];
+                $label = $_POST['label'];
+                $date = $_POST['date'];
+                $hour = $_POST['hour'];
+                $minute = $_POST['minute'];
+                $duration = $_POST['duration'];
+                $position = $_POST['position'];
+
+
+                $startDate = $date . " $hour:$minute:00";;
+                TaskUtil::insertByDuration($projectId, $startDate, $duration, $parentId, $label, $position);
+
+                $output = "ok";
+            }
+            break;
+        case 'calendrier-remove-task':
+            if (array_key_exists("id", $_GET)) {
+
+                $id = $_GET['id'];
+                Task::delete($id);
+
+                $output = "ok";
+            }
+            break;
+        case 'calendrier-task-update':
+            if (
+                array_key_exists("id", $_POST) &&
+                array_key_exists("label", $_POST) &&
+                array_key_exists("color", $_POST)
+            ) {
+
+                $id = $_POST['id'];
+                $label = $_POST['label'];
+                $color = $_POST['color'];
+                $applyColorToChildren = ("true" === $_POST['applyColorToChildren']) ? true : false;
+
+
+                Task::update($id, [
+                    "label" => $label,
+                    "color" => $color,
+                ], $applyColorToChildren);
+                $output = "ok";
+            }
+            break;
+        case 'calendrier-update-period':
+            if (
+                array_key_exists("date_start", $_POST) &&
+                array_key_exists("interval", $_POST) &&
+                array_key_exists("segments", $_POST)
+            ) {
+
+                $dateStart = $_POST['date_start'];
+                $interval = $_POST['interval'];
+                $segments = $_POST['segments'];
+
+                $_SESSION['periodStartDate'] = $dateStart;
+                $_SESSION['periodInterval'] = $interval;
+                $_SESSION['periodNbSegments'] = $segments;
+
+                $output = "ok";
+            }
+            break;
         default:
             break;
     }

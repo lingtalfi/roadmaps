@@ -17,6 +17,7 @@ $form->labels = [
     "done" => "done",
     "project_id" => "project",
     "order" => "order",
+    "color" => "color",
 ];
 
 
@@ -34,6 +35,7 @@ $form->addControl("done")->type("text")
 $form->addControl("project_id")->type("selectByRequest", "select id, name from roadmaps.project");
 $form->addControl("order")->type("text")
 ->value(0);
+$form->addControl("color")->type("text");
 
 
 $form->display();

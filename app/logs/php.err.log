@@ -183,3 +183,68 @@ Stack trace:
 #2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/dbgen.php(6): require_once('/Volumes/Macint...')
 #3 {main}
   thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 307
+[06-Mar-2017 21:07:37 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1' for key 'PRIMARY' in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:307
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(307): PDO->exec('INSERT INTO `pr...')
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/tools/reset-db.php(9): QuickPdo\QuickPdo::freeExec('INSERT INTO `pr...')
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/dbgen.php(6): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 307
+[06-Mar-2017 21:08:19 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1' for key 'PRIMARY' in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:307
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(307): PDO->exec('INSERT INTO `pr...')
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/tools/reset-db.php(9): QuickPdo\QuickPdo::freeExec('INSERT INTO `pr...')
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/dbgen.php(6): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 307
+[06-Mar-2017 21:08:43 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1' for key 'PRIMARY' in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:307
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(307): PDO->exec('INSERT INTO `pr...')
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/tools/reset-db.php(9): QuickPdo\QuickPdo::freeExec('INSERT INTO `pr...')
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/dbgen.php(6): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 307
+[06-Mar-2017 21:37:43 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'and id != 1' at line 2 in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:264
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(264): PDOStatement->execute(Array)
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class/Task/Task.php(84): QuickPdo\QuickPdo::fetchAll('select id from ...', Array, 7)
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/no.php(13): Task\Task::getSiblings(1)
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 264
+[06-Mar-2017 21:42:42 Europe/Paris] PHP Warning:  array_search() expects at least 2 parameters, 1 given in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class/Calendar/CalendarApi.php on line 230
+[07-Mar-2017 05:15:34 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'roadmaps.project' doesn't exist in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:307
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(307): PDO->exec('INSERT INTO `pr...')
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/tools/reset-db.php(11): QuickPdo\QuickPdo::freeExec('INSERT INTO `pr...')
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/dbgen.php(6): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 307
+[07-Mar-2017 05:16:58 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'roadmaps.project' doesn't exist in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:307
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(307): PDO->exec('INSERT INTO `pr...')
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/tools/reset-db.php(11): QuickPdo\QuickPdo::freeExec('INSERT INTO `pr...')
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/dbgen.php(6): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 307
+[07-Mar-2017 05:17:05 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'roadmaps.project' doesn't exist in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:307
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(307): PDO->exec('INSERT INTO `pr...')
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/tools/reset-db.php(11): QuickPdo\QuickPdo::freeExec('INSERT INTO `pr...')
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/dbgen.php(6): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 307
+[07-Mar-2017 05:18:05 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'GENERATED ALWAYS AS (),
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENG' at line 5 in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:307
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(307): PDO->exec('\n\n\n-- ---------...')
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/tools/reset-db.php(10): QuickPdo\QuickPdo::freeExec('\n\n\n-- ---------...')
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/dbgen.php(6): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 307
+[07-Mar-2017 05:37:08 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[07-Mar-2017 05:37:08 Europe/Paris] PHP Warning:  gmmktime() expects parameter 2 to be integer, string given in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[07-Mar-2017 07:20:55 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 40
+[07-Mar-2017 07:20:55 Europe/Paris] PHP Warning:  gmmktime() expects parameter 5 to be integer, string given in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[07-Mar-2017 08:03:00 Europe/Paris] PHP Notice:  Undefined variable: nbSegments in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 75

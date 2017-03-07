@@ -24,6 +24,13 @@ class Task
         return QuickPdo::insert("task", $data);
     }
 
+    public static function delete($taskId)
+    {
+        QuickPdo::delete("task", [
+            ["id", "=", $taskId],
+        ]);
+    }
+
 
     public static function getStartDate($taskId)
     {
@@ -66,5 +73,44 @@ class Task
         return false;
     }
 
+    public static function getProjectId($taskId)
+    {
+        return QuickPdo::fetch("select project_id from task where id=" . (int)$taskId, [], \PDO::FETCH_COLUMN);
+    }
 
+    public static function getParent($taskId)
+    {
+        return QuickPdo::fetch("select parent_task_id from task where id=" . (int)$taskId, [], \PDO::FETCH_COLUMN);
+    }
+
+    public static function getOrderedChildren($taskId)
+    {
+        $parentId = self::getParent($taskId);
+        if (null === $parentId) {
+            return QuickPdo::fetchAll("select id from task 
+where parent_task_id is null order by `order` asc", [], \PDO::FETCH_COLUMN);
+        } else {
+            return QuickPdo::fetchAll("select id from task 
+where parent_task_id=$parentId order by `order` asc", [], \PDO::FETCH_COLUMN);
+        }
+
+    }
+
+
+    public static function update($taskId, array $data, $applyColorToChildren = true)
+    {
+        QuickPdo::update("task", $data, [
+            ["id", "=", $taskId],
+        ]);
+
+        if (true === $applyColorToChildren && array_key_exists('color', $data)) {
+            $ids = TaskUtil::getChildrenIds($taskId);
+            $sIds = implode(", ", $ids);
+            $q = "update task set color=:color where id in ($sIds)";
+            QuickPdo::freeQuery($q, [
+                'color' => $data['color'],
+            ]);
+        }
+
+    }
 }
