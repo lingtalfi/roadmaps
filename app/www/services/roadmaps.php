@@ -1,7 +1,9 @@
 <?php
 
 
+use Backup\AppBackup;
 use Calendar\CalendarApi;
+use Project\Project;
 use Task\Task;
 use Task\TaskUtil;
 use Util\GeneralUtil;
@@ -44,22 +46,29 @@ if (array_key_exists('action', $_GET)) {
             if (
                 array_key_exists("id", $_POST) &&
                 array_key_exists("offsetLeft", $_POST) &&
-                array_key_exists("offsetRight", $_POST)
+                array_key_exists("offsetRight", $_POST) &&
+                array_key_exists("alignedStart", $_POST) &&
+                array_key_exists("alignedEnd", $_POST)
             ) {
                 $taskId = $_POST['id'];
                 $offsetLeft = $_POST['offsetLeft'];
                 $offsetRight = $_POST['offsetRight'];
+                $alignedStart = $_POST['alignedStart'];
+                $alignedEnd = $_POST['alignedEnd'];
+
 
                 if ('calendrier-update-left' === $action) {
-                    $time = Task::getStartTime($taskId);
+//                    $time = Task::getStartTime($taskId);
+                    $time = $alignedStart;
                     $time += $offsetLeft;
                     CalendarApi::setStartDate($taskId, gmdate("Y-m-d H:i:s", $time));
                 } elseif ('calendrier-update-right' === $action) {
-                    $time = Task::getEndTime($taskId);
+//                    $time = Task::getEndTime($taskId);
+                    $time = $alignedEnd;
                     $time += $offsetRight;
                     CalendarApi::setEndDate($taskId, gmdate("Y-m-d H:i:s", $time));
                 } elseif ('calendrier-update-grab' === $action) {
-                    CalendarApi::move($taskId, $offsetLeft);
+                    CalendarApi::move($taskId, $offsetLeft, $alignedEnd);
                 }
 
 
@@ -90,6 +99,7 @@ if (array_key_exists('action', $_GET)) {
                 array_key_exists("hour", $_POST) &&
                 array_key_exists("minute", $_POST) &&
                 array_key_exists("duration", $_POST) &&
+                array_key_exists("color", $_POST) &&
                 array_key_exists("position", $_POST)
             ) {
 
@@ -100,11 +110,12 @@ if (array_key_exists('action', $_GET)) {
                 $hour = $_POST['hour'];
                 $minute = $_POST['minute'];
                 $duration = $_POST['duration'];
+                $color = $_POST['color'];
                 $position = $_POST['position'];
 
 
                 $startDate = $date . " $hour:$minute:00";;
-                TaskUtil::insertByDuration($projectId, $startDate, $duration, $parentId, $label, $position);
+                TaskUtil::insertByDuration($projectId, $startDate, $duration, $parentId, $label, $color, $position);
 
                 $output = "ok";
             }
@@ -175,6 +186,56 @@ if (array_key_exists('action', $_GET)) {
                 $_SESSION['periodStartDate'] = $newDate;
 
 
+                $output = "ok";
+            }
+            break;
+        case 'calendrier-change-parent':
+            if (
+                array_key_exists("dir", $_GET) &&
+                array_key_exists("id", $_GET)
+            ) {
+                $dir = $_GET['dir'];
+                $id = $_GET['id'];
+
+                if ("left" === $dir) {
+                    Task::parentLevelUp($id);
+                } elseif (array_key_exists("prev", $_GET)) {
+                    Task::parentLevelDown($id, $_GET['prev']);
+                }
+
+
+                $output = "ok";
+            }
+            break;
+        case 'calendrier-project-create':
+            if (array_key_exists("name", $_POST)) {
+
+                $name = $_POST['name'];
+                if (false !== ($id = Project::insert(["name" => $name]))) {
+                    $_SESSION['project_id'] = $id;
+                }
+                $output = "ok";
+            }
+            break;
+        case 'calendrier-project-change':
+            if (array_key_exists("id", $_GET)) {
+                $id = $_GET['id'];
+                $_SESSION['project_id'] = $id;
+                $output = "ok";
+            }
+            break;
+        case 'calendrier-all-save':
+            AppBackup::create()->createBackup();
+            $output = "ok";
+            break;
+        case 'calendrier-open-container':
+        case 'calendrier-close-container':
+            if (array_key_exists("id", $_GET)) {
+                if (!array_key_exists("taskOpenStates", $_SESSION)) {
+                    $_SESSION['taskOpenStates'] = [];
+                }
+                $value = ('calendrier-open-container' === $action) ? true : false;
+                $_SESSION["taskOpenStates"][$_GET['id']] = $value;
                 $output = "ok";
             }
             break;

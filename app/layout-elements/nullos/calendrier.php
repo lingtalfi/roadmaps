@@ -9,11 +9,11 @@ use Project\Project;
 use Util\GeneralUtil;
 
 
-$projectId = 1;
+$projectId = array_key_exists('project_id', $_SESSION) ? (int)$_SESSION['project_id'] : 1;
 $periodStartDate = array_key_exists('periodStartDate', $_SESSION) ? $_SESSION['periodStartDate'] : $projectStartDate . " 00:00:00";
 $periodInterval = array_key_exists('periodInterval', $_SESSION) ? (int)$_SESSION['periodInterval'] : 86400;
 $periodNbSegments = array_key_exists('periodNbSegments', $_SESSION) ? (int)$_SESSION['periodNbSegments'] : 30;
-
+$defaultTaskColor = '#733a4a';
 
 //a($periodStartDate, $periodInterval, $periodNbSegments);
 
@@ -23,6 +23,12 @@ $periodNbSegments = array_key_exists('periodNbSegments', $_SESSION) ? (int)$_SES
 //--------------------------------------------
 $projectName = Project::getName($projectId);
 $projectStartDate = Project::getStartDate($projectId);
+$projectId2Labels = Project::getId2Labels();
+
+
+$_SESSION['taskOpenStates'] = [];
+$taskOpenStates = (array_key_exists("taskOpenStates", $_SESSION)) ? $_SESSION["taskOpenStates"] : [];
+a($taskOpenStates);
 
 
 AssetsList::css("/style/roadmaps.css");
@@ -50,9 +56,18 @@ foreach ($_periodIntervals as $k => $v) {
     $periodIntervals[$k * 86400] = $v;
 }
 
+$containerDeepestLevel = 0;
+
 
 ?>
 <div class="action-topcontainer">
+    <div>
+        <button class="project-add">Ajouter un nouveau projet</button>
+    </div>
+    <div style="flex: auto">
+        <button class="project-save">Faire une sauvegarde</button>
+    </div>
+
     <i class="material-icons period-prev">arrow_back</i>
     <i class="material-icons period-next">arrow_forward</i>
     <div>
@@ -98,7 +113,7 @@ foreach ($_periodIntervals as $k => $v) {
         $helper = new \Period\InlinePeriodHelper($p);
 
 
-        $tasks = \Task\TaskUtil::getTasksByProject(1, $p);
+        $tasks = \Task\TaskUtil::getTasksByProject($projectId, $p);
 
 
         function justDate($dateTime)
@@ -139,13 +154,35 @@ foreach ($_periodIntervals as $k => $v) {
             <table class="roadmaps-table" id="roadmaps-table">
                 <tr>
                     <th class="first-column-cell">
-                        <span class="label">
-                        <?php echo $projectName; ?>
-                            </span>
-
-                        <button class="add-child-trigger"><i class="material-icons add-child-trigger">add</i>
-                        </button>
-
+                        <table>
+                            <tr>
+                                <td>
+                                    <select class="label" id="project-selector">
+                                        <?php foreach ($projectId2Labels as $id => $label):
+                                            $s = ($id === $projectId) ? ' selected="selected"' : '';
+                                            ?>
+                                            <option <?php echo $s; ?>
+                                                    value="<?php echo $id; ?>"><?php echo $label; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="add-child-trigger"><i
+                                                class="material-icons add-child-trigger">add</i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="tasks-closeall-trigger"><i
+                                                class="material-icons tasks-closeall-trigger">expand_less</i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="tasks-openall-trigger"><i
+                                                class="material-icons tasks-openall-trigger">expand_more</i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
                     </th>
                     <th style="clear: both;">Start date</th>
                     <th>End date</th>
@@ -169,8 +206,30 @@ foreach ($_periodIntervals as $k => $v) {
                     $ml = $task['level'] * 20 + 10;
                     $style = ' style="padding-left: ' . $ml . 'px"';
                     $sOddEven = (0 == $i++ % 2) ? "even" : "odd";
+                    $taskId = $task['id'];
+
+
+                    $sOpen = "";
+                    $sBtnText = "";
+                    if (true === $task['hasChildren']) {
+                        $sOpen = "opened";
+                        $sBtnText = "-";
+                        if (array_key_exists($taskId, $taskOpenStates) && false === $taskOpenStates[$taskId]) {
+                            $sOpen = "closed";
+                            $sBtnText = "+";
+                        } else {
+                            $sOpen = "opened";
+                            $sBtnText = "-";
+                        }
+                    }
+
+
+                    if ($task['level'] > $containerDeepestLevel) {
+                        $containerDeepestLevel = $task['level'];
+                    }
+
                     ?>
-                    <tr class="<?php echo $sOddEven; ?> level-<?php echo $task['level']; ?> parent-open"
+                    <tr class="<?php echo $sOddEven; ?> level-<?php echo $task['level']; ?> <?php echo $sOpen; ?>"
                         data-level="<?php echo $task['level']; ?>"
                         data-color="<?php echo htmlspecialchars($task['color']); ?>"
                     >
@@ -178,18 +237,19 @@ foreach ($_periodIntervals as $k => $v) {
 
                             <div class="first-column-cell">
                                 <?php if (true === $task['hasChildren']): ?>
-                                    <button class="toggler">-</button>
+                                    <button class="toggler"><?php echo $sBtnText; ?></button>
                                 <?php endif; ?>
                                 <span class="label task-info-trigger"><span
                                             class="labelonly task-info-trigger"><?php echo $task['label'] . '</span>' . " (" . $task['id'] . ")"; ?></span>
 
                                 <button class="add-child-trigger"><i
                                             class="material-icons add-child-trigger">add</i></button>
+                                    <button class="leftmove-trigger"><i class="material-icons leftmove-trigger">keyboard_arrow_left</i></button>
+                                    <button class="rightmove-trigger"><i class="material-icons rightmove-trigger">keyboard_arrow_right</i></button>
 
 
                                 <button class="remove-child-trigger"><i class="material-icons remove-child-trigger">delete</i>
                                 </button>
-
 
                                 <div class="sort">
                                     <button class="sort-up-trigger"><i class="material-icons sort-up-trigger">arrow_drop_up</i>
@@ -197,6 +257,7 @@ foreach ($_periodIntervals as $k => $v) {
                                     <button class="sort-down-trigger"><i class="material-icons sort-down-trigger">arrow_drop_down</i>
                                     </button>
                                 </div>
+
                             </div>
 
                         </td>
@@ -234,55 +295,6 @@ foreach ($_periodIntervals as $k => $v) {
 
 <script>
 
-
-    function toggleChildrenTasks(jToggler) {
-        var jTr = jToggler.closest("tr");
-        var hasOpen = jTr.hasClass("parent-open");
-        if (true === hasOpen) {
-            jToggler.text("+");
-            jTr.removeClass("parent-open");
-        }
-        else {
-            jToggler.text("-");
-            jTr.addClass("parent-open");
-        }
-        var aChildren = getChildrenTasksByToggler(jTr);
-
-        for (var i in aChildren) {
-            var jChildren = aChildren[i];
-            if (true === hasOpen) {
-                jChildren.removeClass("open");
-                jChildren.addClass("close");
-            }
-            else {
-                jChildren.addClass("open");
-                jChildren.removeClass("close");
-            }
-        }
-    }
-
-    /**
-     * Children are subsequent items with higher level
-     */
-    function getChildrenTasksByToggler(jTr) {
-        var level = jTr.attr("data-level");
-        var aTrs = [];
-        while (true) {
-            var jNextTr = jTr.next();
-            if (!jNextTr) {
-                break;
-            }
-            var nextLevel = jNextTr.attr("data-level");
-            if (nextLevel > level) {
-                aTrs.push(jNextTr);
-            }
-            else {
-                break;
-            }
-            jTr = jNextTr;
-        }
-        return aTrs;
-    }
 
     $(document).ready(function () {
 
@@ -323,6 +335,17 @@ foreach ($_periodIntervals as $k => $v) {
         }
 
 
+        $("#project-selector").on("change", function () {
+            var value = $(this).val();
+            $.getJSON("/services/roadmaps.php?action=calendrier-project-change&id=" + value, function (data) {
+                if ('ok' === data) {
+                    window.location.reload();
+                }
+            });
+
+        });
+
+
         //----------------------------------------
         // TABLE
         //----------------------------------------
@@ -331,7 +354,7 @@ foreach ($_periodIntervals as $k => $v) {
             var jTarget = $(e.target);
             if (jTarget.hasClass("toggler")) {
                 e.preventDefault();
-                toggleChildrenTasks(jTarget);
+                toggleContainer(jTarget.closest('tr'));
             }
             else if (
                 jTarget.hasClass("start-date-update-trigger") ||
@@ -482,6 +505,7 @@ foreach ($_periodIntervals as $k => $v) {
                             var minute = jDial.find('.minute').val();
                             var duree = jDial.find('.duration').val();
                             var position = jDial.find('.position').val();
+                            var color = jDial.find('.color').val();
 
 
                             $.post('/services/roadmaps.php?action=calendrier-task-create', {
@@ -492,6 +516,7 @@ foreach ($_periodIntervals as $k => $v) {
                                 'hour': hour,
                                 'minute': minute,
                                 'duration': duree,
+                                'color': color,
                                 'position': position
                             }, function (data) {
                                 if ('ok' === data) {
@@ -558,7 +583,7 @@ foreach ($_periodIntervals as $k => $v) {
                         var jColor = jDial.find('.color');
                         var jSpreadColor = jDial.find('.apply-color-to-children');
                         jColor.val(color);
-                        var aChildrenTrs = getChildrenTasksByToggler(jTr);
+                        var aChildrenTrs = getChildrenContainers(jTr);
 
 
                         jColor.off().on('input', function () {
@@ -632,7 +657,77 @@ foreach ($_periodIntervals as $k => $v) {
                         window.location.reload();
                     }
                 });
+            }
+            else if (jTarget.hasClass("leftmove-trigger") ||
+                jTarget.hasClass("rightmove-trigger")) {
+                var dir = "right";
+                if (jTarget.hasClass("leftmove-trigger")) {
+                    dir = "left";
+                }
 
+                var jTr = jTarget.closest("tr");
+                var id = jTr.attr("data-id");
+                var prevId = jTr.prev().attr("data-id");
+
+                e.preventDefault();
+                $.getJSON("/services/roadmaps.php?action=calendrier-change-parent&id=" + id + "&dir=" + dir + "&prev=" + prevId, function (data) {
+                    if ("ok" === data) {
+                        window.location.reload();
+                    }
+                });
+            }
+            else if (jTarget.hasClass("project-add")) {
+
+                var jDial = $("#dialog-project-create");
+                if ('undefined' !== typeof jDial.dialog('instance')) {
+                    jDial.dialog("close");
+                }
+                jDial.dialog({
+                    position: {
+                        my: "center",
+                        at: "center",
+                        of: jTarget
+                    },
+                    width: 600,
+                    buttons: {
+                        "Appliquer": function () {
+
+                            var name = jDial.find('.name').val();
+
+                            $.post('/services/roadmaps.php?action=calendrier-project-create', {
+                                'name': name
+                            }, function (data) {
+                                if ('ok' === data) {
+                                    location.reload();
+                                }
+                            }, 'json');
+                        },
+                        "Annuler": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            }
+            else if (jTarget.hasClass("project-save")) {
+                e.preventDefault();
+                $.getJSON("/services/roadmaps.php?action=calendrier-all-save", function (data) {
+                    if ("ok" === data) {
+                        alert("Ok");
+//                        window.location.reload();
+                    }
+                });
+            }
+            else if (jTarget.hasClass("tasks-closeall-trigger")) {
+                e.preventDefault();
+                jTable.find("tr[data-level=0]").each(function () {
+                    closeContainers($(this));
+                });
+            }
+            else if (jTarget.hasClass("tasks-openall-trigger")) {
+                e.preventDefault();
+                jTable.find("tr[data-level=0]").each(function () {
+                    openContainers($(this));
+                });
             }
         });
 
@@ -641,12 +736,139 @@ foreach ($_periodIntervals as $k => $v) {
 
 
         //----------------------------------------
+        // TOGGLING CONTAINERS
+        //----------------------------------------
+        var containerDeepestLevel = <?php echo $containerDeepestLevel; ?>;
+
+
+
+
+        function initializeContainers() {
+
+//            while (containerDeepestLevel >= 0) {
+//                jTable.find('tr[data-level=' + containerDeepestLevel + ']').each(function () {
+//                    if ($(this).hasClass('opened')) {
+//                        openContainer($(this), false);
+//                    }
+//                    else if ($(this).hasClass('closed')) {
+//                        closeContainer($(this), false);
+//                    }
+//                });
+//                containerDeepestLevel--;
+//            }
+
+            var jTr1 = jTable.find('tr[data-id=1]');
+            var ac = getDirectChildrenContainers(jTr1);
+            for(var i in ac){
+                console.log(ac[i]);
+            }
+
+        }
+
+
+        function toggleContainer(jTr) {
+            if (true === jTr.hasClass("opened")) {
+                closeContainer(jTr);
+            }
+            else {
+                openContainer(jTr);
+            }
+        }
+
+        function openContainer(jTr, update) {
+            jTr.find(".toggler:first").text("-");
+            jTr.addClass("opened");
+            jTr.removeClass("closed");
+            console.log("open " + jTr.attr('data-id'));
+
+            if (false !== update) {
+                var id = jTr.attr("data-id");
+                $.getJSON("/services/roadmaps.php?action=calendrier-open-container&id=" + id, function (data) {
+
+                });
+
+            }
+            var aChildren = getChildrenContainers(jTr);
+            for (var i in aChildren) {
+                var jChildren = aChildren[i];
+                jChildren.removeClass("child-close");
+            }
+        }
+
+        function closeContainer(jTr, update) {
+            jTr.find(".toggler:first").text("+");
+            jTr.addClass("closed");
+            jTr.removeClass("opened");
+            console.log("close " + jTr.attr('data-id'));
+
+            if (false !== update) {
+                var id = jTr.attr("data-id");
+                $.getJSON("/services/roadmaps.php?action=calendrier-close-container&id=" + id, function (data) {
+
+                });
+
+            }
+            var aChildren = getChildrenContainers(jTr);
+            for (var i in aChildren) {
+                var jChildren = aChildren[i];
+                jChildren.addClass("child-close");
+            }
+        }
+
+
+        /**
+         * Children are subsequent items with higher level
+         */
+        function getChildrenContainers(jTr) {
+            var level = jTr.attr("data-level");
+            var aTrs = [];
+            var jNextTr = jTr;
+            while (true) {
+                jNextTr = jNextTr.next();
+                if (!jNextTr) {
+                    break;
+                }
+                var nextLevel = jNextTr.attr("data-level");
+                if (nextLevel > level) {
+                    aTrs.push(jNextTr);
+                }
+                else {
+                    break;
+                }
+            }
+            return aTrs;
+        }
+
+        function getDirectChildrenContainers(jTr) {
+            var level = jTr.attr("data-level");
+            var aTrs = [];
+            var jNextTr = jTr;
+            while (true) {
+                jNextTr = jNextTr.next();
+                if (!jNextTr) {
+                    break;
+                }
+                var nextLevel = jNextTr.attr("data-level");
+
+                if (parseInt(nextLevel) + 1 === level) {
+                    aTrs.push(jNextTr);
+                }
+                else {
+                    break;
+                }
+            }
+            return aTrs;
+        }
+
+        //----------------------------------------
         // SORT ARROWS
         //----------------------------------------
-        function updateSortArrows() {
+        function updateArrows() {
             jTable.find('tr').each(function () {
                 var hasPrevSibling = trHasPrevSibling($(this));
                 var hasNextSibling = trHasNextSibling($(this));
+                var canBecomeChild = trCanBecomeChild($(this));
+                var canBecomeParent = trCanBecomeParent($(this));
 
 
                 if (true === hasPrevSibling) {
@@ -661,19 +883,74 @@ foreach ($_periodIntervals as $k => $v) {
                 else {
                     $(this).removeClass('has-next-sibling');
                 }
+                if (true === canBecomeParent) {
+                    $(this).addClass('can-become-parent');
+                }
+                else {
+                    $(this).removeClass('can-become-parent');
+                }
+                if (true === canBecomeChild) {
+                    $(this).addClass('can-become-child');
+                }
+                else {
+                    $(this).removeClass('can-become-child');
+                }
             });
         }
 
         function trHasPrevSibling(jTr) {
             var level = jTr.attr("data-level");
-            var jPrevSiblings = jTr.prevAll("[data-level=" + level + "]");
-            return (jPrevSiblings.length > 0);
+            var cpt = 0;
+            var isDead = false;
+            jTr.prevAll().each(function () {
+                if (false === isDead && level === $(this).attr("data-level")) {
+                    cpt++;
+                }
+                if ($(this).attr("data-level") < level) {
+                    isDead = true;
+                }
+            });
+            return (cpt > 0);
         }
 
         function trHasNextSibling(jTr) {
             var level = jTr.attr("data-level");
-            var jNextSiblings = jTr.nextAll("[data-level=" + level + "]");
-            return (jNextSiblings.length > 0);
+            var cpt = 0;
+            var isDead = false;
+            jTr.nextAll().each(function () {
+                if (false === isDead && level === $(this).attr("data-level")) {
+                    cpt++;
+                }
+                if ($(this).attr("data-level") < level) {
+                    isDead = true;
+                }
+            });
+            return (cpt > 0);
+        }
+
+
+        function trCanBecomeParent(jTr) {
+            var level = jTr.attr("data-level");
+            if (level > 0) {
+                return true;
+            }
+            return false;
+        }
+
+        function trCanBecomeChild(jTr) {
+            var jPrev = jTr.prev();
+            if (jPrev.length > 0) {
+                var prevLevel = jPrev.attr("data-level");
+                if ("undefined" !== typeof prevLevel) {
+                    if (prevLevel < jTr.attr("data-level")) {
+                        return false;
+                    }
+                }
+                else {
+                    return false;
+                }
+            }
+            return true;
         }
 
 
@@ -691,7 +968,8 @@ foreach ($_periodIntervals as $k => $v) {
             plots: plots
         });
         oCalendar.draw(function () {
-            updateSortArrows();
+            updateArrows();
+            initializeContainers();
         });
         oCalendar.listen();
 
@@ -734,7 +1012,7 @@ foreach ($_periodIntervals as $k => $v) {
         </ul>
     </div>
     <div id="dialog-create-task"
-         title="Créer une tâche"
+         title="Créer une tâche enfant"
          class="dialog-standard">
         <table>
             <tr>
@@ -774,6 +1052,10 @@ foreach ($_periodIntervals as $k => $v) {
                         <option value="last">à la fin</option>
                     </select></td>
             </tr>
+            <tr>
+                <td>Couleur</td>
+                <td><input type="color" class="color" value="<?php echo $defaultTaskColor; ?>"></td>
+            </tr>
         </table>
     </div>
     <div id="dialog-taskinfo"
@@ -791,6 +1073,16 @@ foreach ($_periodIntervals as $k => $v) {
             <tr>
                 <td>Appliquer la couleur aux enfants également</td>
                 <td><input type="checkbox" class="apply-color-to-children"></td>
+            </tr>
+        </table>
+    </div>
+    <div id="dialog-project-create"
+         title="Créer un nouveau projet"
+         class="dialog-standard">
+        <table>
+            <tr>
+                <td>Nom</td>
+                <td><input type="text" class="name"></td>
             </tr>
         </table>
     </div>

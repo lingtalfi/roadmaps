@@ -162,7 +162,7 @@ and end_date < '$newEndDate'
     }
 
 
-    public static function move($taskId, $offset)
+    public static function move($taskId, $offset, $alignedEnd = null)
     {
 
         $parentIds = [];
@@ -171,13 +171,19 @@ and end_date < '$newEndDate'
         $offset = (int)$offset;
         $addOp = "DATE_ADD";
         $offsetIsPositive = true;
+        $limitTime = null;
+
         if ($offset < 0) {
             $offsetIsPositive = false;
             $addOp = "DATE_SUB";
             $offset = -$offset;
             $originalDate = Task::getStartDate($taskId);
         } else {
-            $originalDate = Task::getEndDate($taskId);
+            if (null !== $alignedEnd) {
+                $limitTime = $alignedEnd + $offset;
+            } else {
+                $originalDate = Task::getEndDate($taskId);
+            }
         }
         $childrenIds = [$taskId];
         TaskUtil::collectChildrenIds($taskId, $childrenIds);
@@ -194,7 +200,9 @@ where id in ($sIds)";
         if (count($parentIds) > 0) {
             $sParentIds = implode(', ', $parentIds);
             if (true === $offsetIsPositive) {
-                $limitTime = GeneralUtil::gmMysqlToTime($originalDate) + $offset;
+                if (null === $limitTime) {
+                    $limitTime = GeneralUtil::gmMysqlToTime($originalDate) + $offset;
+                }
                 $limitDate = gmdate("Y-m-d H:i:s", $limitTime);
 
                 $q = "

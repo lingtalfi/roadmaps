@@ -83,6 +83,7 @@ class Task
         return QuickPdo::fetch("select parent_task_id from task where id=" . (int)$taskId, [], \PDO::FETCH_COLUMN);
     }
 
+
     public static function getOrderedChildren($taskId)
     {
         $parentId = self::getParent($taskId);
@@ -111,6 +112,70 @@ where parent_task_id=$parentId order by `order` asc", [], \PDO::FETCH_COLUMN);
                 'color' => $data['color'],
             ]);
         }
+    }
 
+    public static function getInfo($taskId)
+    {
+        return QuickPdo::fetch("select * from task where id=" . (int)$taskId);
+    }
+
+    public static function parentLevelUp($taskId)
+    {
+        $parent = self::getParent($taskId);
+        if (null !== $parent) {
+            $parentItem = self::getInfo($parent);
+            QuickPdo::update("task", [
+                "parent_task_id" => $parentItem['parent_task_id'],
+                "order" => $parentItem['order'] + 1,
+            ], [
+                ["id", "=", $taskId],
+            ]);
+        }
+    }
+
+    public static function parentLevelDown($taskId, $prevId)
+    {
+
+        if (false !== ($prevItem = self::getInfo($prevId))) {
+            if (false !== ($item = self::getInfo($taskId))) {
+
+                $itemParent = $item['parent_task_id'];
+                $prevItemParent = $prevItem['parent_task_id'];
+
+                if ($itemParent === $prevItemParent) {
+                    QuickPdo::update("task", [
+                        "parent_task_id" => $prevId,
+                    ], [
+                        ["id", "=", $taskId],
+                    ]);
+                } else {
+                    /**
+                     * Become sibling with the last child
+                     * of the previous sibling
+                     */
+                    $allChildren = Task::getOrderedChildren($taskId);
+                    $previousSiblingId = $taskId;
+                    foreach ($allChildren as $id) {
+                        if ((int)$id === (int)$taskId) {
+                            break;
+                        }
+                        $previousSiblingId = $id;
+                    }
+
+
+                    $q = "select MAX(`order`) as count from task where parent_task_id=" . (int)$previousSiblingId;
+                    $order = QuickPdo::fetch($q, [], \PDO::FETCH_COLUMN);
+
+
+
+                    QuickPdo::update("task", [
+                        "parent_task_id" => $previousSiblingId,
+                        "order" => $order + 1,
+                    ], [
+                        ["id", "=", $taskId],
+                    ]);
+                }
+            }
+        }
     }
 }

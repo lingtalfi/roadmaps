@@ -73,6 +73,10 @@ order by `order` asc
 //            $ret[$k]['end_date'] = gmdate("Y-m-d H:i:s", $newEnd);
         }
 
+        // 1490918400 31
+
+//        az($ret);
+
         return $ret;
     }
 
@@ -172,7 +176,7 @@ where id=" . (int)$taskId . "
     }
 
 
-    public static function insertByDuration($projectId, $startDate, $nbDays, $parentId, $label, $position = "last")
+    public static function insertByDuration($projectId, $startDate, $nbDays, $parentId, $label, $color, $position = "last")
     {
         $time = GeneralUtil::gmMysqlToTime($startDate);
         $dateStart = gmdate("Y-m-d H:i:s", $time);
@@ -194,6 +198,7 @@ where id=" . (int)$taskId . "
                 'done' => 0,
                 'project_id' => $projectId,
                 'order' => 0,
+                'color' => $color,
             ]))
         ) {
 

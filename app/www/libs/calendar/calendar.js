@@ -57,7 +57,7 @@ if ("undefined" === typeof window.Calendar) {
                     //----------------------------------------
                     // FILLED?
                     //----------------------------------------
-                    var isFilled = isTaskFilled(time, task);
+                    var isFilled = isCellFilled(time, task);
                     // console.log(jTd, isFilled, time, task['timeStart'], task['timeEnd']);
                     if (true === isFilled) {
                         jTd.addClass("filled");
@@ -107,7 +107,7 @@ if ("undefined" === typeof window.Calendar) {
                         else {
                             nextPlot = plots[i] + this.options.periodInterval;
                         }
-                        var isNextFilled = isTaskFilled(nextPlot, task);
+                        var isNextFilled = isCellFilled(nextPlot, task);
                         if (false === isNextFilled) {
                             hasRightBorder = true;
                         }
@@ -235,10 +235,14 @@ if ("undefined" === typeof window.Calendar) {
                                 var url = "/services/roadmaps.php?action=calendrier-update-" + zis.dragType;
 
 
+
+
                                 $.post(url, {
                                     id: id,
                                     offsetLeft: offsetStart,
-                                    offsetRight: offsetEnd
+                                    offsetRight: offsetEnd,
+                                    alignedStart: originalTask.timeStart,
+                                    alignedEnd: originalTask.timeEnd
                                 }, function (data) {
                                     if ("ok" === data) {
                                         window.location.reload();
@@ -571,12 +575,12 @@ if ("undefined" === typeof window.Calendar) {
                 return (true === broken) ? parseInt(i) - 1 : parseInt(i);
             },
             debug: function () {
-                screenDebug({
-                    currentIndex: this.currentIndex,
-                    clickIndex: this.clickIndex,
-                    currentTaskStart: this.currentTask['plotStart'],
-                    currentTaskEnd: this.currentTask['plotEnd']
-                });
+                // screenDebug({
+                //     currentIndex: this.currentIndex,
+                //     clickIndex: this.clickIndex,
+                //     currentTaskStart: this.currentTask['plotStart'],
+                //     currentTaskEnd: this.currentTask['plotEnd']
+                // });
             }
         };
 
@@ -591,8 +595,8 @@ if ("undefined" === typeof window.Calendar) {
             return jTable.find("tr:first").next();
         }
 
-        function isTaskFilled(time, task) {
-            return (time >= task.timeStart && time < task.timeEnd);
+        function isCellFilled(plotTime, task) {
+            return (plotTime >= task.timeStart && plotTime < task.timeEnd);
         }
 
         function getTaskId(jTr) {

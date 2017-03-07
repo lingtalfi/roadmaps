@@ -35,9 +35,6 @@ ButineurAutoloader::getInst()->start();
 require_once __DIR__ . "/functions/main-functions.php";
 
 
-
-
-
 //--------------------------------------------
 // DB
 //--------------------------------------------
@@ -47,6 +44,7 @@ $dbName = 'roadmaps';
 $host = 'host=127.0.0.1';
 $host = 'host=localhost';
 $host = 'unix_socket=/Applications/MAMP/tmp/mysql/mysql.sock';
+$mysqlDumpPath = "/Applications/MAMP/Library/bin/mysqldump";
 
 
 //--------------------------------------------
@@ -97,11 +95,11 @@ QuickPdo::setConnection("mysql:$host;dbname=$dbName", $dbUser, $dbPass, [
 //--------------------------------------------
 define('APP_ROOT_DIR', __DIR__);
 define('WEBSITE_NAME', "Roadmaps");
+define('MYSQLDUMP_PATH', $mysqlDumpPath);
+define('DB_PASS', $dbPass);
 
 
 Spirit::set('ricSeparator', '--*--');
-
-
 
 
 //--------------------------------------------

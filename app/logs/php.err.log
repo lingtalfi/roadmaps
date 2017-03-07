@@ -248,3 +248,11 @@ Stack trace:
 [07-Mar-2017 07:20:55 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 40
 [07-Mar-2017 07:20:55 Europe/Paris] PHP Warning:  gmmktime() expects parameter 5 to be integer, string given in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
 [07-Mar-2017 08:03:00 Europe/Paris] PHP Notice:  Undefined variable: nbSegments in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 75
+[07-Mar-2017 11:39:17 Europe/Paris] PHP Notice:  Undefined variable: originalDate in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Calendar/CalendarApi.php on line 222
+[07-Mar-2017 11:39:22 Europe/Paris] PHP Notice:  Undefined variable: originalDate in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Calendar/CalendarApi.php on line 222
+[07-Mar-2017 14:38:30 Europe/Paris] PHP Fatal error:  Uncaught exception 'Exception' with message 'Command failed: /Applications/MAMP/Library/bin/mysqldump -uroot -proot --default-character-set=utf8 --add-drop-database -B roadmaps > "/Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/backup/auto/20170307--000000--backup.sql"' in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Backup/AppBackup.php:85
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Backup/AppBackup.php(42): Backup\AppBackup->executeCmd('/Applications/M...')
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/no.php(14): Backup\AppBackup->createBackup()
+#2 {main}
+  thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Backup/AppBackup.php on line 85

@@ -24,12 +24,12 @@
     cursor: pointer;
 }
 
-.roadmaps-table tr.close {
+.roadmaps-table tr.child-close {
     display: none;
 }
 
 .roadmaps-table .level-0 {
-    background: #aaa;
+    background: #ddd;
     font-weight: bold;
 }
 
@@ -38,7 +38,15 @@
 }
 
 .roadmaps-table .level-2 {
-    background: #ddd;
+    background: #bbb;
+}
+
+.roadmaps-table .level-3 {
+    background: #aaa;
+}
+
+.roadmaps-table .level-4 {
+    background: #999;
 }
 
 .roadmaps-table .toggler {
@@ -155,12 +163,18 @@
 }
 
 .first-column-cell .sort-up-trigger,
-.first-column-cell .sort-down-trigger {
+.first-column-cell .sort-down-trigger,
+.first-column-cell .leftmove-trigger,
+.first-column-cell .rightmove-trigger
+{
     display: none;
 }
 
 .has-prev-sibling .first-column-cell .sort-up-trigger,
-.has-next-sibling .first-column-cell .sort-down-trigger {
+.has-next-sibling .first-column-cell .sort-down-trigger,
+.can-become-parent .first-column-cell .leftmove-trigger,
+.can-become-child .first-column-cell .rightmove-trigger
+{
     display: block;
 }
 
