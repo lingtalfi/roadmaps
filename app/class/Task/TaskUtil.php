@@ -12,20 +12,10 @@ use Util\GeneralUtil;
 class TaskUtil
 {
 
+
     public static function getTasksByProject($projectId, Period $p)
     {
-        $ret = [];
-        $items = QuickPdo::fetchAll("select * from task 
-where project_id=" . (int)$projectId . "
-and parent_task_id is null
-order by `order` asc
-");
-
-        $level = 0;
-        foreach ($items as $item) {
-            $item['level'] = $level;
-            self::addItem($item, $level, $ret);
-        }
+        $ret = self::getTasksInfoByProject($projectId);
 
 
         // add hasChildren and timeStart/timeEnd helpers
@@ -80,6 +70,40 @@ order by `order` asc
         return $ret;
     }
 
+    public static function getTasksInfoByProject($projectId)
+    {
+        $ret = [];
+        $items = QuickPdo::fetchAll("select * from task 
+where project_id=" . (int)$projectId . "
+and parent_task_id is null
+order by `order` asc
+");
+
+        $level = 0;
+        foreach ($items as $item) {
+            $item['level'] = $level;
+            self::addItem($item, $level, $ret);
+        }
+        return $ret;
+    }
+
+
+    public static function getTasksHierarchyByProject($projectId)
+    {
+        $ret = [];
+        $items = QuickPdo::fetchAll("select * from task 
+where project_id=" . (int)$projectId . "
+and parent_task_id is null
+order by `order` asc
+");
+
+        foreach ($items as $item) {
+            self::addHierarchyItem($item);
+            $ret[] = $item;
+        }
+        return $ret;
+    }
+
 
     //--------------------------------------------
     //
@@ -107,6 +131,18 @@ order by `order` asc
             return $right;
         }
         return $left;
+    }
+
+    private static function addHierarchyItem(array &$item)
+    {
+        $children = self::getChildrenTasks($item['id']);
+        if (count($children) > 0) {
+            $item['children'] = [];
+            foreach ($children as $child) {
+                self::addHierarchyItem($child);
+                $item['children'][] = $child;
+            }
+        }
     }
 
     private static function addItem(array $item, $level, array &$items)

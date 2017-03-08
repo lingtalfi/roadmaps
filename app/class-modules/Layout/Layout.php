@@ -5,6 +5,9 @@ namespace Layout;
 use AssetsList\AssetsList;
 use Icons\Icons;
 use Icons\IconsFactory;
+use Privilege\Privilege;
+use Privilege\PrivilegeUser;
+use Users\Users;
 
 class Layout
 {
@@ -57,8 +60,35 @@ class Layout
         <!--        <div class="topbar">--><?php ////LayoutServices::displayTopBar();
         ?><!--</div>-->
 
+
+
+
         <div class="topmenu">
+
             <ul>
+                <li style="flex: auto">
+                    <select id="users-selector">
+                        <?php
+
+
+
+                        $users = Users::getId2Labels();
+                        $userSelected = null;
+                        if (array_key_exists('user_selected', $_SESSION)) {
+                            $userSelected = $_SESSION['user_selected'];
+                        } else {
+                            $userSelected = $users[0];
+                            $_SESSION['user_selected'] = $userSelected;
+                        }
+                        foreach ($users as $id => $label) {
+                            $s = ((int)$id === (int)$userSelected) ? ' selected="selected"' : '';
+                            ?>
+                            <option <?php echo $s; ?> value="<?php echo $id; ?>"><?php echo $label; ?></option>
+                            <?php
+                        }
+                        ?>
+                    </select>
+                </li>
                 <li><a id="calendrier-topmenu-link"
                        href="/calendrier<?php echo $calendrierQueryString; ?>">Calendrier</a></li>
             </ul>

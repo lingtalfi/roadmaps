@@ -1,5 +1,16 @@
 
 
+-- -----------------------------------------------------
+-- Table `roadmaps`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `roadmaps`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `pseudo` VARCHAR(64) NOT NULL,
+  `pass` VARCHAR(64) NOT NULL,
+  `avatar` VARCHAR(128) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table `roadmaps`.`project`
@@ -7,8 +18,17 @@
 CREATE TABLE IF NOT EXISTS `roadmaps`.`project` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
+  `current` VARCHAR(64) NULL,
+  `users_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_project_users1_idx` (`users_id` ASC),
+  CONSTRAINT `fk_project_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `roadmaps`.`users` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
+
 
 
 -- -----------------------------------------------------

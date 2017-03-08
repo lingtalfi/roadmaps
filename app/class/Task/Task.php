@@ -31,6 +31,11 @@ class Task
         ]);
     }
 
+    public static function insert(array $item)
+    {
+        return QuickPdo::insert("task", $item);
+    }
+
 
     public static function getStartDate($taskId)
     {
@@ -165,7 +170,6 @@ where parent_task_id=$parentId order by `order` asc", [], \PDO::FETCH_COLUMN);
 
                     $q = "select MAX(`order`) as count from task where parent_task_id=" . (int)$previousSiblingId;
                     $order = QuickPdo::fetch($q, [], \PDO::FETCH_COLUMN);
-
 
 
                     QuickPdo::update("task", [

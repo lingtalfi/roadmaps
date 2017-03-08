@@ -165,16 +165,14 @@
 .first-column-cell .sort-up-trigger,
 .first-column-cell .sort-down-trigger,
 .first-column-cell .leftmove-trigger,
-.first-column-cell .rightmove-trigger
-{
+.first-column-cell .rightmove-trigger {
     display: none;
 }
 
 .has-prev-sibling .first-column-cell .sort-up-trigger,
 .has-next-sibling .first-column-cell .sort-down-trigger,
 .can-become-parent .first-column-cell .leftmove-trigger,
-.can-become-child .first-column-cell .rightmove-trigger
-{
+.can-become-child .first-column-cell .rightmove-trigger {
     display: block;
 }
 
@@ -198,6 +196,8 @@ th.first-column-cell button:hover i {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    position: relative;
+    z-index: 10000;
 }
 
 .action-topcontainer div {
@@ -212,4 +212,14 @@ th.first-column-cell button:hover i {
 .period-prev:hover,
 .period-next:hover {
     color: #666;
+}
+
+.ui-widget.ui-widget-content {
+    z-index: 100000;
+}
+
+.project-cursor {
+    color: white;
+    background: rgba(0, 0, 0, 0.1);
+
 }

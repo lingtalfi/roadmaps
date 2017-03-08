@@ -4,6 +4,7 @@
 use Backup\AppBackup;
 use Calendar\CalendarApi;
 use Project\Project;
+use QuickPdo\QuickPdo;
 use Task\Task;
 use Task\TaskUtil;
 use Util\GeneralUtil;
@@ -210,11 +211,28 @@ if (array_key_exists('action', $_GET)) {
         case 'calendrier-project-create':
             if (array_key_exists("name", $_POST)) {
 
+                $userId = $_SESSION['user_selected'];
                 $name = $_POST['name'];
-                if (false !== ($id = Project::insert(["name" => $name]))) {
+                if (false !== ($id = Project::insert([
+                    "name" => $name,
+                    "users_id" => $userId,
+                    ]))) {
                     $_SESSION['project_id'] = $id;
                 }
                 $output = "ok";
+            }
+            break;
+        case 'calendrier-project-duplicate':
+            if (
+                array_key_exists("name", $_POST) &&
+                array_key_exists("id", $_POST)
+            ) {
+                $id = $_POST['id'];
+                $name = $_POST['name'];
+
+                if (false !== ($id = Project::duplicate($id, $name))) {
+                    $output = "ok";
+                }
             }
             break;
         case 'calendrier-project-change':
@@ -225,8 +243,24 @@ if (array_key_exists('action', $_GET)) {
             }
             break;
         case 'calendrier-all-save':
-            AppBackup::create()->createBackup();
+            $name = null;
+            if (array_key_exists("name", $_POST)) {
+                $name = "manual/" . $_POST["name"];
+            }
+            AppBackup::create()->createBackup($name);
             $output = "ok";
+            break;
+        case 'calendrier-all-restore':
+            $name = null;
+            if (array_key_exists("name", $_POST)) {
+
+                $name = $_POST["name"];
+                $file = APP_ROOT_DIR . "/backup/" . $name;
+                if (file_exists($file)) {
+                    QuickPdo::freeExec(file_get_contents($file));
+                    $output = "ok";
+                }
+            }
             break;
         case 'calendrier-open-container':
         case 'calendrier-close-container':
@@ -236,6 +270,30 @@ if (array_key_exists('action', $_GET)) {
                 }
                 $value = ('calendrier-open-container' === $action) ? true : false;
                 $_SESSION["taskOpenStates"][$_GET['id']] = $value;
+                $output = "ok";
+            }
+            break;
+        case 'calendrier-project-setcursor':
+            if (
+                array_key_exists("time", $_GET) &&
+                array_key_exists("task_id", $_GET) &&
+                array_key_exists("project_id", $_GET)
+            ) {
+                $datetime = gmdate("Y-m-d H:i:s", $_GET['time']);
+                $taskId = $_GET['task_id'];
+                $projectId = $_GET['project_id'];
+
+                $cursor = $taskId . ":" . $datetime;
+                Project::setCursor($projectId, $cursor);
+
+                $output = "ok";
+            }
+            break;
+        case 'calendrier-users-change':
+            if (array_key_exists("id", $_GET)) {
+                $id = $_GET['id'];
+                $_SESSION["user_selected"] = $id;
+                unset($_SESSION["project_id"]);
                 $output = "ok";
             }
             break;

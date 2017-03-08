@@ -69,14 +69,14 @@ body.holygrail {
 .topmenu {
     height: 40px;
     background: #ddd;
-    display: flex;
-    justify-content: flex-end;
     flex-shrink: 0;
     padding: 15px 0 10px 0;
 }
 
 .topmenu ul {
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
     list-style-type: none;
 }
 

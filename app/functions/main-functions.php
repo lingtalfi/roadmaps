@@ -45,8 +45,8 @@ function __($identifier, $context = 'default', array $tags = [])
         $defs = [];
         $file = APP_DICTIONARY_PATH . '/' . $context . '.php';
         if (false === file_exists($file)) {
-            return $identifier;
             throw new \Exception("translation file not found: " . $file);
+            return $identifier;
         }
         require $file;
         $terms[$context] = $defs;

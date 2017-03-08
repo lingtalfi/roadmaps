@@ -256,3 +256,78 @@ Stack trace:
 #1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/no.php(14): Backup\AppBackup->createBackup()
 #2 {main}
   thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Backup/AppBackup.php on line 85
+[08-Mar-2017 04:33:09 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1' for key 'PRIMARY' in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:114
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(114): PDOStatement->execute(Array)
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class/Task/Task.php(36): QuickPdo\QuickPdo::insert('task', Array)
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class/Project/Project.php(42): Task\Task::insert(Array)
+#3 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/no.php(14): Project\Project::duplicate(1, 'maurice')
+#4 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 114
+[08-Mar-2017 04:58:41 Europe/Paris] PHP Notice:  Array to string conversion in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 114
+[08-Mar-2017 04:58:41 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'children' in 'field list' in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:114
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(114): PDOStatement->execute(Array)
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class/Task/Task.php(36): QuickPdo\QuickPdo::insert('task', Array)
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class/Project/Project.php(45): Task\Task::insert(Array)
+#3 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/no.php(15): Project\Project::duplicate(1, 'maurice')
+#4 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 114
+[08-Mar-2017 06:33:14 Europe/Paris] PHP Warning:  Illegal string offset 'name' in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 26
+[08-Mar-2017 06:33:14 Europe/Paris] PHP Warning:  Illegal string offset 'current' in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 29
+[08-Mar-2017 06:33:14 Europe/Paris] PHP Notice:  Undefined offset: 1 in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 29
+[08-Mar-2017 06:33:36 Europe/Paris] PHP Warning:  Illegal string offset 'name' in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 26
+[08-Mar-2017 06:33:36 Europe/Paris] PHP Warning:  Illegal string offset 'current' in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 29
+[08-Mar-2017 06:33:36 Europe/Paris] PHP Notice:  Undefined offset: 1 in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 29
+[08-Mar-2017 07:23:21 Europe/Paris] PHP Fatal error:  Uncaught Error: Class 'Users\Users' not found in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-modules/Layout/Layout.php:66
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/pages/calendrier.php(8): Layout\Layout->display()
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/index.php(51): require_once('/Volumes/Macint...')
+#2 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-modules/Layout/Layout.php on line 66
+[08-Mar-2017 07:51:52 Europe/Paris] PHP Notice:  Undefined offset: 0 in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-modules/Layout/Layout.php on line 71
+[08-Mar-2017 07:53:05 Europe/Paris] PHP Notice:  Undefined variable: tasks in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 1149
+[08-Mar-2017 07:53:05 Europe/Paris] PHP Notice:  Undefined variable: plots in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 1151
+[08-Mar-2017 07:53:16 Europe/Paris] PHP Notice:  Undefined variable: tasks in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 1149
+[08-Mar-2017 07:53:16 Europe/Paris] PHP Notice:  Undefined variable: plots in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 1151
+[08-Mar-2017 07:54:04 Europe/Paris] PHP Notice:  Undefined variable: plots in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 1152
+[08-Mar-2017 07:55:45 Europe/Paris] PHP Notice:  Undefined offset: 1 in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 33
+[08-Mar-2017 07:55:45 Europe/Paris] PHP Warning:  gmmktime() expects parameter 6 to be integer, string given in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 07:57:27 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`roadmaps`.`project`, CONSTRAINT `fk_project_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:114
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(114): PDOStatement->execute(Array)
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class/Project/Project.php(46): QuickPdo\QuickPdo::insert('project', Array)
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/services/roadmaps.php(215): Project\Project::insert(Array)
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 114
+[08-Mar-2017 07:57:30 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`roadmaps`.`project`, CONSTRAINT `fk_project_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:114
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(114): PDOStatement->execute(Array)
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class/Project/Project.php(46): QuickPdo\QuickPdo::insert('project', Array)
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/services/roadmaps.php(215): Project\Project::insert(Array)
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 114
+[08-Mar-2017 07:57:39 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`roadmaps`.`project`, CONSTRAINT `fk_project_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:114
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(114): PDOStatement->execute(Array)
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class/Project/Project.php(46): QuickPdo\QuickPdo::insert('project', Array)
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/services/roadmaps.php(215): Project\Project::insert(Array)
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 114
+[08-Mar-2017 08:03:08 Europe/Paris] PHP Fatal error:  Uncaught Error: Class 'PrivilegeUser' not found in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/index.php:11
+Stack trace:
+#0 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/index.php on line 11
+[08-Mar-2017 08:03:53 Europe/Paris] PHP Fatal error:  Uncaught Exception: translation file not found: /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/lang/en/authentication.php in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/functions/main-functions.php:48
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/pages/login.php(59): __('Welcome to {web...', 'authentication', Array)
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/index.php(54): require_once('/Volumes/Macint...')
+#2 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/functions/main-functions.php on line 48
+[08-Mar-2017 08:12:12 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`roadmaps`.`project`, CONSTRAINT `fk_project_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:114
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(114): PDOStatement->execute(Array)
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class/Project/Project.php(46): QuickPdo\QuickPdo::insert('project', Array)
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/services/roadmaps.php(215): Project\Project::insert(Array)
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 114

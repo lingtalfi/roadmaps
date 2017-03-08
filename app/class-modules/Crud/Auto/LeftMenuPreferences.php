@@ -14,6 +14,7 @@ class LeftMenuPreferences
     'Website' => [
         'roadmaps.project',
         'roadmaps.task',
+        'roadmaps.users',
     ],
 ];
     }
