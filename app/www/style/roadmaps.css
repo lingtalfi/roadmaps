@@ -69,6 +69,8 @@
     z-index: 2;
 }
 
+
+
 .roadmaps-table .token-resize-handle-left {
     left: 0;
 }
@@ -88,6 +90,13 @@
     z-index: 2;
     cursor: grab;
 }
+
+.roadmaps-table.baby .filled .token-grab-handle,
+.roadmaps-table.baby .left-border .token-resize-handle,
+.roadmaps-table.baby .right-border .token-resize-handle{
+    cursor: default;
+}
+
 
 .roadmaps-table .left-border .token-resize-handle-right,
 .roadmaps-table .right-border .token-resize-handle-left {

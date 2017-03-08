@@ -2912,3 +2912,63 @@ id in (71, 65)
 and end_date <'2017-03-28 00:00:00'
 
 -------------
+094330: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+094332: move:main
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 259200 second),
+end_date=DATE_ADD(end_date, INTERVAL 259200 second)
+where id in (86)
+-------------
+094332: move:parents
+
+update task set
+end_date='2017-03-12 00:00:00'
+where 
+id in (87)
+and end_date <'2017-03-12 00:00:00'
+
+-------------
+094333: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+094333: setEndDate:parents
+
+update task set end_date='2017-03-20 00:00:00' 
+where 
+id in (87)
+and end_date < '2017-03-20 00:00:00'
+                
+-------------
+094619: move:main
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 86400 second),
+end_date=DATE_ADD(end_date, INTERVAL 86400 second)
+where id in (90)
+-------------
+094621: move:main
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 172800 second),
+end_date=DATE_ADD(end_date, INTERVAL 172800 second)
+where id in (88)
+-------------
+094624: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+094626: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------
+094641: move:main
+
+update task set
+start_date=DATE_ADD(start_date, INTERVAL 172800 second),
+end_date=DATE_ADD(end_date, INTERVAL 172800 second)
+where id in (91)
+-------------
+094648: setEndDate:main
+update task set `end_date`=:end_date where `id` = :bzz_0
+-------------

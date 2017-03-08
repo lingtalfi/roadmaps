@@ -101,6 +101,25 @@ define('DB_PASS', $dbPass);
 
 Spirit::set('ricSeparator', '--*--');
 
+//--------------------------------------------
+// PRIVILEGE
+//--------------------------------------------
+PrivilegeUser::$sessionTimeout = 60 * 5 * 1000;
+PrivilegeUser::refresh();
+if (array_key_exists('disconnect', $_GET)) {
+    PrivilegeUser::disconnect();
+    if ('' !== $_SERVER['HTTP_REFERER']) {
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
+    }
+}
+Privilege::setProfiles([
+    'root' => [
+        '*',
+    ],
+    'admin' => [],
+]);
+
 
 //--------------------------------------------
 // TRANSLATION

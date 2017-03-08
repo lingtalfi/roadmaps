@@ -331,3 +331,136 @@ Stack trace:
 #2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/services/roadmaps.php(215): Project\Project::insert(Array)
 #3 {main}
   thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 114
+[08-Mar-2017 08:55:35 Europe/Paris] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42S02]: Base table or view not found: 1146 Table 'roadmaps.users' doesn't exist' in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:264
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(264): PDOStatement->execute(Array)
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Users/Users.php(17): QuickPdo\QuickPdo::fetchAll('select * from u...')
+#2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Authentication/AuthenticationConfig.php(22): Users\Users::getInfos()
+#3 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Authentication/AuthenticationHelper.php(18): Authentication\AuthenticationConfig::getCredentials()
+#4 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/pages/login.php(42): Authentication\AuthenticationHelper::authenticationMatch('ling', 'root')
+#5 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/ in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 264
+[08-Mar-2017 08:56:11 Europe/Paris] PHP Notice:  Undefined offset: 0 in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Layout/Layout.php on line 80
+[08-Mar-2017 09:05:05 Europe/Paris] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens' in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:285
+Stack trace:
+#0 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(285): PDOStatement->execute(Array)
+#1 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Users/Users.php(26): QuickPdo\QuickPdo::fetch('select id from ...', Array, Array)
+#2 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/pages/login.php(47): Users\Users::getIdByCredentials('ling', 'pilates')
+#3 /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/www/index.php(54): require_once('/Volumes/Macint...')
+#4 {main}
+  thrown in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 285
+[08-Mar-2017 09:06:11 Europe/Paris] PHP Warning:  PDOStatement::fetch() expects parameter 1 to be long, array given in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 286
+[08-Mar-2017 09:08:43 Europe/Paris] PHP Warning:  PDOStatement::fetch() expects parameter 1 to be long, array given in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 286
+[08-Mar-2017 09:08:44 Europe/Paris] PHP Notice:  Undefined offset: 0 in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Layout/Layout.php on line 80
+[08-Mar-2017 09:08:44 Europe/Paris] PHP Notice:  Undefined variable: projectStartDate in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 21
+[08-Mar-2017 09:09:27 Europe/Paris] PHP Notice:  Undefined variable: projectStartDate in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 21
+[08-Mar-2017 09:10:25 Europe/Paris] PHP Warning:  PDOStatement::fetch() expects parameter 1 to be long, array given in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 286
+[08-Mar-2017 09:11:09 Europe/Paris] PHP Warning:  PDOStatement::fetch() expects parameter 1 to be long, array given in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 286
+[08-Mar-2017 09:11:24 Europe/Paris] PHP Warning:  PDOStatement::fetch() expects parameter 1 to be long, array given in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 286
+[08-Mar-2017 09:12:18 Europe/Paris] PHP Notice:  Undefined offset: 0 in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Layout/Layout.php on line 80
+[08-Mar-2017 09:12:18 Europe/Paris] PHP Notice:  Undefined variable: projectStartDate in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 21
+[08-Mar-2017 09:14:43 Europe/Paris] PHP Notice:  Undefined offset: 0 in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Layout/Layout.php on line 80
+[08-Mar-2017 09:14:43 Europe/Paris] PHP Notice:  Undefined variable: projectStartDate in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 21
+[08-Mar-2017 09:14:45 Europe/Paris] PHP Notice:  Undefined offset: 0 in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Layout/Layout.php on line 80
+[08-Mar-2017 09:14:45 Europe/Paris] PHP Notice:  Undefined variable: projectStartDate in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 21
+[08-Mar-2017 09:14:49 Europe/Paris] PHP Notice:  Undefined offset: 0 in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Layout/Layout.php on line 80
+[08-Mar-2017 09:14:49 Europe/Paris] PHP Notice:  Undefined variable: projectStartDate in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 21
+[08-Mar-2017 09:15:15 Europe/Paris] PHP Notice:  Undefined offset: 0 in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Layout/Layout.php on line 81
+[08-Mar-2017 09:15:27 Europe/Paris] PHP Notice:  Undefined offset: 0 in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class-modules/Layout/Layout.php on line 82
+[08-Mar-2017 09:15:53 Europe/Paris] PHP Notice:  Undefined variable: projectStartDate in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 21
+[08-Mar-2017 09:15:53 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:15:53 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:15:53 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:15:53 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:15:53 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:15:53 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:15:55 Europe/Paris] PHP Notice:  Undefined variable: projectStartDate in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/layout-elements/nullos/calendrier.php on line 21
+[08-Mar-2017 09:15:55 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:15:55 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:15:55 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:15:55 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:15:55 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:15:55 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:16:40 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:16:40 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:16:40 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:16:40 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:16:40 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:16:40 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:17:40 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:17:40 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:17:40 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:17:40 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:17:40 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:17:40 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:25:32 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 65
+[08-Mar-2017 09:25:32 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 65
+[08-Mar-2017 09:25:32 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 65
+[08-Mar-2017 09:25:32 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 65
+[08-Mar-2017 09:25:32 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 65
+[08-Mar-2017 09:25:32 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 65
+[08-Mar-2017 09:25:54 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 65
+[08-Mar-2017 09:25:54 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 65
+[08-Mar-2017 09:25:54 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 65
+[08-Mar-2017 09:25:54 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 65
+[08-Mar-2017 09:25:54 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 65
+[08-Mar-2017 09:25:54 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 65
+[08-Mar-2017 09:26:16 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 65
+[08-Mar-2017 09:26:16 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 65
+[08-Mar-2017 09:26:16 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 65
+[08-Mar-2017 09:26:16 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 65
+[08-Mar-2017 09:26:16 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 65
+[08-Mar-2017 09:26:16 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 65
+[08-Mar-2017 09:26:43 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:26:43 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:26:43 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:26:43 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:26:43 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:26:43 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:45:11 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:45:11 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:45:11 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:45:11 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:45:11 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 09:45:11 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:56:17 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:56:17 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:56:17 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:56:17 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:56:17 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:56:17 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:56:23 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:56:23 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:56:23 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:56:23 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:56:23 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:56:23 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:56:24 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:56:24 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:56:24 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:56:24 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:56:24 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:56:24 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:57:43 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:57:43 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:57:43 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:57:43 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:57:43 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:57:43 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:58:01 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:58:01 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:58:01 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:58:01 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:58:01 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 13:58:01 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 14:01:48 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 14:01:48 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 14:01:48 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 14:01:48 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 14:01:48 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 14:01:48 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 14:02:07 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 14:02:07 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 14:02:07 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 14:02:07 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 14:02:07 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64
+[08-Mar-2017 14:02:07 Europe/Paris] PHP Notice:  A non well formed numeric value encountered in /Volumes/Macintosh HD 2/web/php/projects/roadmaps/app/class/Util/GeneralUtil.php on line 64

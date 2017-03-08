@@ -10,26 +10,31 @@ use Project\Project;
 use Util\GeneralUtil;
 
 
-$user = $_SESSION['user_selected'];
+$userId = $_SESSION['user_selected'];
+$hasAdminPower = ((int)$userId === (int)$_SESSION['connected_user_id'] && false !== $_SESSION['connected_user_id']);
 
 
-
-$projectId2Labels = Project::getId2Labels($user);
-$projectId = array_key_exists('project_id', $_SESSION) ? (int)$_SESSION['project_id'] : 0;
+$projectId2Labels = Project::getId2Labels($userId);
+$projectId = array_key_exists('project_id', $_SESSION) ? (int)$_SESSION['project_id'] : key($projectId2Labels);
+$projectStartDate = Project::getStartDate($projectId);
+if (null === $projectStartDate) {
+    $projectStartDate = date("Y-m-d 00:00:00");
+}
 $periodStartDate = array_key_exists('periodStartDate', $_SESSION) ? $_SESSION['periodStartDate'] : $projectStartDate . " 00:00:00";
 $periodInterval = array_key_exists('periodInterval', $_SESSION) ? (int)$_SESSION['periodInterval'] : 86400;
 $periodNbSegments = array_key_exists('periodNbSegments', $_SESSION) ? (int)$_SESSION['periodNbSegments'] : 30;
 $defaultTaskColor = '#733a4a';
 
 //a($periodStartDate, $periodInterval, $periodNbSegments);
-
+if (null === $projectId) {
+    $projectId = 0;
+}
 
 //--------------------------------------------
 // SCRIPT
 //--------------------------------------------
 $projectInfo = Project::getInfo($projectId);
 $projectName = $projectInfo["name"];
-$projectStartDate = Project::getStartDate($projectId);
 
 list($cursorTaskId, $cursorDatetime) = Project::getProjectCursorInfo($projectInfo["current"]);
 $cursorTime = GeneralUtil::gmMysqlToTime($cursorDatetime);
@@ -68,20 +73,22 @@ foreach ($_periodIntervals as $k => $v) {
 
 ?>
 <div class="action-topcontainer">
-    <div>
-        <button class="project-add">Ajouter un nouveau projet</button>
-    </div>
-    <div>
-        <button class="project-duplicate">Dupliquer un projet</button>
-    </div>
-    <div>
-        <button class="project-save">Faire une sauvegarde</button>
-    </div>
+    <?php if (true === $hasAdminPower): ?>
+        <div>
+            <button class="project-add">Ajouter un nouveau projet</button>
+        </div>
+        <div>
+            <button class="project-duplicate">Dupliquer un projet</button>
+        </div>
+        <div>
+            <button class="project-save">Faire une sauvegarde</button>
+        </div>
 
-    <div style="flex: auto">
-        <button class="project-restore">Restaurer une sauvegarde</button>
-    </div>
+        <div style="flex: auto">
+            <button class="project-restore">Restaurer une sauvegarde</button>
+        </div>
 
+    <?php endif; ?>
     <i class="material-icons period-prev">arrow_back</i>
     <i class="material-icons period-next">arrow_forward</i>
     <div>
@@ -112,6 +119,7 @@ foreach ($_periodIntervals as $k => $v) {
             </select>
         </label>
     </div>
+
 </div>
 
 
@@ -171,9 +179,12 @@ if (true === $hasProject):
                 return ($plotTime >= $timeStart && $plotTime < $timeEnd);
             }
 
+
+            $sBaby = (true === $hasAdminPower) ? "" : "baby";
+
             ?>
             <div class="roadmaps" id="roadmaps">
-                <table class="roadmaps-table" id="roadmaps-table">
+                <table class="roadmaps-table <?php echo $sBaby; ?>" id="roadmaps-table">
                     <tr>
                         <th class="first-column-cell">
                             <table>
@@ -192,11 +203,13 @@ if (true === $hasProject):
                                             <?php endforeach; ?>
                                         </select>
                                     </td>
-                                    <td>
-                                        <button class="add-child-trigger"><i
-                                                    class="material-icons add-child-trigger">add</i>
-                                        </button>
-                                    </td>
+                                    <?php if (true === $hasAdminPower): ?>
+                                        <td>
+                                            <button class="add-child-trigger"><i
+                                                        class="material-icons add-child-trigger">add</i>
+                                            </button>
+                                        </td>
+                                    <?php endif; ?>
                                     <td>
                                         <button class="tasks-closeall-trigger"><i
                                                     class="material-icons tasks-closeall-trigger">expand_less</i>
@@ -292,22 +305,25 @@ if (true === $hasProject):
                                     <span class="label task-info-trigger"><span
                                                 class="labelonly task-info-trigger"><?php echo $task['label'] . '</span>' . " (" . $task['id'] . ")"; ?></span>
 
-                                <button class="add-child-trigger"><i
-                                            class="material-icons add-child-trigger">add</i></button>
-                                    <button class="leftmove-trigger"><i class="material-icons leftmove-trigger">keyboard_arrow_left</i></button>
-                                    <button class="rightmove-trigger"><i class="material-icons rightmove-trigger">keyboard_arrow_right</i></button>
+                                        <?php if (true === $hasAdminPower): ?>
+                                            <button class="add-child-trigger"><i
+                                                        class="material-icons add-child-trigger">add</i></button>
+                                            <button class="leftmove-trigger"><i class="material-icons leftmove-trigger">keyboard_arrow_left</i></button>
+                                            <button class="rightmove-trigger"><i
+                                                        class="material-icons rightmove-trigger">keyboard_arrow_right</i></button>
 
 
-                                <button class="remove-child-trigger"><i class="material-icons remove-child-trigger">delete</i>
+                                            <button class="remove-child-trigger"><i
+                                                        class="material-icons remove-child-trigger">delete</i>
                                 </button>
 
-                                <div class="sort">
+                                            <div class="sort">
                                     <button class="sort-up-trigger"><i class="material-icons sort-up-trigger">arrow_drop_up</i>
                                     </button>
                                     <button class="sort-down-trigger"><i class="material-icons sort-down-trigger">arrow_drop_down</i>
                                     </button>
                                 </div>
-
+                                        <?php endif; ?>
                                 </div>
 
                             </td>
@@ -346,6 +362,7 @@ if (true === $hasProject):
 <script>
 
 
+    var hasAdminPower = <?php echo (true === $hasAdminPower) ? "true" : "false"; ?>;
     $(document).ready(function () {
 
 
@@ -1157,6 +1174,7 @@ if (true === $hasProject):
             table: $("#roadmaps-table"),
             tasks: tasks,
             periodInterval: periodInterval,
+            babyMode: (false === hasAdminPower),
             plots: plots
         });
         oCalendar.draw(function () {

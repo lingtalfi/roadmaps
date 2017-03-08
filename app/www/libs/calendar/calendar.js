@@ -4,6 +4,7 @@ if ("undefined" === typeof window.Calendar) {
             this.options = Object.assign({
                 table: null,
                 offsetToFirstTd: 3,
+                babyMode: false, // not an admin
                 tasks: {},
                 periodInterval: 86400,
                 plots: []
@@ -172,88 +173,90 @@ if ("undefined" === typeof window.Calendar) {
 
                 var zis = this;
 
-                $("body").on('mousedown', function (e) {
-                    var jTarget = $(e.target);
-                    if (jTarget.hasClass("token-resize-handle")) {
-                        e.preventDefault();
-                        if (jTarget.hasClass("token-resize-handle-left")) {
-                            zis.dragType = "left";
+                if (false === this.options.babyMode) {
+
+                    $("body").on('mousedown', function (e) {
+                        var jTarget = $(e.target);
+                        if (jTarget.hasClass("token-resize-handle")) {
+                            e.preventDefault();
+                            if (jTarget.hasClass("token-resize-handle-left")) {
+                                zis.dragType = "left";
+                            }
+                            else {
+                                zis.dragType = "right";
+                            }
+                            zis.startDragging(e);
                         }
-                        else {
-                            zis.dragType = "right";
+                        else if (jTarget.hasClass("token-grab-handle")) {
+                            e.preventDefault();
+                            zis.dragType = "grab";
+                            zis.startDragging(e);
                         }
-                        zis.startDragging(e);
-                    }
-                    else if (jTarget.hasClass("token-grab-handle")) {
-                        e.preventDefault();
-                        zis.dragType = "grab";
-                        zis.startDragging(e);
-                    }
-                });
+                    });
 
 
-                window.addEventListener('mouseup', function (e) {
-                    if (null !== zis.jDrag) {
-                        zis.jDrag = null;
+                    window.addEventListener('mouseup', function (e) {
+                        if (null !== zis.jDrag) {
+                            zis.jDrag = null;
 
-                        //----------------------------------------
-                        // COMMIT GUI AND MODEL
-                        //----------------------------------------
-                        zis.jTable.find('tr.redrawn').each(function () {
-                            var redraw = $(this).data("redrawn");
-                            var original = $(this).data("original");
+                            //----------------------------------------
+                            // COMMIT GUI AND MODEL
+                            //----------------------------------------
+                            zis.jTable.find('tr.redrawn').each(function () {
+                                var redraw = $(this).data("redrawn");
+                                var original = $(this).data("original");
 
-                            $(this).find('.left-border, .right-border').removeClass('left-border right-border');
-                            if (redraw.plotStart >= 0) {
-                                $(this).find("td.filled:first").addClass('left-border');
-                            }
-                            if (redraw.plotEnd <= zis.plotsMaxIndex) {
-                                $(this).find("td.filled:last").addClass('right-border');
-                            }
-                            $(this).removeClass('redrawn');
-                            $(this).data('redrawn', null);
-
-
-                            // now apply into gui memory
-                            var originalTask = zis.getTask($(this));
-                            var originalPlotStart = originalTask.plotStart;
-                            var originalPlotEnd = originalTask.plotEnd;
-                            originalTask.plotStart = redraw.plotStart;
-                            originalTask.plotEnd = redraw.plotEnd;
-
-                            // now update the db
-                            var id = getTaskId($(this));
-                            if (id === zis.updatedId) {
-                                /**
-                                 * To update the db, we need to pass it the number of seconds that we have
-                                 * added/removed to the original event.
-                                 *
-                                 */
-                                var offsetStart = zis.options.periodInterval * (redraw.plotStart - originalPlotStart);
-                                var offsetEnd = zis.options.periodInterval * (redraw.plotEnd - originalPlotEnd);
-
-                                var url = "/services/roadmaps.php?action=calendrier-update-" + zis.dragType;
+                                $(this).find('.left-border, .right-border').removeClass('left-border right-border');
+                                if (redraw.plotStart >= 0) {
+                                    $(this).find("td.filled:first").addClass('left-border');
+                                }
+                                if (redraw.plotEnd <= zis.plotsMaxIndex) {
+                                    $(this).find("td.filled:last").addClass('right-border');
+                                }
+                                $(this).removeClass('redrawn');
+                                $(this).data('redrawn', null);
 
 
+                                // now apply into gui memory
+                                var originalTask = zis.getTask($(this));
+                                var originalPlotStart = originalTask.plotStart;
+                                var originalPlotEnd = originalTask.plotEnd;
+                                originalTask.plotStart = redraw.plotStart;
+                                originalTask.plotEnd = redraw.plotEnd;
+
+                                // now update the db
+                                var id = getTaskId($(this));
+                                if (id === zis.updatedId) {
+                                    /**
+                                     * To update the db, we need to pass it the number of seconds that we have
+                                     * added/removed to the original event.
+                                     *
+                                     */
+                                    var offsetStart = zis.options.periodInterval * (redraw.plotStart - originalPlotStart);
+                                    var offsetEnd = zis.options.periodInterval * (redraw.plotEnd - originalPlotEnd);
+
+                                    var url = "/services/roadmaps.php?action=calendrier-update-" + zis.dragType;
 
 
-                                $.post(url, {
-                                    id: id,
-                                    offsetLeft: offsetStart,
-                                    offsetRight: offsetEnd,
-                                    alignedStart: originalTask.timeStart,
-                                    alignedEnd: originalTask.timeEnd
-                                }, function (data) {
-                                    if ("ok" === data) {
-                                        window.location.reload();
-                                    }
-                                }, 'json');
-                            }
+                                    $.post(url, {
+                                        id: id,
+                                        offsetLeft: offsetStart,
+                                        offsetRight: offsetEnd,
+                                        alignedStart: originalTask.timeStart,
+                                        alignedEnd: originalTask.timeEnd
+                                    }, function (data) {
+                                        if ("ok" === data) {
+                                            window.location.reload();
+                                        }
+                                    }, 'json');
+                                }
 
-                        });
-                    }
-                    $(window).off('mousemove.calendar');
-                });
+                            });
+                        }
+                        $(window).off('mousemove.calendar');
+                    });
+
+                }
 
 
             },

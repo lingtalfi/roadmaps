@@ -74,10 +74,10 @@ class Layout
 
                         $users = Users::getId2Labels();
                         $userSelected = null;
-                        if (array_key_exists('user_selected', $_SESSION)) {
+                        if (array_key_exists('user_selected', $_SESSION) && null !== $_SESSION['user_selected']) {
                             $userSelected = $_SESSION['user_selected'];
                         } else {
-                            $userSelected = $users[0];
+                            $userSelected = key($users);
                             $_SESSION['user_selected'] = $userSelected;
                         }
                         foreach ($users as $id => $label) {

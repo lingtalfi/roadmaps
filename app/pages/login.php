@@ -3,8 +3,7 @@
 
 use Authentication\AuthenticationHelper;
 use Privilege\PrivilegeUser;
-
-
+use Users\Users;
 
 
 if (file_exists(__DIR__ . "/../init.php")) {
@@ -41,9 +40,11 @@ if (
 
     $profile = AuthenticationHelper::authenticationMatch($pseudo, $password);
 
+
     if (false !== $profile) {
         $formValidated = true;
 
+        $_SESSION['connected_user_id'] = Users::getIdByCredentials($pseudo, $password);
         PrivilegeUser::connect([], $profile);
 
     } else {
