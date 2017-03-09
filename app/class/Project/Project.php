@@ -31,6 +31,7 @@ class Project
         return QuickPdo::fetch("select * from project where id=" . (int)$projectId);
     }
 
+
     public static function getStartDate($projectId)
     {
         return QuickPdo::fetch("select min(start_date) from task where project_id=" . (int)$projectId, [], \PDO::FETCH_COLUMN);
@@ -48,10 +49,13 @@ class Project
 
     public static function duplicate($id, $name)
     {
+        $info = self::getInfo($id);
+        $info['name'] = $name;
+        unset($info['id']);
+
+
         $hierarchy = TaskUtil::getTasksHierarchyByProject($id);
-        $newId = self::insert([
-            "name" => $name,
-        ]);
+        $newId = self::insert($info);
         foreach ($hierarchy as $item) {
             $children = (array_key_exists("children", $item)) ? $item['children'] : [];
             $item['id'] = null;
@@ -91,6 +95,13 @@ class Project
             "current" => $cursor,
         ], [
             ["id", "=", $projectId],
+        ]);
+    }
+
+    public static function delete($id)
+    {
+        QuickPdo::delete("project", [
+            ["id", "=", $id],
         ]);
     }
 }

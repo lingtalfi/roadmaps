@@ -1,6 +1,7 @@
 <?php
 
 use BumbleBee\Autoload\ButineurAutoloader;
+use Cache\Cache;
 use Lang\LangModule;
 use Privilege\Privilege;
 use Privilege\PrivilegeUser;
@@ -38,14 +39,19 @@ require_once __DIR__ . "/functions/main-functions.php";
 //--------------------------------------------
 // DB
 //--------------------------------------------
-$dbUser = 'root';
-$dbPass = 'root';
-$dbName = 'roadmaps';
-$host = 'host=127.0.0.1';
-$host = 'host=localhost';
-$host = 'unix_socket=/Applications/MAMP/tmp/mysql/mysql.sock';
-$mysqlDumpPath = "/Applications/MAMP/Library/bin/mysqldump";
+if (0 === strpos(__DIR__, '/home')) {
 
+    require_once __DIR__ . "/../private/init-prod.php";
+
+} else {
+    $dbUser = 'root';
+    $dbPass = 'root';
+    $dbName = 'roadmaps';
+    $host = 'host=127.0.0.1';
+    $host = 'host=localhost';
+    $host = 'unix_socket=/Applications/MAMP/tmp/mysql/mysql.sock';
+    $mysqlDumpPath = "/Applications/MAMP/Library/bin/mysqldump";
+}
 
 //--------------------------------------------
 //
@@ -104,7 +110,7 @@ Spirit::set('ricSeparator', '--*--');
 //--------------------------------------------
 // PRIVILEGE
 //--------------------------------------------
-PrivilegeUser::$sessionTimeout = 60 * 5 * 1000;
+PrivilegeUser::$sessionTimeout = 60 * 5 * 10000;
 PrivilegeUser::refresh();
 if (array_key_exists('disconnect', $_GET)) {
     PrivilegeUser::disconnect();
@@ -120,6 +126,12 @@ Privilege::setProfiles([
     'admin' => [],
 ]);
 
+
+
+//--------------------------------------------
+//
+//--------------------------------------------
+Cache::$cacheDir = APP_ROOT_DIR . "/cache";
 
 //--------------------------------------------
 // TRANSLATION

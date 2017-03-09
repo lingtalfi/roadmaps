@@ -2,6 +2,7 @@
 
 
 use Backup\AppBackup;
+use Cache\Cache;
 use Calendar\CalendarApi;
 use Project\Project;
 use QuickPdo\QuickPdo;
@@ -214,9 +215,10 @@ if (array_key_exists('action', $_GET)) {
                 $userId = $_SESSION['user_selected'];
                 $name = $_POST['name'];
                 if (false !== ($id = Project::insert([
-                    "name" => $name,
-                    "users_id" => $userId,
-                    ]))) {
+                        "name" => $name,
+                        "users_id" => $userId,
+                    ]))
+                ) {
                     $_SESSION['project_id'] = $id;
                 }
                 $output = "ok";
@@ -235,6 +237,15 @@ if (array_key_exists('action', $_GET)) {
                 }
             }
             break;
+        case 'calendrier-project-delete':
+            if (array_key_exists("id", $_POST)) {
+                $id = $_POST['id'];
+
+                if (false !== ($id = Project::delete($id))) {
+                    $output = "ok";
+                }
+            }
+            break;
         case 'calendrier-project-change':
             if (array_key_exists("id", $_GET)) {
                 $id = $_GET['id'];
@@ -243,12 +254,15 @@ if (array_key_exists('action', $_GET)) {
             }
             break;
         case 'calendrier-all-save':
-            $name = null;
-            if (array_key_exists("name", $_POST)) {
-                $name = "manual/" . $_POST["name"];
+            if (array_key_exists('pid', $_POST)) {
+                $projectId = $_POST['pid'];
+                $name = null;
+                if (array_key_exists("name", $_POST)) {
+                    $name = "manual/" . $_POST["name"];
+                }
+                Cache::saveProjectTasks($projectId);
+                $output = "ok";
             }
-            AppBackup::create()->createBackup($name);
-            $output = "ok";
             break;
         case 'calendrier-all-restore':
             $name = null;

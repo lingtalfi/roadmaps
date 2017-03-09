@@ -5,13 +5,14 @@
 // CONFIG
 //--------------------------------------------
 use AssetsList\AssetsList;
+use Cache\Cache;
 use DirScanner\YorgDirScannerTool;
 use Project\Project;
 use Util\GeneralUtil;
 
 
 $userId = $_SESSION['user_selected'];
-$hasAdminPower = ((int)$userId === (int)$_SESSION['connected_user_id'] && false !== $_SESSION['connected_user_id']);
+$hasAdminPower = (array_key_exists("connected_user_id", $_SESSION) && (int)$userId === (int)$_SESSION['connected_user_id'] && false !== $_SESSION['connected_user_id']);
 
 
 $projectId2Labels = Project::getId2Labels($userId);
@@ -80,13 +81,17 @@ foreach ($_periodIntervals as $k => $v) {
         <div>
             <button class="project-duplicate">Dupliquer un projet</button>
         </div>
-        <div>
-            <button class="project-save">Faire une sauvegarde</button>
+        <div style="flex: auto">
+            <button class="project-delete">Supprimer un projet</button>
         </div>
 
-        <div style="flex: auto">
-            <button class="project-restore">Restaurer une sauvegarde</button>
-        </div>
+        <!--        <div>-->
+        <!--            <button class="project-save">Faire une sauvegarde</button>-->
+        <!--        </div>-->
+        <!---->
+        <!--        <div style="flex: auto">-->
+        <!--            <button class="project-restore">Restaurer une sauvegarde</button>-->
+        <!--        </div>-->
 
     <?php endif; ?>
     <i class="material-icons period-prev">arrow_back</i>
@@ -142,6 +147,14 @@ if (true === $hasProject):
 
             $helper = new \Period\InlinePeriodHelper($p);
 
+
+            // note: the cache is not efficient -> not using it now but maybe one day, but use chrome and it's good.
+            //            $cacheName = 'project-' . $projectId . "-tasks.php";
+            //            $tasks = Cache::getArray($cacheName);
+            //            if (false === $tasks) {
+            //                $tasks = \Task\TaskUtil::getTasksByProject($projectId, $p);
+            //                Cache::cacheArray($cacheName, $tasks);
+            //            }
 
             $tasks = \Task\TaskUtil::getTasksByProject($projectId, $p);
 
@@ -284,6 +297,10 @@ if (true === $hasProject):
                             $sOpened = "0";
                         }
 
+                        $sLabel = "label";
+                        if (false === $hasAdminPower) {
+                            $sLabel = "labelbr";
+                        }
                         $sHasChildren = "";
                         if (true === $task['hasChildren']) {
                             $sHasChildren = "has-children";
@@ -302,7 +319,7 @@ if (true === $hasProject):
                                     <?php if (true === $task['hasChildren']): ?>
                                         <button class="toggler"><?php echo $sBtnText; ?></button>
                                     <?php endif; ?>
-                                    <span class="label task-info-trigger"><span
+                                    <span class="<?php echo $sLabel; ?> task-info-trigger"><span
                                                 class="labelonly task-info-trigger"><?php echo $task['label'] . '</span>' . " (" . $task['id'] . ")"; ?></span>
 
                                         <?php if (true === $hasAdminPower): ?>
@@ -327,12 +344,22 @@ if (true === $hasProject):
                                 </div>
 
                             </td>
+
+                            <?php
+                            $class = "";
+                            $class2 = "";
+                            if (true === $hasAdminPower) {
+                                $class = "start-date-update-trigger";
+                                $class2 = "end-date-update-trigger";
+                            }
+                            ?>
+
                             <td data-id="<?php echo $task['id']; ?>"
-                                class="infocell start-date-update-trigger"
+                                class="infocell <?php echo $class; ?>"
                                 data-date="<?php echo $task['start_date']; ?>"
                                 title="<?php echo $task['start_date']; ?>"><?php echo justDate($task['start_date']); ?></td>
                             <td data-id="<?php echo $task['id']; ?>"
-                                class="infocell end-date-update-trigger"
+                                class="infocell <?php echo $class2; ?>"
                                 data-date="<?php echo $task['end_date']; ?>"
                                 title="<?php echo $task['end_date']; ?>"><?php echo justDate($task['end_date']); ?></td>
 
@@ -635,7 +662,7 @@ if (true === $hasProject):
                     });
                 }
             }
-            else if (jTarget.hasClass("task-info-trigger")) {
+            else if (jTarget.hasClass("task-info-trigger") && true === hasAdminPower) {
                 e.preventDefault();
                 var jTr = jTarget.closest('tr');
                 var id = jTr.attr("data-id");
@@ -818,6 +845,39 @@ if (true === $hasProject):
                     }
                 });
             }
+            else if (jTarget.hasClass("project-delete")) {
+
+                var jDial = $("#dialog-project-delete");
+                if ('undefined' !== typeof jDial.dialog('instance')) {
+                    jDial.dialog("close");
+                }
+                jDial.dialog({
+                    position: {
+                        my: "center",
+                        at: "center",
+                        of: jTarget
+                    },
+                    width: 600,
+                    buttons: {
+                        "Appliquer": function () {
+
+
+                            var id = jDial.find('.project_id').val();
+
+                            $.post('/services/roadmaps.php?action=calendrier-project-delete', {
+                                'id': id
+                            }, function (data) {
+                                if ('ok' === data) {
+                                    location.reload();
+                                }
+                            }, 'json');
+                        },
+                        "Annuler": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            }
             else if (jTarget.hasClass("project-save")) {
                 e.preventDefault();
                 var jDial = $("#dialog-backup-create");
@@ -836,7 +896,7 @@ if (true === $hasProject):
                         date = date.replace(/:/g, "");
                         date = date.replace(" ", "_");
                         date = date.replace(/-/g, "");
-                        date += "--backup.sql";
+                        date += "--<?php echo $projectName; ?>.sql";
 
                         jDial.find(".name").val(date);
                     },
@@ -846,7 +906,8 @@ if (true === $hasProject):
                             var name = jDial.find('.name').val();
 
                             $.post('/services/roadmaps.php?action=calendrier-all-save', {
-                                'name': name
+                                'name': name,
+                                'pid': <?php echo $projectId; ?>
                             }, function (data) {
                                 if ('ok' === data) {
                                     alert("sauvegarde effectuée");
@@ -1314,6 +1375,22 @@ if (true === $hasProject):
             <tr>
                 <td>Nouveau nom</td>
                 <td><input type="text" class="project_name"></td>
+            </tr>
+        </table>
+    </div>
+    <div id="dialog-project-delete"
+         title="Supprimer un projet"
+         class="dialog-standard">
+        <table>
+            <tr>
+                <td>Project à supprimer</td>
+                <td>
+                    <select class="project_id">
+                        <?php foreach ($projectId2Labels as $id => $label): ?>
+                            <option value="<?php echo $id; ?>"><?php echo $label; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </td>
             </tr>
         </table>
     </div>
