@@ -1,13 +1,16 @@
 <?php
 
 
+use AppUser\AppUser;
 use Backup\AppBackup;
 use Cache\Cache;
 use Calendar\CalendarApi;
+use MailHelper\MailHelper;
 use Project\Project;
 use QuickPdo\QuickPdo;
 use Task\Task;
 use Task\TaskUtil;
+use UserHasTask\UserHasTask;
 use Util\GeneralUtil;
 
 require_once __DIR__ . "/../../init.php";
@@ -115,11 +118,18 @@ if (array_key_exists('action', $_GET)) {
                 $duration = $_POST['duration'];
                 $color = $_POST['color'];
                 $position = $_POST['position'];
-                $compteMail = (array_key_exists('compte_mail', $_POST)) ? $_POST['compte_mail'] : [];
+                $compteMailIds = (array_key_exists('compte_mail', $_POST)) ? $_POST['compte_mail'] : [];
+                if (!is_array($compteMailIds)) {
+                    $compteMailIds = [];
+                }
 
 
                 $startDate = $date . " $hour:$minute:00";;
-                TaskUtil::insertByDuration($projectId, $startDate, $duration, $parentId, $label, $color, $position, $compteMail);
+                $id = TaskUtil::insertByDuration($projectId, $startDate, $duration, $parentId, $label, $color, $position);
+                if (false !== $id && count($compteMailIds) > 0) {
+                    $userId = AppUser::getUser();
+                    UserHasTask::insert($userId, $id, $compteMailIds, 0);
+                }
 
                 $output = "ok";
             }
@@ -146,10 +156,20 @@ if (array_key_exists('action', $_GET)) {
                 $applyColorToChildren = ("true" === $_POST['applyColorToChildren']) ? true : false;
 
 
+                $compteMailIds = (array_key_exists('compte_mail', $_POST)) ? $_POST['compte_mail'] : [];
+
+
                 Task::update($id, [
                     "label" => $label,
                     "color" => $color,
                 ], $applyColorToChildren);
+
+                if (count($compteMailIds) > 0) {
+                    $userId = AppUser::getUser();
+                    UserHasTask::update($userId, $id, $compteMailIds, 0);
+                }
+
+
                 $output = "ok";
             }
             break;
@@ -311,6 +331,56 @@ if (array_key_exists('action', $_GET)) {
                 $_SESSION["user_selected"] = $id;
                 unset($_SESSION["project_id"]);
                 $output = "ok";
+            }
+            break;
+        case 'calendrier-get-bound-comptemail':
+            if (array_key_exists("task_id", $_GET)) {
+                $taskId = $_GET['task_id'];
+                $userId = AppUser::getUser();
+                $output = UserHasTask::getCompteMailIdsByTaskId($userId, $taskId);
+            }
+            break;
+        case 'calendrier-get-mail-template':
+            if (array_key_exists("task_id", $_GET)) {
+                $taskId = $_GET['task_id'];
+
+
+                $userId = AppUser::getUser();
+                $items = UserHasTask::getCompteMailInfoByTaskId($userId, $taskId);
+
+
+//                $projectId = Task::getProjectId($taskId);
+//                $url = MailHelper::getBestUrlForProject($projectId);
+//                $item = current($items);
+//                $sName = $item['pseudo'];
+
+
+                $output = [
+                    'subject' => MailHelper::getDefaultSubject(),
+                    'plain' => MailHelper::getDefaultPlainText(),
+                    'recipients_info' => $items,
+                ];
+            }
+            break;
+        case 'calendrier-send-notif-mail':
+            if (
+                array_key_exists("task_id", $_POST) &&
+                array_key_exists("subject", $_POST) &&
+                array_key_exists("message", $_POST)
+            ) {
+
+                $taskId = $_POST['task_id'];
+                $subject = $_POST['subject'];
+                $message = $_POST['message'];
+
+
+                $userId = AppUser::getUser();
+                $projectId = Task::getProjectId($taskId);
+
+                $nbSent = MailHelper::sendNotificationMail($userId, $projectId, $taskId, $subject, $message);
+                $output = $nbSent;
+
+
             }
             break;
         default:

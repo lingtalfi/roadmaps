@@ -4,9 +4,11 @@
 namespace Task;
 
 
+use AppUser\AppUser;
 use Calendar\CalendarApi;
 use Period\Period;
 use QuickPdo\QuickPdo;
+use UserHasTask\UserHasTask;
 use Util\GeneralUtil;
 
 class TaskUtil
@@ -73,6 +75,7 @@ class TaskUtil
     public static function getTasksInfoByProject($projectId)
     {
         $ret = [];
+
         $items = QuickPdo::fetchAll("select * from task 
 where project_id=" . (int)$projectId . "
 and parent_task_id is null
@@ -212,7 +215,7 @@ where id=" . (int)$taskId . "
     }
 
 
-    public static function insertByDuration($projectId, $startDate, $nbDays, $parentId, $label, $color, $position = "last", array $compteMail=[])
+    public static function insertByDuration($projectId, $startDate, $nbDays, $parentId, $label, $color, $position = "last", array $compteMail = [])
     {
         $time = GeneralUtil::gmMysqlToTime($startDate);
         $dateStart = gmdate("Y-m-d H:i:s", $time);
@@ -245,6 +248,6 @@ where id=" . (int)$taskId . "
             }
         }
 
-
+        return $id;
     }
 }

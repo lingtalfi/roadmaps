@@ -9,6 +9,7 @@ use Cache\Cache;
 use CompteMail\CompteMail;
 use DirScanner\YorgDirScannerTool;
 use Project\Project;
+use UserHasTask\UserHasTask;
 use Util\GeneralUtil;
 
 
@@ -17,14 +18,46 @@ $hasAdminPower = (array_key_exists("connected_user_id", $_SESSION) && (int)$user
 $hasMailPower = true;
 
 $projectId2Labels = Project::getId2Labels($userId);
-$projectId = array_key_exists('project_id', $_SESSION) ? (int)$_SESSION['project_id'] : key($projectId2Labels);
-$projectStartDate = Project::getStartDate($projectId);
-if (null === $projectStartDate) {
-    $projectStartDate = date("Y-m-d 00:00:00");
+
+
+$projectId = null;
+
+if (array_key_exists('project_id', $_GET)) {
+    $projectId = (int)$_GET['project_id'];
+} elseif (array_key_exists('project_id', $_SESSION)) {
+    $projectId = (int)$_SESSION['project_id'];
+} else {
+    $projectId = (int)key($projectId2Labels);
 }
-$periodStartDate = array_key_exists('periodStartDate', $_SESSION) ? $_SESSION['periodStartDate'] : $projectStartDate . " 00:00:00";
-$periodInterval = array_key_exists('periodInterval', $_SESSION) ? (int)$_SESSION['periodInterval'] : 86400;
-$periodNbSegments = array_key_exists('periodNbSegments', $_SESSION) ? (int)$_SESSION['periodNbSegments'] : 30;
+
+
+if (array_key_exists('start', $_GET)) {
+    $periodStartDate = $_GET['start'];
+} elseif (array_key_exists('periodStartDate', $_SESSION)) {
+    $periodStartDate = $_SESSION['periodStartDate'];
+} else {
+    $periodStartDate = date("Y-m-d 00:00:00");
+}
+
+
+if (array_key_exists('interval', $_GET)) {
+    $periodInterval = $_GET['interval'];
+} elseif (array_key_exists('periodInterval', $_SESSION)) {
+    $periodInterval = $_SESSION['periodInterval'];
+} else {
+    $periodInterval = 86400;
+}
+
+
+if (array_key_exists('segments', $_GET)) {
+    $periodNbSegments = $_GET['segments'];
+} elseif (array_key_exists('periodNbSegments', $_SESSION)) {
+    $periodNbSegments = $_SESSION['periodNbSegments'];
+} else {
+    $periodNbSegments = 30;
+}
+
+
 $defaultTaskColor = '#733a4a';
 
 //a($periodStartDate, $periodInterval, $periodNbSegments);
@@ -239,7 +272,9 @@ if (true === $hasProject):
                         </th>
                         <th style="clear: both;">Start date</th>
                         <th>End date</th>
-                        <th>Email</th>
+                        <?php if (true === $hasMailPower): ?>
+                            <th>Email</th>
+                        <?php endif; ?>
                         <?php
                         $plots = $helper->getTimeScalePlots();
                         foreach ($plots as $k => $time) {
@@ -366,12 +401,22 @@ if (true === $hasProject):
                                 class="infocell <?php echo $class2; ?>"
                                 data-date="<?php echo $task['end_date']; ?>"
                                 title="<?php echo $task['end_date']; ?>"><?php echo justDate($task['end_date']); ?></td>
-                            <td data-id="<?php echo $task['id']; ?>"
-                                class="infocell <?php echo $class3; ?>"
-                                style="text-align: center;"
-                            >
-                                <i class="mail-conf-trigger material-icons">email</i>
-                            </td>
+
+
+                            <?php if (true === $hasMailPower): ?>
+                                <td data-id="<?php echo $task['id']; ?>"
+                                    class="infocell <?php echo $class3; ?>"
+                                    style="text-align: center;"
+                                >
+                                    <?php
+                                    $hasBeenSent = UserHasTask::getMailHasBeenSent($userId, $taskId);
+                                    $sClass = ($hasBeenSent) ? 'sent' : '';
+                                    ?>
+                                    <button class="mail-send-trigger fake-btn">
+                                        <i class="mail-send-trigger material-icons <?php echo $sClass; ?>">email</i>
+                                    </button>
+                                </td>
+                            <?php endif; ?>
 
                             <?php
                             foreach ($plots as $k => $time):
@@ -400,6 +445,9 @@ if (true === $hasProject):
 
 
     var hasAdminPower = <?php echo (true === $hasAdminPower) ? "true" : "false"; ?>;
+    var hasMailPower = <?php echo (true === $hasMailPower) ? "true" : "false"; ?>;
+
+
     $(document).ready(function () {
 
 
@@ -591,7 +639,7 @@ if (true === $hasProject):
 
                 $("#dialog-create-task").dialog({
                     position: {
-                        my: "center",
+                        my: "top",
                         at: "center",
                         of: jTarget
                     },
@@ -627,6 +675,13 @@ if (true === $hasProject):
                             var cssColor = rgb2hex(color);
                             jDial.find('.color').val(cssColor);
                         }
+
+
+
+
+                        $.getJSON("/services/roadmaps.php?action=calendrier-get-bound-comptemail&task_id=" + parentId, function(data){
+                            jDial.find('.compte_mail').val(data);
+                        });
 
 
                     },
@@ -703,6 +758,7 @@ if (true === $hasProject):
                 var id = jTr.attr("data-id");
                 var color = jTr.attr("data-color");
                 var label = jTr.find(".labelonly").text();
+                var task_id = id;
 
                 var jDial = $("#dialog-taskinfo");
 
@@ -718,6 +774,16 @@ if (true === $hasProject):
                     },
                     width: 600,
                     open: function () {
+
+
+                        if (true === hasMailPower) {
+                            $.getJSON("/services/roadmaps.php?action=calendrier-get-bound-comptemail&task_id=" + task_id, function (data) {
+                                var jCompteMail = jDial.find('.compte_mail');
+                                jCompteMail.val(data);
+                            });
+                        }
+
+
                         var jColor = jDial.find('.color');
                         var jSpreadColor = jDial.find('.apply-color-to-children');
                         jColor.val(color);
@@ -762,12 +828,14 @@ if (true === $hasProject):
 
                             var color = jDial.find('.color').val();
                             var label = jDial.find('.label').val();
+                            var compteMail = jDial.find('.compte_mail').val();
                             var spread = jDial.find('.apply-color-to-children').prop("checked");
 
                             $.post('/services/roadmaps.php?action=calendrier-task-update', {
                                 'id': id,
                                 'label': label,
                                 'color': color,
+                                'compte_mail': compteMail,
                                 'applyColorToChildren': spread
                             }, function (data) {
                                 if ('ok' === data) {
@@ -981,6 +1049,70 @@ if (true === $hasProject):
                                     alert("sauvegarde restaurée");
                                     location.reload();
                                 }
+                            }, 'json');
+                        },
+                        "Annuler": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            }
+            else if (jTarget.hasClass("mail-send-trigger")) {
+                e.preventDefault();
+                var jDial = $("#dialog-mail-send");
+                if ('undefined' !== typeof jDial.dialog('instance')) {
+                    jDial.dialog("close");
+                }
+                jDial.dialog({
+                    position: {
+                        my: "center",
+                        at: "center",
+                        of: jTarget
+                    },
+                    width: 600,
+                    open: function () {
+                        var taskId = jTarget.closest('tr').attr("data-id");
+                        var jSubject = jDial.find(".subject");
+                        var jRecipients = jDial.find(".recipients");
+                        var jTextarea = jDial.find(".message");
+
+                        $.getJSON("/services/roadmaps.php?action=calendrier-get-mail-template&task_id=" + taskId, function (data) {
+                            jSubject.val(data.subject);
+
+                            var s = '';
+                            var c = 0;
+                            for (var i in data.recipients_info) {
+                                var item = data.recipients_info[i];
+                                if (c > 0) {
+                                    s += ', ';
+                                }
+                                s += '<span class="recipient">' + item['pseudo'] + ' (' + item['email'] + ')</span>';
+                                c++;
+                            }
+                            jRecipients.html(s);
+                            jTextarea.val(data.plain);
+                        });
+                    },
+                    buttons: {
+                        "Appliquer": function () {
+
+                            var taskId = jTarget.closest('tr').attr("data-id");
+                            var subject = jDial.find('.subject').val();
+                            var message = jDial.find('.message').val();
+
+
+                            $.post('/services/roadmaps.php?action=calendrier-send-notif-mail', {
+                                'task_id': taskId,
+                                'subject': subject,
+                                'message': message
+                            }, function (nbSent) {
+                                var msg = nbSent + " mail(s) envoyé(s).";
+                                if("0" == nbSent){
+                                    msg += " Avez-vous bien configuré cette tâche ?";
+                                }
+                                alert(msg);
+                                location.reload();
+
                             }, 'json');
                         },
                         "Annuler": function () {
@@ -1376,8 +1508,8 @@ if (true === $hasProject):
             <tr>
                 <td>Ajouter</td>
                 <td><select class="position">
-                        <option value="first">au début</option>
                         <option value="last">à la fin</option>
+                        <option value="first">au début</option>
                     </select></td>
             </tr>
         </table>
@@ -1389,6 +1521,23 @@ if (true === $hasProject):
             <tr>
                 <td>Label</td>
                 <td><input type="text" class="label"></td>
+            </tr>
+            <tr>
+                <td>Responsable(s)</td>
+                <td>
+                    <?php
+                    $id2label = CompteMail::getId2Labels();
+                    ?>
+                    <select multiple class="compte_mail" style="width: 200px;" size="<?php echo count($id2label); ?>">
+                        <?php
+                        foreach ($id2label as $id => $label):
+                            ?>
+                            <option value="<?php echo $id; ?>"><?php echo $label; ?></option>
+                            <?php
+                        endforeach;
+                        ?>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td>Couleur</td>
@@ -1471,6 +1620,30 @@ if (true === $hasProject):
                             <option value="<?php echo $f; ?>"><?php echo $f; ?></option>
                         <?php endforeach; ?>
                     </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="dialog-mail-send"
+         title="Envoyer un mail"
+         class="dialog-standard">
+        <table class="longtable">
+            <tr>
+                <td>Sujet</td>
+                <td>
+                    <input type="text" class="subject">
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 30px">Destinataires</td>
+                <td class="recipients">
+
+                </td>
+            </tr>
+            <tr>
+                <td>message</td>
+                <td>
+                    <textarea rows="10" class="message"></textarea>
                 </td>
             </tr>
         </table>

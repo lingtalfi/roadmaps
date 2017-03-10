@@ -2,15 +2,25 @@ SET FOREIGN_KEY_CHECKS=0;
 
 
 
-INSERT INTO `users` (`id`, `pseudo`, `pass` ) VALUES
-(1, 'ling', 'pilates'),
-(2, 'jerome', 'pilates');
+
+INSERT INTO `compte_mail` (`id`, `pseudo`, `email`) VALUES
+(1, 'Chloé', 'chloe@leaderfit.com'),
+(2, 'Nathalie', 'nathalie@leaderfit.com'),
+(3, 'Delphine', 'delphine@leaderfit.com'),
+(4, 'Jérôme', 'jerome@leaderfit.com'),
+(5, 'Pierre', 'pierre@leaderfit.com'),
+(6, 'Camille', 'camille@leaderfit.com');
+
+
+
+
 
 
 
 INSERT INTO `project` (`id`, `name`, `current`, `users_id`) VALUES
-(1, 'leaderfit-ecommerce', null, 1),
-(6, 'leaderfit-mini', '67:2017-03-10 00:00:00', 1);
+(1, 'leaderfit-ecommerce', NULL, 1),
+(6, 'leaderfit-mini', '67:2017-03-10 00:00:00', 1),
+(8, 'all', NULL, 3);
 
 
 
@@ -34,9 +44,9 @@ INSERT INTO `task` (`id`, `label`, `start_date`, `end_date`, `description`, `par
 (17, 'conception module e-commerce', '2017-05-14 00:00:00', '2017-05-24 00:00:00', '', 9, 0, 1, 0, '#c57fc1'),
 (18, 'implémentation maquette front - https://www.boulanger.com/', '2017-05-24 00:00:00', '2017-05-29 00:00:00', '', 9, 0, 1, 1, '#c57fc1'),
 (19, 'implémentation pages backoffice', '2017-05-29 00:00:00', '2017-06-08 00:00:00', '', 9, 0, 1, 2, '#c57fc1'),
-(21, 'all', '2017-03-13 00:00:00', '2017-06-15 00:00:00', '', NULL, 0, 1, 0, '#733a4a'),
+(21, 'all', '2017-03-13 00:00:00', '2017-06-15 00:00:00', '', NULL, 0, 1, 5, '#733a4a'),
 (22, 'modules paiement', '2017-06-08 00:00:00', '2017-06-15 00:00:00', '', 9, 0, 1, 3, '#c57fc1'),
-(65, 'all', '2017-03-10 00:00:00', '2017-05-14 00:00:00', '', NULL, 0, 6, 0, '#733a4a'),
+(65, 'all', '2017-03-10 00:00:00', '2017-05-14 00:00:00', '', NULL, 0, 6, 6, '#733a4a'),
 (66, 'kamille', '2017-03-10 00:00:00', '2017-03-20 00:00:00', '', 65, 0, 6, 1, 'rgb(79, 16, 62)'),
 (67, 'Architecture', '2017-03-10 00:00:00', '2017-03-13 00:00:00', '', 66, 0, 6, 0, 'rgb(79, 16, 62)'),
 (68, 'Services', '2017-03-13 00:00:00', '2017-03-15 00:00:00', '', 66, 0, 6, 1, 'rgb(79, 16, 62)'),
@@ -56,17 +66,40 @@ INSERT INTO `task` (`id`, `label`, `start_date`, `end_date`, `description`, `par
 (82, 'conception module e-commerce', '2017-04-17 00:00:00', '2017-04-24 00:00:00', '', 81, 0, 6, 0, '#c57fc1'),
 (83, 'implémentation maquette front - https://www.boulanger.com/', '2017-04-24 00:00:00', '2017-04-27 00:00:00', '', 81, 0, 6, 1, '#c57fc1'),
 (84, 'implémentation pages backoffice', '2017-04-27 00:00:00', '2017-05-07 00:00:00', '', 81, 0, 6, 2, '#c57fc1'),
-(85, 'modules paiement', '2017-05-07 00:00:00', '2017-05-14 00:00:00', '', 81, 0, 6, 3, '#c57fc1');
+(85, 'modules paiement', '2017-05-07 00:00:00', '2017-05-14 00:00:00', '', 81, 0, 6, 3, '#c57fc1'),
+(86, 'pierre', '2017-03-19 00:00:00', '2017-03-25 00:00:00', '', NULL, 0, 8, 4, '#1b8227'),
+(87, 'chloé', '2017-03-22 00:00:00', '2017-03-23 00:00:00', '', NULL, 0, 8, 3, '#6a1bbf'),
+(88, 'delphine', '2017-03-18 00:00:00', '2017-04-04 00:00:00', '', NULL, 0, 8, 2, '#d755a3'),
+(89, 'nathalie', '2017-03-15 00:00:00', '2017-03-22 00:00:00', '', NULL, 0, 8, 1, '#9c2011'),
+(90, 'jérôme', '2017-03-13 00:00:00', '2017-03-20 00:00:00', '', NULL, 0, 8, 0, '#1890d3'),
+(91, 'site-web', '2017-03-19 00:00:00', '2017-03-25 00:00:00', '', 86, 0, 8, 0, '#1b8227'),
+(92, 'Référencement', '2017-03-13 00:00:00', '2017-03-20 00:00:00', '', 90, 0, 8, 0, '#1890d3'),
+(93, 'salon body fitness', '2017-03-16 00:00:00', '2017-03-19 00:00:00', '', 89, 0, 8, 0, '#9c2011'),
+(94, 'Envoyer le html de mars', '2017-03-21 00:00:00', '2017-03-22 00:00:00', '', 88, 0, 8, 0, '#d755a3'),
+(95, 'Créer le magazine', '2017-03-22 00:00:00', '2017-03-23 00:00:00', '', 87, 0, 8, 0, '#6a1bbf'),
+(96, 'envoyer le html de mai', '2017-04-03 00:00:00', '2017-04-04 00:00:00', '', 88, 0, 8, 1, '#d755a3');
 
 
 
-INSERT INTO `compte_mail` (`id`, `pseudo`, `email`) VALUES
-(1, 'Chloé', 'chloe@leaderfit.com'),
-(2, 'Nathalie', 'nathalie@leaderfit.com'),
-(3, 'Delphine', 'delphine@leaderfit.com'),
-(4, 'Jérôme', 'jerome@leaderfit.com'),
-(5, 'Pierre', 'pierre@leaderfit.com'),
-(6, 'Camille', 'camille@leaderfit.com');
+INSERT INTO `users` (`id`, `pseudo`, `pass`, `avatar`) VALUES
+(1, 'ling', 'pilates', NULL),
+(2, 'jerome', 'pilates', NULL),
+(3, 'didier', 'pilates', NULL);
+
+
+
+INSERT INTO `users_has_task` (`users_id`, `task_id`, `compte_mail_id`, `mail_sent`) VALUES
+(3, 86, 5, 0),
+(3, 87, 1, 0),
+(3, 88, 3, 0),
+(3, 89, 2, 0),
+(3, 90, 4, 0),
+(3, 91, 5, 0),
+(3, 92, 4, 0),
+(3, 93, 2, 0),
+(3, 94, 3, 0),
+(3, 95, 1, 0),
+(3, 96, 3, 0);
 
 
 

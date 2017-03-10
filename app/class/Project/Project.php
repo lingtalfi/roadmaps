@@ -104,4 +104,20 @@ class Project
             ["id", "=", $id],
         ]);
     }
+
+
+    public static function getPeriod($id)
+    {
+        $id = (int)$id;
+        if (false !== ($ret = QuickPdo::fetch("select min(start_date) as mindate, max(end_date) as maxdate
+        from task where project_id=$id
+        "))
+        ) {
+            return [
+                $ret["mindate"],
+                $ret["maxdate"],
+            ];
+        }
+        return false;
+    }
 }

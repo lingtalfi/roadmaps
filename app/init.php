@@ -28,7 +28,7 @@ ButineurAutoloader::getInst()
     ->addLocation(__DIR__ . "/class-modules")
     ->addLocation(__DIR__ . "/class-planets");
 ButineurAutoloader::getInst()->start();
-
+require_once __DIR__ . '/vendor/autoload.php';
 
 //--------------------------------------------
 // FUNCTIONS
@@ -103,6 +103,8 @@ define('APP_ROOT_DIR', __DIR__);
 define('WEBSITE_NAME', "Roadmaps");
 define('MYSQLDUMP_PATH', $mysqlDumpPath);
 define('DB_PASS', $dbPass);
+define('APP_PUBLIC_URL', "http://www.monplanning.ovh");
+define('MAIL_FROM', "planning-bot@leaderfit.com");
 
 
 Spirit::set('ricSeparator', '--*--');
@@ -125,7 +127,6 @@ Privilege::setProfiles([
     ],
     'admin' => [],
 ]);
-
 
 
 //--------------------------------------------

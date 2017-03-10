@@ -1,0 +1,7 @@
+{nom},
+je t'ai créé une tâche à faire,
+tu regarderas sur le planning: {url}.
+
+Merci, d'avance.
+
+Didier Pescher.

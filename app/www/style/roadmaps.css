@@ -235,3 +235,21 @@ th.first-column-cell button:hover i {
     border: none;
     cursor: pointer;
 }
+
+.mail-send-trigger {
+    color: white;
+}
+
+.mail-send-trigger.sent {
+    color: black;
+}
+
+.longtable{
+    width: 100%;
+}
+
+.longtable input,
+.longtable textarea
+{
+    width: 100%;
+}
