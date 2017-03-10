@@ -60,5 +60,16 @@ INSERT INTO `task` (`id`, `label`, `start_date`, `end_date`, `description`, `par
 
 
 
+INSERT INTO `compte_mail` (`id`, `pseudo`, `email`) VALUES
+(1, 'Chloé', 'chloe@leaderfit.com'),
+(2, 'Nathalie', 'nathalie@leaderfit.com'),
+(3, 'Delphine', 'delphine@leaderfit.com'),
+(4, 'Jérôme', 'jerome@leaderfit.com'),
+(5, 'Pierre', 'pierre@leaderfit.com'),
+(6, 'Camille', 'camille@leaderfit.com');
+
+
+
+
 
 SET FOREIGN_KEY_CHECKS=1;

@@ -6,6 +6,7 @@
 //--------------------------------------------
 use AssetsList\AssetsList;
 use Cache\Cache;
+use CompteMail\CompteMail;
 use DirScanner\YorgDirScannerTool;
 use Project\Project;
 use Util\GeneralUtil;
@@ -13,7 +14,7 @@ use Util\GeneralUtil;
 
 $userId = $_SESSION['user_selected'];
 $hasAdminPower = (array_key_exists("connected_user_id", $_SESSION) && (int)$userId === (int)$_SESSION['connected_user_id'] && false !== $_SESSION['connected_user_id']);
-
+$hasMailPower = true;
 
 $projectId2Labels = Project::getId2Labels($userId);
 $projectId = array_key_exists('project_id', $_SESSION) ? (int)$_SESSION['project_id'] : key($projectId2Labels);
@@ -238,6 +239,7 @@ if (true === $hasProject):
                         </th>
                         <th style="clear: both;">Start date</th>
                         <th>End date</th>
+                        <th>Email</th>
                         <?php
                         $plots = $helper->getTimeScalePlots();
                         foreach ($plots as $k => $time) {
@@ -348,9 +350,11 @@ if (true === $hasProject):
                             <?php
                             $class = "";
                             $class2 = "";
+                            $class3 = "";
                             if (true === $hasAdminPower) {
                                 $class = "start-date-update-trigger";
                                 $class2 = "end-date-update-trigger";
+                                $class3 = "mail-conf-trigger";
                             }
                             ?>
 
@@ -362,6 +366,12 @@ if (true === $hasProject):
                                 class="infocell <?php echo $class2; ?>"
                                 data-date="<?php echo $task['end_date']; ?>"
                                 title="<?php echo $task['end_date']; ?>"><?php echo justDate($task['end_date']); ?></td>
+                            <td data-id="<?php echo $task['id']; ?>"
+                                class="infocell <?php echo $class3; ?>"
+                                style="text-align: center;"
+                            >
+                                <i class="mail-conf-trigger material-icons">email</i>
+                            </td>
 
                             <?php
                             foreach ($plots as $k => $time):
@@ -413,6 +423,18 @@ if (true === $hasProject):
 
 
         <?php if(true === $hasProject): ?>
+
+
+
+
+        function rgb2hex(rgb) {
+            rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+            return (rgb && rgb.length === 4) ? "#" +
+                ("0" + parseInt(rgb[1], 10).toString(16)).slice(-2) +
+                ("0" + parseInt(rgb[2], 10).toString(16)).slice(-2) +
+                ("0" + parseInt(rgb[3], 10).toString(16)).slice(-2) : '';
+        }
+
 
         //----------------------------------------
         // PERIOD FORM
@@ -596,6 +618,17 @@ if (true === $hasProject):
                         jMinute.val(minute);
 
 
+                        /**
+                         * Use parent color if any parent
+                         **/
+                        var jTr = jTarget.closest('tr');
+                        var color = jTr.find('.filled:first').css('background-color');
+                        if (color) {
+                            var cssColor = rgb2hex(color);
+                            jDial.find('.color').val(cssColor);
+                        }
+
+
                     },
                     buttons: {
                         "Appliquer": function () {
@@ -609,6 +642,7 @@ if (true === $hasProject):
                             var duree = jDial.find('.duration').val();
                             var position = jDial.find('.position').val();
                             var color = jDial.find('.color').val();
+                            var compte_mail = jDial.find('.compte_mail').val();
 
 
                             $.post('/services/roadmaps.php?action=calendrier-task-create', {
@@ -620,6 +654,7 @@ if (true === $hasProject):
                                 'minute': minute,
                                 'duration': duree,
                                 'color': color,
+                                'compte_mail': compte_mail,
                                 'position': position
                             }, function (data) {
                                 if ('ok' === data) {
@@ -1318,15 +1353,32 @@ if (true === $hasProject):
                 </td>
             </tr>
             <tr>
+                <td>Couleur</td>
+                <td><input type="color" class="color" value="<?php echo $defaultTaskColor; ?>"></td>
+            </tr>
+            <tr>
+                <td>Responsable(s)</td>
+                <td>
+                    <?php
+                    $id2label = CompteMail::getId2Labels();
+                    ?>
+                    <select multiple class="compte_mail" style="width: 200px;" size="<?php echo count($id2label); ?>">
+                        <?php
+                        foreach ($id2label as $id => $label):
+                            ?>
+                            <option value="<?php echo $id; ?>"><?php echo $label; ?></option>
+                            <?php
+                        endforeach;
+                        ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
                 <td>Ajouter</td>
                 <td><select class="position">
                         <option value="first">au début</option>
                         <option value="last">à la fin</option>
                     </select></td>
-            </tr>
-            <tr>
-                <td>Couleur</td>
-                <td><input type="color" class="color" value="<?php echo $defaultTaskColor; ?>"></td>
             </tr>
         </table>
     </div>

@@ -212,7 +212,7 @@ where id=" . (int)$taskId . "
     }
 
 
-    public static function insertByDuration($projectId, $startDate, $nbDays, $parentId, $label, $color, $position = "last")
+    public static function insertByDuration($projectId, $startDate, $nbDays, $parentId, $label, $color, $position = "last", array $compteMail=[])
     {
         $time = GeneralUtil::gmMysqlToTime($startDate);
         $dateStart = gmdate("Y-m-d H:i:s", $time);

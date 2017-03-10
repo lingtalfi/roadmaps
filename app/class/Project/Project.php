@@ -39,7 +39,7 @@ class Project
 
     public static function getId2Labels($userId)
     {
-        return QuickPdo::fetchAll("select id, name from project where users_id=" . (int)$userId, [], \PDO::FETCH_COLUMN | \PDO::FETCH_UNIQUE);
+        return QuickPdo::fetchAll("select id, `name` from project where users_id=" . (int)$userId, [], \PDO::FETCH_COLUMN | \PDO::FETCH_UNIQUE);
     }
 
     public static function insert(array $data)

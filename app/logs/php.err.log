@@ -489,3 +489,45 @@ Stack trace:
 #3 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/services/roadmaps.php(235): Project\Project::duplicate('1', 'nn')
 #4 {main}
   thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 114
+[10-Mar-2017 07:36:18 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1217 Cannot delete or update a parent row: a foreign key constraint fails in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:307
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(307): PDO->exec('drop table if e...')
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/tools/reset-db.php(8): QuickPdo\QuickPdo::freeExec('drop table if e...')
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/dbgen.php(6): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 307
+[10-Mar-2017 07:36:52 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1217 Cannot delete or update a parent row: a foreign key constraint fails in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:307
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(307): PDO->exec('drop table if e...')
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/tools/reset-db.php(9): QuickPdo\QuickPdo::freeExec('drop table if e...')
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/dbgen.php(6): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 307
+[10-Mar-2017 07:36:52 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1217 Cannot delete or update a parent row: a foreign key constraint fails in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:307
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(307): PDO->exec('drop table if e...')
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/tools/reset-db.php(9): QuickPdo\QuickPdo::freeExec('drop table if e...')
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/dbgen.php(6): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 307
+[10-Mar-2017 07:37:05 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'if exists user_has_task' at line 1 in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:307
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(307): PDO->exec('truncate table ...')
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/tools/reset-db.php(8): QuickPdo\QuickPdo::freeExec('truncate table ...')
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/dbgen.php(6): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 307
+[10-Mar-2017 07:37:27 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'roadmaps.user_has_task' doesn't exist in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:307
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(307): PDO->exec('truncate user_h...')
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/tools/reset-db.php(8): QuickPdo\QuickPdo::freeExec('truncate user_h...')
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/dbgen.php(6): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 307
+[10-Mar-2017 07:37:34 Europe/Paris] PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1217 Cannot delete or update a parent row: a foreign key constraint fails in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php:307
+Stack trace:
+#0 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php(307): PDO->exec('drop table if e...')
+#1 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/tools/reset-db.php(10): QuickPdo\QuickPdo::freeExec('drop table if e...')
+#2 /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/www/dbgen.php(6): require_once('/Volumes/Macint...')
+#3 {main}
+  thrown in /Volumes/Macintosh HD 2/it/php/projects/roadmaps/app/class-planets/QuickPdo/QuickPdo.php on line 307

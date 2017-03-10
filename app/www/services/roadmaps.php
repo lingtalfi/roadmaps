@@ -105,6 +105,7 @@ if (array_key_exists('action', $_GET)) {
                 array_key_exists("position", $_POST)
             ) {
 
+
                 $projectId = $_POST['projectId'];
                 $parentId = $_POST['parentId'];
                 $label = $_POST['label'];
@@ -114,10 +115,11 @@ if (array_key_exists('action', $_GET)) {
                 $duration = $_POST['duration'];
                 $color = $_POST['color'];
                 $position = $_POST['position'];
+                $compteMail = (array_key_exists('compte_mail', $_POST)) ? $_POST['compte_mail'] : [];
 
 
                 $startDate = $date . " $hour:$minute:00";;
-                TaskUtil::insertByDuration($projectId, $startDate, $duration, $parentId, $label, $color, $position);
+                TaskUtil::insertByDuration($projectId, $startDate, $duration, $parentId, $label, $color, $position, $compteMail);
 
                 $output = "ok";
             }

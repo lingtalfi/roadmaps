@@ -12,9 +12,12 @@ class LeftMenuPreferences
     {
         return [
     'Website' => [
+        'roadmaps.compte_mail',
+        'roadmaps.historique_mail',
         'roadmaps.project',
         'roadmaps.task',
         'roadmaps.users',
+        'roadmaps.users_has_task',
     ],
 ];
     }
@@ -25,6 +28,9 @@ class LeftMenuPreferences
     public static function getTableLabels()
     {
         return [
+    'roadmaps.compte_mail' => 'compte mail',
+    'roadmaps.historique_mail' => 'historique mail',
+    'roadmaps.users_has_task' => 'users has task',
 ];
     }
 
